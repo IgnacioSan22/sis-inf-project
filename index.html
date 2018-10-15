@@ -75,6 +75,7 @@
           <div class="row">
             <div class="col">
               <h2 class="text-center text-uppercase text-secondary mb-0">Título de cartel 1</h2>
+              <hr class="star-dark mb-5">
             </div>
           </div>
         <br/>
@@ -101,7 +102,9 @@
                             <label><input type="radio" name="answer">  Option 3</label>
                           </div>
                           <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-m" id="sendMessageButton">Enviar</button>
+                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal2">
+                              Enviar
+                            </button>
                           </div>
                         </form>
                     </div>
@@ -113,15 +116,27 @@
                   </div>
               </div>
           </div>
+
+          <div class="row">
+              <div class="col-1">
+                  <button class="btn"><i class="fas fa-share-alt"></i> Share</button>
+              </div>
+              <div class="col-1">
+                  <button class="btn"><i class="fas fa-thumbs-up"></i> Like</button>
+              </div>
+          </div>
         </div>
     </section>
 
-    <!-- Portfolio Grid Section -->
-    <section class="bg-primary text-white mb-0" id="posters">
+    <section class="masthead bg-primary text-white text-center"></section>
+
+    <!-- Poster 2 -->
+    <section class="portfolio" id="posters">
         <div class="container">
             <div class="row">
               <div class="col">
                 <h2 class="text-center text-uppercase text-secondary mb-0">Título de cartel 2</h2>
+                <hr class="star-dark mb-5">
               </div>
             </div>
           <br/>
@@ -142,7 +157,9 @@
                             <label><input type="radio" name="answer">  Option 3</label>
                           </div>
                           <div class="form-group">
-                            <button type="submit" class="btn btn-secondary btn-m" id="sendMessageButton">Enviar</button>
+                              <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal2">
+                                  Enviar
+                              </button>
                           </div>
                         </form>
                     </div>
@@ -160,8 +177,18 @@
                   <p style="text-align:justify">In pharetra, orci vitae rutrum blandit, odio arcu dignissim elit, eget rhoncus ex dui et ligula. Etiam consectetur ipsum ut ante venenatis, id mollis nulla varius. Nunc condimentum, lorem sit amet rutrum gravida, magna felis fermentum sem, id viverra purus risus vel magna. Aenean enim sapien, fringilla non justo sed, volutpat laoreet turpis.</p>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-1">
+                    <button class="btn"><i class="fas fa-share-alt"></i> Share</button>
+                </div>
+                <div class="col-1">
+                    <button class="btn"><i class="fas fa-thumbs-up"></i> Like</button>
+                </div>
+            </div>
           </div>  
     </section>
+
+    <section class="masthead bg-primary text-white text-center"></section>
 
     <!-- Login Section -->
     <section id="login">
@@ -363,7 +390,9 @@
                     <div class="row">
                       <div class="col">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary" id="uploadButton">Upload</button>
+                           <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                              Upload
+                            </button>
                         </div>
                       </div>
                     </div>
@@ -425,6 +454,48 @@
         <small>Copyright &copy; EnvHub 2018</small>
       </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Login error</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Tienes que iniciar sesión para subir un poster.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Respuesta registrada</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ¿Serías tan amable de responder a dos preguntas estadísticas?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Si</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
     <div class="scroll-to-top d-lg-none position-fixed ">
