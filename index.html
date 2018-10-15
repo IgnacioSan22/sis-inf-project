@@ -40,7 +40,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#">Upload</a>
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#upload">Upload</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#posters">Posters</a>
@@ -121,7 +121,7 @@
         <div class="container">
             <div class="row">
               <div class="col">
-                <h2 class="text-center text-uppercase text-secondary mb-0">Título de cartel 1</h2>
+                <h2 class="text-center text-uppercase text-secondary mb-0">Título de cartel 2</h2>
               </div>
             </div>
           <br/>
@@ -264,6 +264,106 @@
       </div>
     </section>
 
+    <section class="bg-primary text-white mb-0"></section>
+
+    <!--Upload poster-->
+
+    <section class="mb-0" id="upload">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <h2 class="text-center text-uppercase text-secondary mb-0">Subir Cartel</h2>
+              <hr class="star-dark mb-5">
+            </div>
+          </div>
+        <br/>
+          <div class="row">
+              <div class="col">
+                <form name="uploadPoster" id="contactForm" novalidate="novalidate">
+                  <div class="row">
+
+                    <div class="col">
+                      <div class="control-group">
+                        <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                          <label>Información</label><br/>
+                          <textarea name="info" id="info-ta" cols="30" rows="11" placeholder="Información"></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col">
+
+                      <div class="row">
+                        <div class="control-group">
+                          <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                            <label>Imagen</label><br/>
+                            <input class="form-control" id="imagen" type="text" placeholder="Image URL">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="control-group">
+                          <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                            <label>Pregunta</label><br/>
+                            <input class="form-control" id="pregunta" type="text" placeholder="Pregunta">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="control-group">
+                          <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                            <label>Respuesta 1</label><br/>
+                            <input class="form-control" id="respuesta1" type="text" placeholder="Respuesta 1">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                          <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                              <label>Respuesta 2</label><br/>
+                              <input class="form-control" id="respuesta2" type="text" placeholder="Respuesta 2">
+                            </div>
+                          </div>
+                      </div>
+
+                        <div class="row">
+                            <div class="control-group">
+                              <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                <label>Respuesta 3</label><br/>
+                                <input class="form-control" id="respuesta3" type="text" placeholder="Respuesta 3">
+                              </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col">
+                      <div class="control-group">
+                        <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                          <label>Reto</label><br/>
+                          <textarea name="reto" id="info-ta" cols="30" rows="11" placeholder="Reto Sostenible"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  
+                    </div>
+
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary" id="uploadButton">Upload</button>
+                        </div>
+                      </div>
+                    </div>
+                </form>
+              </div>
+          </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer text-center">
       <div class="container">
@@ -305,7 +405,7 @@
           <div class="col-md-4">
             <h4 class="text-uppercase mb-4">About Us</h4>
             <p class="lead mb-0">WebApp made by: <br/> Víctor Fernández Melic <br/> Ignacio Galve Ceamanos <br/> Jorge Generelo Gimeno <br/>
-              <a href="#">EevHub</a>.</p>
+              <a href="#">EnvHub</a>.</p>
           </div>
         </div>
       </div>
@@ -313,7 +413,7 @@
 
     <div class="copyright py-4 text-center text-white">
       <div class="container">
-        <small>Copyright &copy; Your Website 2018</small>
+        <small>Copyright &copy; EnvHub 2018</small>
       </div>
     </div>
 
