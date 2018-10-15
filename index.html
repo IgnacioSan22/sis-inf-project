@@ -165,9 +165,10 @@
 
     <!-- Login Section -->
     <section id="login">
-      <div class="container">
+      <div id="login-form" class="container" style="display:block">
         <h2 class="text-center text-uppercase text-secondary mb-0">Login</h2>
         <hr class="star-dark mb-5">
+
         <div class="row">
           <div class="col-lg-8 mx-auto">
             <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
@@ -190,9 +191,74 @@
               <br>
               <div id="success"></div>
               <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">Send</button>
+                <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
               </div>
             </form>
+          </div>
+        </div>
+      </div>
+
+      <div id="signup-form" class="container" style="display:none">
+          <h2 class="text-center text-uppercase text-secondary mb-0">Signup</h2>
+          <hr class="star-dark mb-5">
+  
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+              <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+              <form name="sentMessage" id="contactForm" novalidate="novalidate">
+              <div class="control-group">
+                  <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                    <label>Name</label>
+                    <input class="form-control" id="name" type="name" placeholder="Email Address" required="required" data-validation-required-message="Please enter your name.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                </div>
+              <div class="control-group">
+                  <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                    <label>Surname</label>
+                    <input class="form-control" id="surname" type="text" placeholder="Surname" required="required" data-validation-required-message="Please enter your surname.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                    <label>Email Address</label>
+                    <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="password" type="text" placeholder="Password" required="required" data-validation-required-message="Please enter your password.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                    <label>Confirm Password</label>
+                    <input type="password" class="form-control" id="confirm-password" type="text" placeholder="Confirm Password" required="required" data-validation-required-message="Please re-enter your password.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                </div>
+                <br>
+                <div id="success"></div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      <!--Radio Buttons to select login or sign up-->
+      <div class="container">
+      <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <button id="toggleLoginButton" class="btn btn-secondary" onclick="toggleLogin()">Signup</button>
+            </div>
           </div>
         </div>
       </div>
@@ -204,8 +270,7 @@
         <div class="row">
           <div class="col-md-4 mb-5 mb-lg-0">
             <h4 class="text-uppercase mb-4">EINA - UNIZAR</h4>
-            <p class="lead mb-0">C/ María de Luna, 3, 50008, Zaragoza
-              <br>Clark, MO 65243</p>
+            <p class="lead mb-0">C/ María de Luna, 3, 50008, Zaragoza</p>
           </div>
           <div class="col-md-4 mb-5 mb-lg-0">
             <h4 class="text-uppercase mb-4">Around the Web</h4>
@@ -238,9 +303,9 @@
             </ul>
           </div>
           <div class="col-md-4">
-            <h4 class="text-uppercase mb-4">About Freelancer</h4>
-            <p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
-              <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+            <h4 class="text-uppercase mb-4">About Us</h4>
+            <p class="lead mb-0">WebApp made by: <br/> Víctor Fernández Melic <br/> Ignacio Galve Ceamanos <br/> Jorge Generelo Gimeno <br/>
+              <a href="#">EevHub</a>.</p>
           </div>
         </div>
       </div>
@@ -273,6 +338,25 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/freelancer.min.js"></script>
+
+    <script>
+      
+      function toggleLogin() {
+        var x = document.getElementById("signup-form");
+        var y = document.getElementById("login-form");
+        var z = document.getElementById("toggleLoginButton");
+
+        if (x.style.display === "none") {
+            y.style.display = "none";
+            x.style.display = "block";
+            z.textContent = "Login";
+        } else {
+            x.style.display = "none";
+            y.style.display = "block";
+            z.textContent = "Signup";
+        }
+    } 
+    </script>
 
   </body>
 
