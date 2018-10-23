@@ -1,0 +1,78 @@
+{% extends "basecontent.html" %}
+{% block contentpage %}
+
+    <!-- Profile -->
+    <header class="masthead bg text-white text-center">
+      <div class="container">
+        <h2 class="text-center text-uppercase text-secondary mb-0">Profile</h2>
+        <hr class="star-dark mb-5">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+            <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+            <form name="sentMessage" id="contactForm" novalidate="novalidate">
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Name</label>
+                  <input class="form-control" id="name" type="text" placeholder="Víctor">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Surname</label>
+                  <input class="form-control" id="surname" type="text" placeholder="Fernández Melic">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Email Address</label>
+                  <input class="form-control" id="email" type="email" placeholder="melic93@gmail.com">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Password</label>
+                  <input type="password" class="form-control" id="password" type="text" placeholder="Password" required="required" data-validation-required-message="Please enter your password.">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="control-group">
+                  <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                    <label>New Password</label>
+                    <input type="password" class="form-control" id="change-password" type="text" placeholder="New Password">
+                    <p class="help-block text-danger"></p>
+                  </div>
+              </div>
+              <br>
+              <div id="success"></div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="masthead bg-primary text-white text-center"></section>
+
+    <section class="text-white text-center">
+
+        <h2 class="text-center text-uppercase text-secondary mb-0">Exportar Datos</h2>
+        <hr class="star-dark mb-5">
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Exportar Datos
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Excell</a>
+              <a class="dropdown-item" href="#">CSV</a>
+              <a class="dropdown-item" href="#">SQL</a>
+            </div>
+          </div>
+    </section>
+    {% endblock %}
