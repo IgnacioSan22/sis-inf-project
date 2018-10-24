@@ -87,18 +87,18 @@ class Poster(db.Model):
 
     # Representación del poster
     def __repr__(self):
-        return '<id: {}, id_usuario: {}>'.format(self.id, self.id_usuario)
+        return '<id: {}, id_usuario: {}, info: {}>'.format(self.id, self.id_usuario, self.info)
 
     #Interfaz
-    def addCartel(self):
+    def addPoster(self):
         db.session.add(self)
         db.session.commit()
     
-    def removeCartel(self):
-        db.session.add(self)
+    def removePoster(self):
+        db.session.delete(self)
         db.session.commit()
 
-    def updateCartel(self):
+    def updatePoster(self):
         Poster.query.filter_by(id=self.id).update(dict(id_usuario=self.id_usuario, imagen=self.imagen, reto=self.reto, info=self.info, pregunta=self.pregunta, respuesta_correcta=self.respuesta_correcta))
         db.session.commit()
 
