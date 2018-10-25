@@ -1,0 +1,23 @@
+name: sis-inf
+channels:
+  - defaults
+dependencies:
+  - astroid=2.0.4=py36_0
+  - certifi=2018.8.24=py36_1
+  - colorama=0.3.9=py36h029ae33_0
+  - isort=4.3.4=py36_0
+  - lazy-object-proxy=1.3.1=py36hfa6e2cd_2
+  - mccabe=0.6.1=py36_1
+  - pip=10.0.1=py36_0
+  - pylint=2.1.1=py36_0
+  - python=3.6.6=hea74fb7_0
+  - setuptools=40.4.3=py36_0
+  - six=1.11.0=py36_1
+  - typed-ast=1.1.0=py36hfa6e2cd_0
+  - vc=14.1=h0510ff6_4
+  - vs2015_runtime=14.15.26706=h3a45250_0
+  - wheel=0.32.0=py36_0
+  - wincertstore=0.2=py36h7fe50ca_0
+  - wrapt=1.10.11=py36hfa6e2cd_2
+prefix: C:\Miniconda3\envs\sis-inf
+
