@@ -45,5 +45,25 @@ class TestBD(unittest.TestCase):
         p2 = Poster.getPosterById(65535)
         self.assertTrue(p2==None)
 
+    def testInsertUpdateRemoveStat(self):
+        # Insert Stat
+        s1 = Stat(id=65535, id_usuario=1, dato_estadistico_1='Dato 1 Test', dato_estadistico_2='Dato 2 Test')
+        s1.addStat()
+        s2 = Stat.getStatById(65535)
+        self.assertTrue(print(s1)==print(s2))
+
+        # Update Stat
+        s1 = Stat.getStatById(65535)
+        s1.dato_estadistico_1 = 'Dato 1 modified'
+        s1.updateStat()
+        s2 = Stat.getStatById(65535)
+        self.assertTrue(print(s1)==print(s2))
+
+        # Remove Stat
+        s1 = Stat.getStatById(65535)
+        s1.removeStat()
+        s2 = Stat.getStatById(65535)
+        self.assertTrue(s2==None)
+
 if __name__ == '__main__':
     unittest.main()
