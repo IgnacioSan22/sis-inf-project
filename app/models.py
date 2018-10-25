@@ -83,7 +83,7 @@ class Poster(db.Model):
     reto = Column(String(1024))
     info = Column(String(1024))
     pregunta = Column(String(1024))
-    respuesta_correcta = Column(Integer, ForeignKey('question_options.id'))
+    respuesta_correcta = Column(Integer)
 
     # Representación del poster
     def __repr__(self):
@@ -138,12 +138,12 @@ class UserResponse(db.Model):
     __tablename__ = 'user_response'
 
     id = Column(Integer, primary_key=True)
-    id_user = Column(Integer, ForeignKey('users.id'))
+    id_usuario = Column(Integer, ForeignKey('users.id'))
     id_opcion = Column(Integer, ForeignKey('question_options.id'))
 
     # Reperesentación de UserResponse
     def __resp__(self):
-        return '<id: {}, id_user: {}, id_opcion:{}>'.format(self.id, self.id_user, self.id_opcion)
+        return '<id: {}, id_user: {}, id_opcion:{}>'.format(self.id, self.id_usuario, self.id_opcion)
 
     #Interfaz
     def addUserResponse(self):
@@ -155,9 +155,9 @@ class UserResponse(db.Model):
         db.session.commit()
 
     def updateUserResponse(self):
-        UserResponse.query.filter_by(id=self.id).update(dict(id_user=self.id_user, id_opcion=self.id_opcion))
+        UserResponse.query.filter_by(id=self.id).update(dict(id_user=self.id_usuario, id_opcion=self.id_opcion))
         db.session.commit()
 
     @classmethod
     def getUserResponseByUserId(cls, id_usuario):
-        return QuestionOption.query.filter_by(id_usuario=id_usuario).all()
+        return UserResponse.query.filter_by(id_usuario=id_usuario).all()
