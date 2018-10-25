@@ -127,9 +127,37 @@ class QuestionOption(db.Model):
         db.session.commit()
 
     def updateOpcionPregunta(self):
-        Poster.query.filter_by(id=self.id).update(dict(id_poster=self.id_poster, opcion=self.opcion))
+        QuestionOption.query.filter_by(id=self.id).update(dict(id_poster=self.id_poster, opcion=self.opcion))
         db.session.commit()
 
     @classmethod
-    def getOptionsByPosterId(cls, id_poster):
+    def getOpcionPreguntaByPosterId(cls, id_poster):
         return QuestionOption.query.filter_by(id_poster=id_poster).all()
+
+class UserResponse(db.Model):
+    __tablename__ = 'user_response'
+
+    id = Column(Integer, primary_key=True)
+    id_user = Column(Integer, ForeignKey('users.id'))
+    id_opcion = Column(Integer, ForeignKey('question_options.id'))
+
+    # Reperesentación de UserResponse
+    def __resp__(self):
+        return '<id: {}, id_user: {}, id_opcion:{}>'.format(self.id, self.id_user, self.id_opcion)
+
+    #Interfaz
+    def addUserResponse(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    def removeUserResponse(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def updateUserResponse(self):
+        UserResponse.query.filter_by(id=self.id).update(dict(id_user=self.id_user, id_opcion=self.id_opcion))
+        db.session.commit()
+
+    @classmethod
+    def getUserResponseByUserId(cls, id_usuario):
+        return QuestionOption.query.filter_by(id_usuario=id_usuario).all()
