@@ -15,6 +15,11 @@ def index():
 def profile():
     return render_template('profile.html')
 
+@app.route('/posterValidation')
+@login_required
+def posterValidation():
+    return render_template('posterValidation.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
