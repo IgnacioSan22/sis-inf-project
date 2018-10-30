@@ -1,24 +1,36 @@
 {% extends "basecontent.html" %}
 {% block contentpage %}
-    <!-- Header -->
-    <header class="masthead bg-primary text-white text-center">
-      <div class="container">
-        <!--<i class="fas fa-leaf fa-3x"></i>-->
-        <i class="fas fa-fish fa-8x"></i>
-        <br/>
-        <br/>
-        <h1 class="text-uppercase mb-0">ENV HUB</h1>
-        <hr class="star-light">
-        <h2 class="font-weight-light mb-0">Enviromental Posters - Challenges</h2>
-      </div>
-    </header>
 
+  <!-- Messages -->
+
+  {% for msg in get_flashed_messages() %}
+    <section id="msgs" style="padding-block-end: 0rem">
+      <div class="alert alert-info" role="alert">
+        <strong> {{ msg }} </strong>
+      </div>
+    </section>
+  {% endfor %}
+
+  <!-- Header -->
+  <header class="masthead bg-primary text-white text-center" id="page-top">
+    <div class="container">
+      <!--<i class="fas fa-leaf fa-3x"></i>-->
+      <i class="fas fa-fish fa-8x"></i>
+      <br/>
+      <br/>
+      <h1 class="text-uppercase mb-0">ENV HUB</h1>
+      <hr class="star-light">
+      <h2 class="font-weight-light mb-0">Enviromental Posters - Challenges</h2>
+    </div>
+  </header>
+
+  {% for post in posts %}
     <!-- Poster section -->
     <section class="portfolio" id="posters">
         <div class="container">
           <div class="row">
             <div class="col">
-              <h2 class="text-center text-uppercase text-secondary mb-0">Título de cartel 1</h2>
+              <h2 class="text-center text-uppercase text-secondary mb-0">{{ post.titulo }}</h2>
               <hr class="star-dark mb-5">
             </div>
           </div>
@@ -27,13 +39,12 @@
               <div class="col-8">
                 <img src="/static/img/parque.jpg" class="rounded">
                 <br/><br/>
-                <p style="text-align:justify">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</p>
-                <p style="text-align:justify">In pharetra, orci vitae rutrum blandit, odio arcu dignissim elit, eget rhoncus ex dui et ligula. Etiam consectetur ipsum ut ante venenatis, id mollis nulla varius. Nunc condimentum, lorem sit amet rutrum gravida, magna felis fermentum sem, id viverra purus risus vel magna. Aenean enim sapien, fringilla non justo sed, volutpat laoreet turpis.</p>
+                <p style="text-align:justify">{{ post.info }}</p>
               </div>
               <div class="col-4">
                   <div class="row">
                     <div class="col">
-                      ¿Cual es la mejor pregunta 1 que se te ocurre?
+                        {{ post.pregunta }}
                     <br/><br/>
                       <form name="pregunta" id="answerForm" novalidate="novalidate">
                         <div class="radio">
@@ -55,7 +66,7 @@
                   </div>
                   <div class="row">
                     <div class="col">
-                      <p style="text-align:justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum varius consectetur augue a aliquet. Suspendisse potenti. Duis leo justo, bibendum a commodo eget, placerat quis neque. Curabitur auctor convallis nunc non faucibus. Donec a leo a lorem dapibus condimentum nec sit amet eros. Nam vitae dolor vel nulla convallis cursus nec at velit. Integer ex nisl, porta ut urna non, tincidunt sollicitudin massa. Integer ultrices a ipsum ut condimentum. Maecenas at magna neque.</p>
+                      <p style="text-align:justify">{{ post.reto }}</p>
                     </div>
                   </div>
               </div>
@@ -73,278 +84,117 @@
     </section>
 
     <section class="masthead bg-primary text-white text-center"></section>
+  {% endfor %}
 
-    <!-- Poster 2 -->
-    <section class="portfolio" id="posters">
-        <div class="container">
+  {% if current_user.is_authenticated %}
+      <!--Upload poster-->
+      <section class="mb-0" id="upload">
+          <div class="container">
             <div class="row">
               <div class="col">
-                <h2 class="text-center text-uppercase text-secondary mb-0">Título de cartel 2</h2>
+                <h2 class="text-center text-uppercase text-secondary mb-0">Subir Cartel</h2>
                 <hr class="star-dark mb-5">
               </div>
             </div>
           <br/>
-          <div class="row">
-              <div class="col-4">
-                  <div class="row">
-                    <div class="col">
-                      ¿Cual es la mejor pregunta 1 que se te ocurre?
-                    <br/><br/>
-                      <form name="pregunta" id="answerForm" novalidate="novalidate">
-                        <div class="radio">
-                            <label><input type="radio" name="answer">  Option 1</label>
-                          </div>
-                          <div class="radio">
-                            <label><input type="radio" name="answer">  Option 2</label>
-                          </div>
-                          <div class="radio">
-                            <label><input type="radio" name="answer">  Option 3</label>
-                          </div>
-                          <div class="form-group">
-                              <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal2">
-                                  Enviar
-                              </button>
-                          </div>
-                        </form>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <p style="text-align:justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum varius consectetur augue a aliquet. Suspendisse potenti. Duis leo justo, bibendum a commodo eget, placerat quis neque. Curabitur auctor convallis nunc non faucibus. Donec a leo a lorem dapibus condimentum nec sit amet eros. Nam vitae dolor vel nulla convallis cursus nec at velit. Integer ex nisl, porta ut urna non, tincidunt sollicitudin massa. Integer ultrices a ipsum ut condimentum. Maecenas at magna neque.</p>
-                    </div>
-                  </div>
-              </div> 
-                <div class="col-8">
-                  <img src="/static/img/parque.jpg" class="rounded">
-                  <br/><br/>
-                  <p style="text-align:justify">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</p>
-                  <p style="text-align:justify">In pharetra, orci vitae rutrum blandit, odio arcu dignissim elit, eget rhoncus ex dui et ligula. Etiam consectetur ipsum ut ante venenatis, id mollis nulla varius. Nunc condimentum, lorem sit amet rutrum gravida, magna felis fermentum sem, id viverra purus risus vel magna. Aenean enim sapien, fringilla non justo sed, volutpat laoreet turpis.</p>
-                </div>
-            </div>
             <div class="row">
-                <div class="col-1">
-                    <button class="btn"><i class="fas fa-share-alt"></i> Share</button>
-                </div>
-                <div class="col-1">
-                    <button class="btn"><i class="fas fa-thumbs-up"></i> Like</button>
-                </div>
-            </div>
-          </div>  
-    </section>
-
-    <section class="masthead bg-primary text-white text-center"></section>
-
-    <!-- Login Section -->
-    <section id="login">
-      <div id="login-form" class="container" style="display:block">
-        <h2 class="text-center text-uppercase text-secondary mb-0">Login</h2>
-        <hr class="star-dark mb-5">
-
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
-            <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-            <form name="sentMessage" id="contactForm" novalidate="novalidate">
-              <div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Email Address</label>
-                  <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address.">
-                  <p class="help-block text-danger"></p>
-                </div>
-              </div>
-              <div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Password</label>
-                  <input type="password" class="form-control" id="password" type="text" placeholder="Password" required="required" data-validation-required-message="Please enter your password.">
-                  <p class="help-block text-danger"></p>
-                </div>
-              </div>
-              <br>
-              <div id="success"></div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div id="signup-form" class="container" style="display:none">
-          <h2 class="text-center text-uppercase text-secondary mb-0">Signup</h2>
-          <hr class="star-dark mb-5">
-  
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
-              <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-              <form name="sentMessage" id="contactForm" novalidate="novalidate">
-              <div class="control-group">
-                  <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                    <label>Name</label>
-                    <input class="form-control" id="name" type="name" placeholder="Email Address" required="required" data-validation-required-message="Please enter your name.">
-                    <p class="help-block text-danger"></p>
-                  </div>
-                </div>
-              <div class="control-group">
-                  <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                    <label>Surname</label>
-                    <input class="form-control" id="surname" type="text" placeholder="Surname" required="required" data-validation-required-message="Please enter your surname.">
-                    <p class="help-block text-danger"></p>
-                  </div>
-                </div>
-                <div class="control-group">
-                  <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                    <label>Email Address</label>
-                    <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address.">
-                    <p class="help-block text-danger"></p>
-                  </div>
-                </div>
-                <div class="control-group">
-                  <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                    <label>Password</label>
-                    <input type="password" class="form-control" id="password" type="text" placeholder="Password" required="required" data-validation-required-message="Please enter your password.">
-                    <p class="help-block text-danger"></p>
-                  </div>
-                </div>
-                <div class="control-group">
-                  <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                    <label>Confirm Password</label>
-                    <input type="password" class="form-control" id="confirm-password" type="text" placeholder="Confirm Password" required="required" data-validation-required-message="Please re-enter your password.">
-                    <p class="help-block text-danger"></p>
-                  </div>
-                </div>
-                <br>
-                <div id="success"></div>
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-
-      <!--Radio Buttons to select login or sign up-->
-      <div class="container">
-      <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <button id="toggleLoginButton" class="btn btn-secondary" onclick="toggleLogin()">Signup</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="bg-primary text-white mb-0"></section>
-
-    <!--Upload poster-->
-
-    <section class="mb-0" id="upload">
-        <div class="container">
-          <div class="row">
-            <div class="col">
-              <h2 class="text-center text-uppercase text-secondary mb-0">Subir Cartel</h2>
-              <hr class="star-dark mb-5">
-            </div>
-          </div>
-        <br/>
-          <div class="row">
-              <div class="col">
-                <form name="uploadPoster" id="contactForm" novalidate="novalidate">
-                  <div class="row">
-
-                    <div class="col">
-                      <div class="control-group">
-                        <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                          <label>Información</label><br/>
-                          <textarea name="info" id="info-ta" cols="30" rows="14" placeholder="Información"></textarea>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col">
-
+                <div class="col">
+                  <form name="uploadPoster" id="contactForm" novalidate="novalidate">
                     <div class="row">
+
+                      <div class="col">
                         <div class="control-group">
                           <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                            <label>Título</label><br/>
-                            <input class="form-control" id="titulo" type="text" placeholder="Título">
+                            <label>Información</label><br/>
+                            <textarea name="info" id="info-ta" cols="30" rows="14" placeholder="Información"></textarea>
                           </div>
                         </div>
                       </div>
 
-                      <div class="row">
-                        <div class="control-group">
-                          <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                            <label>Imagen</label><br/>
-                            <input class="form-control" id="imagen" type="text" placeholder="Image URL">
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="control-group">
-                          <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                            <label>Pregunta</label><br/>
-                            <input class="form-control" id="pregunta" type="text" placeholder="Pregunta">
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="control-group">
-                          <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                            <label>Respuesta 1</label><br/>
-                            <input class="form-control" id="respuesta1" type="text" placeholder="Respuesta 1">
-                          </div>
-                        </div>
-                      </div>
+                      <div class="col">
 
                       <div class="row">
                           <div class="control-group">
                             <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                              <label>Respuesta 2</label><br/>
-                              <input class="form-control" id="respuesta2" type="text" placeholder="Respuesta 2">
+                              <label>Título</label><br/>
+                              <input class="form-control" id="titulo" type="text" placeholder="Título">
                             </div>
                           </div>
-                      </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                              <label>Imagen</label><br/>
+                              <input class="form-control" id="imagen" type="text" placeholder="Image URL">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                              <label>Pregunta</label><br/>
+                              <input class="form-control" id="pregunta" type="text" placeholder="Pregunta">
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="control-group">
+                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                              <label>Respuesta 1</label><br/>
+                              <input class="form-control" id="respuesta1" type="text" placeholder="Respuesta 1">
+                            </div>
+                          </div>
+                        </div>
 
                         <div class="row">
                             <div class="control-group">
                               <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                <label>Respuesta 3</label><br/>
-                                <input class="form-control" id="respuesta3" type="text" placeholder="Respuesta 3">
+                                <label>Respuesta 2</label><br/>
+                                <input class="form-control" id="respuesta2" type="text" placeholder="Respuesta 2">
                               </div>
                             </div>
                         </div>
 
-                    </div>
+                          <div class="row">
+                              <div class="control-group">
+                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                                  <label>Respuesta 3</label><br/>
+                                  <input class="form-control" id="respuesta3" type="text" placeholder="Respuesta 3">
+                                </div>
+                              </div>
+                          </div>
 
-                    <div class="col">
-                      <div class="control-group">
-                        <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                          <label>Reto</label><br/>
-                          <textarea name="reto" id="info-ta" cols="30" rows="14" placeholder="Reto Sostenible"></textarea>
-                        </div>
                       </div>
-                    </div>
-                  
-                    </div>
-                    <br/>
-                    <div class="row">
+
                       <div class="col">
-                        <div class="form-group">
-                           <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                              Upload
-                            </button>
+                        <div class="control-group">
+                          <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                            <label>Reto</label><br/>
+                            <textarea name="reto" id="info-ta" cols="30" rows="14" placeholder="Reto Sostenible"></textarea>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                </form>
-              </div>
+                    
+                      </div>
+                      <br/>
+                      <div class="row">
+                        <div class="col">
+                          <div class="form-group">
+                            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                Upload
+                              </button>
+                          </div>
+                        </div>
+                      </div>
+                  </form>
+                </div>
+            </div>
           </div>
-        </div>
-    </section>
+      </section>
+  {% endif %}
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

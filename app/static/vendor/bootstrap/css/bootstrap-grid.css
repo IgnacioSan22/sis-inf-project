@@ -1563,5 +1563,11 @@ html {
     -ms-flex-item-align: stretch !important;
         align-self: stretch !important;
   }
+  .list-group{
+    max-height: 450px;
+    margin-bottom: 7px;
+    overflow:scroll;
+    
+    }
 }
 /*# sourceMappingURL=bootstrap-grid.css.map */

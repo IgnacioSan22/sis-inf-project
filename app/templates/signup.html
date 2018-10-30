@@ -1,0 +1,48 @@
+{% extends "basecontent.html" %}
+{% block contentpage %}
+
+<!-- Singup Section -->
+<header class="masthead bg text-white text-center">
+        <div class="container">
+          <h2 class="text-center text-uppercase text-secondary mb-0">SingUp</h2>
+          <hr class="star-dark mb-5">
+
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <form action="" method="post" style="color:#222;">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.username.label }}<br>
+                    {{ form.username(size=32) }}<br>
+                    {% for error in form.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.email.label }}<br>
+                    {{ form.email(size=32) }}<br>
+                    {% for error in form.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.password.label }}<br>
+                    {{ form.password(size=32) }}<br>
+                    {% for error in form.password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.password2.label }}<br>
+                    {{ form.password2(size=32) }}<br>
+                    {% for error in form.password2.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>{{ form.submit() }}</p>
+            </form>
+          </div>
+        </div>
+      </div>
+</header>
+{% endblock %}

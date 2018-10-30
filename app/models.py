@@ -1,8 +1,12 @@
 from datetime import datetime
-from app import db
+from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import Column, String, Integer, Boolean, ForeignKey
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -13,6 +17,7 @@ class User(UserMixin, db.Model):
     email = Column(String(120), index=True, unique=True)
     password_hash = Column(String(128))
     tipo_usuario = Column(Integer)
+    validated = Column(Integer)
 
     # Representación del Usuario
     def __repr__(self):
@@ -36,6 +41,15 @@ class User(UserMixin, db.Model):
     def updateUser(self):
         User.query.filter_by(id=self.id).update(dict(username=self.username, email=self.email, password_hash=self.password_hash, tipo_usuario=self.tipo_usuario))
         db.session.commit()
+    
+    def validate(self):
+        self.validated = True
+        self.updateUser()
+
+    def invalidate(self):
+        self.validated = False
+        self.tipo_usuario = 2
+        self.updateUser()
 
     @classmethod
     def getUserByUsername(cls, username):
@@ -80,8 +94,9 @@ class Poster(db.Model):
     id = Column(Integer, primary_key=True)
     id_usuario = Column(Integer, ForeignKey('users.id'))
     imagen = Column(String(1024))
-    reto = Column(String(1024))
-    info = Column(String(1024))
+    titulo = Column(String(1024))
+    reto = Column(String(2048))
+    info = Column(String(2048))
     pregunta = Column(String(1024))
     respuesta_correcta = Column(Integer)
 
@@ -99,12 +114,16 @@ class Poster(db.Model):
         db.session.commit()
 
     def updatePoster(self):
-        Poster.query.filter_by(id=self.id).update(dict(id_usuario=self.id_usuario, imagen=self.imagen, reto=self.reto, info=self.info, pregunta=self.pregunta, respuesta_correcta=self.respuesta_correcta))
+        Poster.query.filter_by(id=self.id).update(dict(id_usuario=self.id_usuario, imagen=self.imagen, reto=self.reto, info=self.info, pregunta=self.pregunta, respuesta_correcta=self.respuesta_correcta, likes=self.likes))
         db.session.commit()
 
     @classmethod
     def getPosterById(cls, id):
         return Poster.query.filter_by(id=id).first()
+
+    @classmethod
+    def getPosters(cls):
+        return Poster.query.all()
 
 class QuestionOption(db.Model):
     __tablename__ = 'question_options'
@@ -161,3 +180,31 @@ class UserResponse(db.Model):
     @classmethod
     def getUserResponseByUserId(cls, id_usuario):
         return UserResponse.query.filter_by(id_usuario=id_usuario).all()
+
+class UserLike(db.Model):
+    __tablename__ = 'user_likes'
+
+    id = Column(Integer, primary_key=True)
+    id_usuario = Column(Integer, ForeignKey('users.id'))
+    id_poster = Column(Integer, ForeignKey('posters.id'))
+
+    #Interfaz
+    def likePoster(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def unlikePoster(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @classmethod
+    def getUserLikes(cls, id_usuario):
+        return UserLike.query.filter_by(id_usuario=id_usuario).all()
+
+    @classmethod
+    def getPosterLikes(cls, id_poster):
+        return UserLike.query.filter_by(id_poster=id_poster).count()
+    
+    @classmethod
+    def gaveLike(cls, id_usuario, id_poster):
+        return UserLike.query.filter_by(id_usuario=id_usuario, id_poster=id_poster).first() is not None

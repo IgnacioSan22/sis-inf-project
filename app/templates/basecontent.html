@@ -37,17 +37,31 @@
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item mx-0 mx-lg-1">
-                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="index#upload">Upload</a>
-              </li>
-              <li class="nav-item mx-0 mx-lg-1">
                 <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="index#posters">Posters</a>
               </li>
+              {% if current_user.is_authenticated %}
               <li class="nav-item mx-0 mx-lg-1">
-                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="index#login">Login</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="index#upload">Upload</a>
               </li>
+              {% endif %}
+              {% if current_user.is_anonymous %}
               <li class="nav-item mx-0 mx-lg-1">
-                  <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="profile">Profile</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('login') }}">Login</a>
               </li>
+              {% else %}
+                {% if current_user.tipo_usuario == 2 %}
+                  <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('profile', username=current_user.username) }}">Profile</a>
+                  </li>
+                {% elif current_user.tipo_usuario == 1 %}
+                  <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('adminProfile', username=current_user.username) }}">Admin</a>
+                  </li>
+                {% endif %}
+                  <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('logout') }}">Logout</a>
+                  </li>
+              {% endif %}
             </ul>
           </div>
         </div>

@@ -1,0 +1,108 @@
+{% extends "basecontent.html" %}
+{% block contentpage %}
+
+<link href="/static/vendor/bootstrap/css/bootstrap-grid.css" rel="stylesheet">
+
+<section class="text-white text-center">
+  <br><br>
+    <div class="row">
+        <div class="col-3">
+            <!--left col-->
+            <ul class="list-group ml-4">
+                <li class="list-group-item text-muted" contenteditable="false">Profile</li>
+                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Username</span><p class="text-right">Conan</p></li>
+                <li class="list-group-item list-group-item-success"><span class="pull-left font-weight-bold">email</span><p class="text-right">shinichi@secret.com</p></li>
+                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Tipo de Usuario</span><p class="text-right">Administrador</p></li>
+                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Usuarios registrados</span><p class="text-right">20</p></li>
+                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Carteles validados</span><p class="text-right">37</p></li>
+            </ul>
+        </div>
+        <div class="col-9">
+          <div class="accordion" id="accordionExample">
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Solicitudes de registro de sesión pendientes
+                      </button>
+                    </h5>
+                  </div>
+                  
+                  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li id="elem1" class="list-group-item alert list-group-item-secondary">
+                                El usuario con correo: 735508@unizar.es ha solicitado registrarse.
+                                <button type="button" class="btn btn-success">Aceptar</button>
+                                <button type="button" class="btn btn-danger">Denegar</button>
+                            </li>
+                            <li class="list-group-item list-group-item-primary">
+                              El usuario con correo: 737317@unizar.es ha solicitado registrarse.
+                              <button type="button" class="btn btn-success">Aceptar</button>
+                              <button type="button" class="btn btn-danger">Denegar</button>
+                            </li>
+                            <li class="list-group-item alert list-group-item-secondary">
+                              El usuario con correo: 737312@unizar.es ha solicitado registrarse.
+                              <button type="button" class="btn btn-success">Aceptar</button>
+                              <button type="button" class="btn btn-danger">Denegar</button>
+                            </li>
+                            <li class="list-group-item list-group-item-primary">
+                              El usuario con correo: 4815162342@lost.com ha solicitado registrarse.
+                              <button type="button" class="btn btn-success">Aceptar</button>
+                              <button type="button" class="btn btn-danger">Denegar</button>
+                            </li>
+                        </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Solicitudes para publicar un cartel pendientes
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-group-item alert list-group-item-secondary">
+                                El usuario 735508 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>.
+                                </li>
+                                <li class="list-group-item list-group-item-primary">
+                                El usuario 735508 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>.
+                                </li>
+                                <li class="list-group-item alert list-group-item-secondary">
+                                El usuario 737317 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>.
+                                </li>
+                                <li class="list-group-item list-group-item-primary">
+                                El usuario 651943 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>.
+                                </li>
+                            </ul>
+                    </div>
+                  </div>
+                </div>
+        </div>
+    </div>
+</section>
+    
+
+    <section class="masthead bg-primary text-white text-center"></section>
+
+    <section class="text-white text-center">
+
+        <h2 class="text-center text-uppercase text-secondary mb-0">Exportar Datos</h2>
+        <hr class="star-dark mb-5">
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Exportar Datos
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Excell</a>
+              <a class="dropdown-item" href="#">CSV</a>
+              <a class="dropdown-item" href="#">SQL</a>
+            </div>
+          </div>
+    </section>
+    {% endblock %}

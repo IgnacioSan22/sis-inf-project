@@ -1,78 +1,92 @@
 {% extends "basecontent.html" %}
 {% block contentpage %}
 
-    <!-- Profile -->
-    <header class="masthead bg text-white text-center">
-      <div class="container">
-        <h2 class="text-center text-uppercase text-secondary mb-0">Profile</h2>
-        <hr class="star-dark mb-5">
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
-            <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
-            <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-            <form name="sentMessage" id="contactForm" novalidate="novalidate">
-              <div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Name</label>
-                  <input class="form-control" id="name" type="text" placeholder="Víctor">
-                  <p class="help-block text-danger"></p>
-                </div>
-              </div>
-              <div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Surname</label>
-                  <input class="form-control" id="surname" type="text" placeholder="Fernández Melic">
-                  <p class="help-block text-danger"></p>
-                </div>
-              </div>
-              <div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Email Address</label>
-                  <input class="form-control" id="email" type="email" placeholder="melic93@gmail.com">
-                  <p class="help-block text-danger"></p>
-                </div>
-              </div>
-              <div class="control-group">
-                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Password</label>
-                  <input type="password" class="form-control" id="password" type="text" placeholder="Password" required="required" data-validation-required-message="Please enter your password.">
-                  <p class="help-block text-danger"></p>
-                </div>
-              </div>
-              <div class="control-group">
-                  <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                    <label>New Password</label>
-                    <input type="password" class="form-control" id="change-password" type="text" placeholder="New Password">
-                    <p class="help-block text-danger"></p>
-                  </div>
-              </div>
-              <br>
-              <div id="success"></div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">Update</button>
-              </div>
-            </form>
-          </div>
+<!--<link href="/static/vendor/bootstrap/css/bootstrap-grid.css" rel="stylesheet">-->
+
+<section class="text-white text-center">
+  <br><br>
+    <div class="row">
+        <div class="col-3">
+            <!--left col-->
+            <!--<div><a class="pull-center"><img title="profile image" class="img-circle mx-auto" src="http://www.rlsandbox.com/img/profile.jpg"></a></div>-->
+            <ul class="list-group ml-4" style="overflow-y: auto; overflow-x: auto">
+                <li class="list-group-item text-muted" contenteditable="false">Profile</li>
+                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Username</span><p class="text-right">Benedict</p></li>
+                <li class="list-group-item list-group-item-success"><span class="pull-left font-weight-bold">email</span><p class="text-right">sherlock@great.com</p></li>
+                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Tipo de Usuario</span><p class="text-right">Alumno</p></li>
+                <li class="list-group-item list-group-item-success"><span class="pull-left font-weight-bold">Carteles aceptados</span><p class="text-right">5</p></li>
+                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Carteles rechazados</span><p class="text-right">2</p></li>
+            </ul>
         </div>
-      </div>
-    </header>
-
-    <section class="masthead bg-primary text-white text-center"></section>
-
-    <section class="text-white text-center">
-
-        <h2 class="text-center text-uppercase text-secondary mb-0">Exportar Datos</h2>
-        <hr class="star-dark mb-5">
-
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Exportar Datos
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Excell</a>
-              <a class="dropdown-item" href="#">CSV</a>
-              <a class="dropdown-item" href="#">SQL</a>
+        <div class="col-9">
+          <div class="panel panel-primary" id="result_panel">
+              <div class="panel-heading"><h3 class="panel-title">Ultimas actualizaciones en tus carteles</h3></div>
+            <div style="height: 500px" class="panel-body">
+              <ul class="list-group">
+                <li class="list-group-item alert list-group-item-success">
+                  El cartel con pregunta: <a href="poster" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>. Ha sido acceptado.
+                </li>
+                <li class="list-group-item alert list-group-item-danger">
+                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
+                </li>
+                <li class="list-group-item alert list-group-item-success">
+                  El cartel con pregunta: <a href="poster" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>. Ha sido acceptado.
+                </li>
+                <li class="list-group-item alert list-group-item-danger">
+                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
+                </li>
+                <li class="list-group-item alert list-group-item-danger">
+                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
+                </li>
+                <li class="list-group-item alert list-group-item-success">
+                  El cartel con pregunta: <a href="poster" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>. Ha sido acceptado.
+                </li>
+                <li class="list-group-item alert list-group-item-danger">
+                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
+                </li>
+                <li class="list-group-item alert list-group-item-success">
+                  El cartel con pregunta: <a href="poster" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>. Ha sido acceptado.
+                </li>
+                <li class="list-group-item alert list-group-item-danger">
+                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
+                </li>
+                <li class="list-group-item alert list-group-item-success">
+                  El cartel con pregunta: <a href="poster" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>. Ha sido acceptado.
+                </li>
+                <li class="list-group-item alert list-group-item-danger">
+                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
+                </li>
+                <li class="list-group-item alert list-group-item-danger">
+                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
+                </li>
+                <li class="list-group-item alert list-group-item-success">
+                  El cartel con pregunta: <a href="poster" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>. Ha sido acceptado.
+                </li>
+                <li class="list-group-item alert list-group-item-danger">
+                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
+                  </li>
+              </ul>
             </div>
-          </div>
-    </section>
-    {% endblock %}
+        </div>
+    </div>
+</section>
+
+<section class="masthead bg-primary text-white text-center"></section>
+
+<section class="text-white text-center">
+
+    <h2 class="text-center text-uppercase text-secondary mb-0">Exportar Datos</h2>
+    <hr class="star-dark mb-5">
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Exportar Datos
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Excell</a>
+            <a class="dropdown-item" href="#">CSV</a>
+            <a class="dropdown-item" href="#">SQL</a>
+        </div>
+        </div>
+</section>
+{% endblock %}
