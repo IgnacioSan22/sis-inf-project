@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, RegisterForm
+from app.forms import LoginForm, RegisterForm, ValidateUserForm
 from app.models import User, Poster, UserLike, Poster
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -49,7 +49,7 @@ def signup():
         user.set_password(form.password.data)
         user.addUser()
         flash('Usuario registrado con éxito. Debes esperar a que un administrador te valide para poder hacer Log In')
-        return redirect(url_for('index'))
+        return redirect(url_for('signup'))
     return render_template('signup.html', title='Sign Up', form=form)
 
 @app.route('/poster')
@@ -60,7 +60,26 @@ def poster():
 @app.route('/adminProfile')
 @login_required
 def adminProfile():
-    return render_template('adminProfile.html')
+    users = User.getUsersNotValidated()
+    form = ValidateUserForm()
+    return render_template('adminProfile.html', users=users, form=form)
+
+    
+@app.route('/validateUser', methods=['GET', 'POST'])
+@login_required
+def validateUser():
+    if current_user.tipo_usuario != 1:
+        return render_template('index.html')
+    else:
+        form = ValidateUserForm()
+        if form.validate_on_submit:
+            user = User.getUserByUsername(username=form.user.data)
+            if form.action.data == 'validate':
+                user.validate()
+            elif form.action.data == 'invalidate':
+                user.removeUser()
+        return redirect(url_for('adminProfile'))
+
 
 @app.route('/like')
 @login_required

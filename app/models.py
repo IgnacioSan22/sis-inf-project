@@ -44,11 +44,11 @@ class User(UserMixin, db.Model):
     
     def validate(self):
         self.validated = True
+        self.tipo_usuario = 2
         self.updateUser()
 
     def invalidate(self):
         self.validated = False
-        self.tipo_usuario = 2
         self.updateUser()
 
     @classmethod
@@ -58,6 +58,10 @@ class User(UserMixin, db.Model):
     @classmethod
     def getUserById(cls, id):
         return User.query.filter_by(id=id).first()
+    
+    @classmethod
+    def getUsersNotValidated(cls):
+        return User.query.filter_by(validated=0).all()
 
 class Stat(db.Model):
     __tablename__ = 'stats'

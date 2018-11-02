@@ -1,16 +1,6 @@
 {% extends "basecontent.html" %}
 {% block contentpage %}
 
-  <!-- Messages -->
-
-  {% for msg in get_flashed_messages() %}
-    <section id="msgs" style="padding-block-end: 0rem">
-      <div class="alert alert-info" role="alert">
-        <strong> {{ msg }} </strong>
-      </div>
-    </section>
-  {% endfor %}
-
   <!-- Header -->
   <header class="masthead bg-primary text-white text-center" id="page-top">
     <div class="container">

@@ -1,6 +1,15 @@
 {% extends "basecontent.html" %}
 {% block contentpage %}
 
+<!-- Messages  -->
+{% for msg in get_flashed_messages() %}
+<section id="msgs" style="padding-block-end: 0rem">
+    <div class="alert alert-info" role="alert" style="position:absolute; z-index:1;">
+    <strong> {{ msg }} </strong>
+    </div>
+</section>
+{% endfor %}
+
 <!-- Singup Section -->
 <header class="masthead bg text-white text-center">
         <div class="container">

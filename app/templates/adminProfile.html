@@ -3,21 +3,51 @@
 
 <link href="/static/vendor/bootstrap/css/bootstrap-grid.css" rel="stylesheet">
 
-<section class="text-white text-center">
-  <br><br>
+<section class="portfolio text text-center">
+  <div class="container">
+  <br/><br/>
     <div class="row">
-        <div class="col-3">
-            <!--left col-->
-            <ul class="list-group ml-4">
-                <li class="list-group-item text-muted" contenteditable="false">Profile</li>
-                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Username</span><p class="text-right">Conan</p></li>
-                <li class="list-group-item list-group-item-success"><span class="pull-left font-weight-bold">email</span><p class="text-right">shinichi@secret.com</p></li>
-                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Tipo de Usuario</span><p class="text-right">Administrador</p></li>
-                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Usuarios registrados</span><p class="text-right">20</p></li>
-                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Carteles validados</span><p class="text-right">37</p></li>
-            </ul>
+        <div class="col">
+          <h2 class="text-center text-uppercase text-secondary mb-0">Perfil</h2>
+          <hr class="star-dark mb-5">
         </div>
-        <div class="col-9">
+      </div>
+    <div class="row">
+        <div class="col-4">
+            <!--left col-->
+            <table class="table table-bordered table-active">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" colspan="2">Perfil</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-primary">
+                    <td>Username</td>
+                    <td>{{ current_user.username }}</td>
+                  </tr>
+                  <tr class="table" style="background-color: #94bbe0">
+                    <td>Email</td>
+                    <td>{{ current_user.email }}</td>
+                  </tr>
+                  <tr class="table-primary">
+                    <td>Tipo de Usuario</td>
+                    <td>{{ current_user.tipo_usuario }}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <!--
+        <ul class="list-group ml-4">
+            <li class="list-group-item text-muted" contenteditable="false">Profile</li>
+            <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Username</span><p class="text-right">{{ current_user.username }}</p></li>
+            <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">email</span><p class="text-right">{{ current_user.email }}</p></li>
+            <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Tipo de Usuario</span><p class="text-right">{{ current_user.tipo_usuario }}</p></li>
+            <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Usuarios registrados</span><p class="text-right">20</p></li>
+            <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Carteles validados</span><p class="text-right">37</p></li>
+        </ul>-->
+
+        <div class="col-8">
           <div class="accordion" id="accordionExample">
                 <div class="card">
                   <div class="card-header" id="headingOne">
@@ -30,27 +60,34 @@
                   
                   <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
-                        <ul class="list-group">
-                            <li id="elem1" class="list-group-item alert list-group-item-secondary">
-                                El usuario con correo: 735508@unizar.es ha solicitado registrarse.
-                                <button type="button" class="btn btn-success">Aceptar</button>
-                                <button type="button" class="btn btn-danger">Denegar</button>
-                            </li>
+                        <ul class="list-group" style="overflow-y: auto; overflow-x: auto">
+                          {% if users %}
+                            {% for user in users %}
                             <li class="list-group-item list-group-item-primary">
-                              El usuario con correo: 737317@unizar.es ha solicitado registrarse.
-                              <button type="button" class="btn btn-success">Aceptar</button>
-                              <button type="button" class="btn btn-danger">Denegar</button>
+                              <div class="container">
+                                <div class="row">
+                                  <div class="col-8" style="float:left;">
+                                    <p>El usuario con correo: {{ user.email }} ha solicitado registrarse.</p>
+                                  </div>
+                                  <div class="col-2">
+                                    <form action="validateUser" method="post" novalidate style="color:#222;">
+                                      <p>{{ form.user(value=user.username) }} {{ form.action(value="validate") }} {{ form.validate(class="btn-success") }}</p>
+                                    </form>
+                                  </div>
+                                  <div class="col-2">
+                                    <form action="validateUser" method="post" novalidate style="color:#222;">
+                                      <p>{{ form.user(value=user.username) }} {{ form.action(value="invalidate") }} {{ form.deny(class="btn-danger") }}</p>
+                                    </form>
+                                  </div>
+                                </div>
+                            </div>
                             </li>
-                            <li class="list-group-item alert list-group-item-secondary">
-                              El usuario con correo: 737312@unizar.es ha solicitado registrarse.
-                              <button type="button" class="btn btn-success">Aceptar</button>
-                              <button type="button" class="btn btn-danger">Denegar</button>
-                            </li>
-                            <li class="list-group-item list-group-item-primary">
-                              El usuario con correo: 4815162342@lost.com ha solicitado registrarse.
-                              <button type="button" class="btn btn-success">Aceptar</button>
-                              <button type="button" class="btn btn-danger">Denegar</button>
-                            </li>
+                            {% endfor %}
+                          {% else %}
+                          <li class="list-group-item list-group-item-primary">
+                            <p>No hay solicitudes pendientes</p>
+                          </li>
+                          {% endif %}
                         </ul>
                     </div>
                   </div>
@@ -65,7 +102,7 @@
                   </div>
                   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
-                            <ul class="list-group">
+                            <ul class="list-group" style="overflow-y: auto; overflow-x: auto">
                                 <li class="list-group-item alert list-group-item-secondary">
                                 El usuario 735508 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>.
                                 </li>
@@ -104,5 +141,6 @@
               <a class="dropdown-item" href="#">SQL</a>
             </div>
           </div>
+        </div>
     </section>
     {% endblock %}
