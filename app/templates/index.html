@@ -237,41 +237,27 @@
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <form name="pregunta" id="answerForm1" novalidate="novalidate">
+            <form name="pregunta" method="post" id="answerForm" novalidate="novalidate">
+              {{ form.hidden_tag() }}
               <div class="modal-body">
                 ¿Actualmente está estudiando o ha terminado los estudios?
               </div>
-              <form name="pregunta" id="answerForm1" novalidate="novalidate">
-                <div class="radio ml-4">
-                    <label><input type="radio" name="answer">  Estudiando grado</label>
-                  </div>
-                  <div class="radio ml-4">
-                    <label><input type="radio" name="answer">  Estudiando Bachillerato o anterior</label>
-                  </div>
-                  <div class="radio ml-4">
-                    <label><input type="radio" name="answer">  Estudios termindos</label>
-                  </div>
-                </form>
-                <div class="modal-body">
+                  <p>
+                    {{ form.estudios() }}<br>
+                  </p>
+              <div class="modal-body">>
                   ¿Cual es su rango de edad?
-                </div>
-                <form name="pregunta" id="answerForm2" novalidate="novalidate">
-                  <div class="radio ml-4">
-                      <label><input type="radio" name="answer">  0-18</label>
-                    </div>
-                    <div class="radio  ml-4">
-                      <label><input type="radio" name="answer">  18-22</label>
-                    </div>
-                    <div class="radio  ml-4">
-                      <label><input type="radio" name="answer">  +22</label>
-                    </div>
-                  </form>
-                  <br/>
+              </div>
+                  <p>
+                    {{ form.edad() }}<br>
+                  </p>
                 <div class="form-group">
-                  <button type="button" class="btn btn-secondary ml-4" data-dismiss="modal">Enviar</button>
+                  <p>
+                    {{ form.submit() }}<br>
+                  </p>
                   <button type="button" class="btn btn-secondary " data-dismiss="modal">Cerrar</button>
                 </div>
-              </form>
+            </form>
           </div>
         </div>
       </div>
