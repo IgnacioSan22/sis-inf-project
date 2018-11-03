@@ -103,18 +103,17 @@
                   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
                             <ul class="list-group" style="overflow-y: auto; overflow-x: auto">
-                                <li class="list-group-item alert list-group-item-secondary">
-                                El usuario 735508 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>.
-                                </li>
+                              {% if posters %}
+                                {% for poster in posters %}
                                 <li class="list-group-item list-group-item-primary">
-                                El usuario 735508 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>.
+                                  <p>El usuario con id {{ poster.id_usuario }} quiere publicar el cartel con pregunta:<a href="posterValidation/{{ poster.id }}" class="alert-link"> {{ poster.pregunta }}</a>.</p>
                                 </li>
-                                <li class="list-group-item alert list-group-item-secondary">
-                                El usuario 737317 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>.
-                                </li>
-                                <li class="list-group-item list-group-item-primary">
-                                El usuario 651943 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>.
-                                </li>
+                                {% endfor %}
+                              {% else %}
+                              <li class="list-group-item list-group-item-primary">
+                                <p>No hay carteles pendientes de revisión.</p>
+                              </li>
+                              {% endif %}
                             </ul>
                     </div>
                   </div>

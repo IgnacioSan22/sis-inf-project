@@ -1,24 +1,42 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, RegisterForm, ValidateUserForm
-from app.models import User, Poster, UserLike, Poster
+from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm
+from app.models import User, Poster, UserLike, Poster, QuestionOption
 from flask_login import current_user, login_user, logout_user, login_required
 
 @app.route('/')
 @app.route('/index')
+@app.route('/uploadPoster', methods=['GET', 'POST'])
 def index():
-    posts = Poster.getPosters()
-    return render_template('index.html', title='Home', posts=posts)
+    form = PosterForm()
+    posts = Poster.getPostersChecked()
+    if form.validate_on_submit():
+        post = Poster(id_usuario=current_user.id, titulo=form.titulo.data, corregido=0, imagen=form.imagen.data, reto=form.reto.data, info=form.info.data, pregunta=form.pregunta.data)
+        resp1 = QuestionOption(id_poster=post.id,opcion=form.respuesta1.data)
+        resp2 = QuestionOption(id_poster=post.id,opcion=form.respuesta2.data)
+        resp3 = QuestionOption(id_poster=post.id,opcion=form.respuesta3.data)
+        resp4 = QuestionOption(id_poster=post.id,opcion=form.respuesta4.data)       
+        post.addPoster()
+        resp1.addOpcionPregunta()
+        resp2.addOpcionPregunta()
+        resp3.addOpcionPregunta()
+        resp4.addOpcionPregunta()
+        flash('Poster almacenado con éxito. Debes esperar a que un administrador lo corrija para que se pueda mostrar')
+        return redirect(url_for('index'))
+    return render_template('index.html', title='Home', posts=posts, form=form)
 
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html')
+    posts = Poster.getPosterByUserId(current_user.id)
+    return render_template('profile.html', title='Profile', posts=posts)
 
-@app.route('/posterValidation')
+@app.route('/posterValidation/<int:poster_id>')
 @login_required
-def posterValidation():
-    return render_template('posterValidation.html')
+def posterValidation(poster_id):
+    post=Poster.getPosterById(poster_id)
+    form =  ValidatePosterForm()
+    return render_template('posterValidation.html', posts=post, form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -41,7 +59,9 @@ def logout():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    print("Hola\n")
     if current_user.is_authenticated:
+        print("Hola2\n")
         return redirect(url_for('index'))
     form = RegisterForm()
     if form.validate_on_submit():
@@ -51,6 +71,7 @@ def signup():
         flash('Usuario registrado con éxito. Debes esperar a que un administrador te valide para poder hacer Log In')
         return redirect(url_for('signup'))
     return render_template('signup.html', title='Sign Up', form=form)
+    
 
 @app.route('/poster')
 @login_required
@@ -62,7 +83,8 @@ def poster():
 def adminProfile():
     users = User.getUsersNotValidated()
     form = ValidateUserForm()
-    return render_template('adminProfile.html', users=users, form=form)
+    posters = Poster.getPostersNotChecked()
+    return render_template('adminProfile.html', users=users, posters=posters, form=form)
 
     
 @app.route('/validateUser', methods=['GET', 'POST'])
@@ -78,6 +100,22 @@ def validateUser():
                 user.validate()
             elif form.action.data == 'invalidate':
                 user.removeUser()
+        return redirect(url_for('adminProfile'))
+
+@app.route('/posterValidation/validatePoster', methods=['GET', 'POST'])
+@login_required
+def validatePoster():
+    if current_user.tipo_usuario != 1:
+        return render_template('index.html')
+    else:
+        print("Hola\n")
+        form = ValidatePosterForm()
+        if form.validate_on_submit:
+            poster = Poster.getPosterById(id=form.id.data)
+            if form.action.data == 'validate':
+                poster.validate()
+            elif form.action.data == 'invalidate':
+                poster.denyPoster()
         return redirect(url_for('adminProfile'))
 
 
