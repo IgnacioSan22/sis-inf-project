@@ -33,10 +33,16 @@ class RegisterForm(FlaskForm):
             raise ValidationError('Please use a different email address.')
 
 class PosterForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign in')
+    imagen = StringField('URL Imagen', validators=[DataRequired()])
+    titulo = StringField('Título', validators=[DataRequired()])
+    reto = StringField('Reto', validators=[DataRequired()])
+    info =  StringField('Información', validators=[DataRequired()])
+    pregunta = StringField('Pregunta', validators=[DataRequired()])
+    respuesta1 = StringField('Respuesta 1', validators=[DataRequired()])
+    respuesta2 = StringField('Respuesta 2', validators=[DataRequired()])
+    respuesta3 = StringField('Respuesta 3', validators=[DataRequired()])
+    respuesta4 = StringField('Respuesta 4', validators=[DataRequired()])
+    submit = SubmitField('Upload')
 
 class ValidateUserForm(FlaskForm):
     user = HiddenField('')
@@ -45,5 +51,7 @@ class ValidateUserForm(FlaskForm):
     deny = SubmitField('Denegar')
 
 class ValidatePosterForm(FlaskForm):
+    id = HiddenField('')
+    action = HiddenField('')
     validate = SubmitField('Validar')
     deny = SubmitField('Denegar')

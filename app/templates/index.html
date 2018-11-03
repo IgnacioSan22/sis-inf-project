@@ -1,6 +1,14 @@
 {% extends "basecontent.html" %}
 {% block contentpage %}
 
+{% for msg in get_flashed_messages() %}
+<section id="msgs" style="padding-block-end: 0rem">
+    <div class="alert alert-info" role="alert" style="position:absolute; z-index:1;">
+    <strong> {{ msg }} </strong>
+    </div>
+</section>
+{% endfor %}
+
   <!-- Header -->
   <header class="masthead bg-primary text-white text-center" id="page-top">
     <div class="container">
@@ -89,14 +97,19 @@
           <br/>
             <div class="row">
                 <div class="col">
-                  <form name="uploadPoster" id="contactForm" novalidate="novalidate">
+                  <form action="uploadPoster" method="post" style="color:#222;" name="uploadPoster" id="posterForm" novalidate="novalidate">
+                    {{ form.hidden_tag() }}
                     <div class="row">
-
                       <div class="col">
                         <div class="control-group">
-                          <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                            <label>Información</label><br/>
-                            <textarea name="info" id="info-ta" cols="30" rows="14" placeholder="Información"></textarea>
+                          <div class="form-group controls mb-0 pb-2">
+                            <p>
+                              {{ form.info.label }}<br>
+                              {{ form.info }}<br>
+                              {% for error in form.info.errors %}
+                              <span style="color: red;">[{{ error }}]</span>
+                              {% endfor %}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -105,79 +118,118 @@
 
                       <div class="row">
                           <div class="control-group">
-                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                              <label>Título</label><br/>
-                              <input class="form-control" id="titulo" type="text" placeholder="Título">
+                            <div class="form-group controls mb-0 pb-2">
+                              <p>
+                                {{ form.titulo.label }}<br>
+                                {{ form.titulo(size=256) }}<br>
+                                {% for error in form.titulo.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                              </p>
                             </div>
                           </div>
                         </div>
 
                         <div class="row">
                           <div class="control-group">
-                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                              <label>Imagen</label><br/>
-                              <input class="form-control" id="imagen" type="text" placeholder="Image URL">
+                            <div class="form-group controls mb-0 pb-2">
+                              <p>
+                                {{ form.imagen.label }}<br>
+                                {{ form.imagen }}<br>
+                                {% for error in form.imagen.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
                             </div>
                           </div>
                         </div>
 
                         <div class="row">
                           <div class="control-group">
-                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                              <label>Pregunta</label><br/>
-                              <input class="form-control" id="pregunta" type="text" placeholder="Pregunta">
+                            <div class="form-group controls mb-0 pb-2">
+                              <p>
+                                {{ form.pregunta.label }}<br>
+                                {{ form.pregunta }}<br>
+                                {% for error in form.pregunta.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
                             </div>
                           </div>
                         </div>
 
                         <div class="row">
                           <div class="control-group">
-                            <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                              <label>Respuesta 1</label><br/>
-                              <input class="form-control" id="respuesta1" type="text" placeholder="Respuesta 1">
+                            <div class="form-group controls mb-0 pb-2">
+                              <p>
+                                {{ form.respuesta1.label }}<br>
+                                {{ form.respuesta1 }}<br>
+                                {% for error in form.respuesta1.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
                             </div>
                           </div>
                         </div>
 
                         <div class="row">
                             <div class="control-group">
-                              <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                <label>Respuesta 2</label><br/>
-                                <input class="form-control" id="respuesta2" type="text" placeholder="Respuesta 2">
+                              <div class="form-group controls mb-0 pb-2">
+                                <p>
+                                  {{ form.respuesta2.label }}<br>
+                                  {{ form.respuesta2 }}<br>
+                                  {% for error in form.respuesta2.errors %}
+                                  <span style="color: red;">[{{ error }}]</span>
+                                  {% endfor %}
+                              </p>
                               </div>
                             </div>
                         </div>
 
                           <div class="row">
                               <div class="control-group">
-                                <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                                  <label>Respuesta 3</label><br/>
-                                  <input class="form-control" id="respuesta3" type="text" placeholder="Respuesta 3">
+                                <div class="form-group controls mb-0 pb-2">
+                                  <p>
+                                    {{ form.respuesta3.label }}<br>
+                                    {{ form.respuesta3 }}<br>
+                                    {% for error in form.respuesta3.errors %}
+                                    <span style="color: red;">[{{ error }}]</span>
+                                    {% endfor %}
+                                </p>
                                 </div>
                               </div>
                           </div>
+
+                          <div class="row">
+                            <div class="control-group">
+                              <div class="form-group controls mb-0 pb-2">
+                                <p>
+                                  {{ form.respuesta4.label }}<br>
+                                  {{ form.respuesta4 }}<br>
+                                  {% for error in form.respuesta4.errors %}
+                                  <span style="color: red;">[{{ error }}]</span>
+                                  {% endfor %}
+                              </p>
+                              </div>
+                            </div>
+                        </div>
 
                       </div>
 
                       <div class="col">
                         <div class="control-group">
-                          <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                            <label>Reto</label><br/>
-                            <textarea name="reto" id="info-ta" cols="30" rows="14" placeholder="Reto Sostenible"></textarea>
+                          <div class="form-group controls mb-0 pb-2">
+                            <p>
+                              {{ form.reto.label }}<br>
+                              {{ form.reto }}<br>
+                              {% for error in form.reto.errors %}
+                              <span style="color: red;">[{{ error }}]</span>
+                              {% endfor %}
+                          </p>
                           </div>
                         </div>
                       </div>
-                    
-                      </div>
-                      <br/>
-                      <div class="row">
-                        <div class="col">
-                          <div class="form-group">
-                            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                Upload
-                              </button>
-                          </div>
-                        </div>
+                      <p>{{ form.submit() }}</p>
                       </div>
                   </form>
                 </div>

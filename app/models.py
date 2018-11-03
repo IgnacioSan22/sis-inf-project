@@ -103,6 +103,7 @@ class Poster(db.Model):
     info = Column(String(2048))
     pregunta = Column(String(1024))
     respuesta_correcta = Column(Integer)
+    corregido = Column(Integer)
 
     # Representación del poster
     def __repr__(self):
@@ -116,9 +117,17 @@ class Poster(db.Model):
     def removePoster(self):
         db.session.delete(self)
         db.session.commit()
+    
+    def validate(self):
+        self.corregido = True
+        self.updatePoster()
+    
+    def denyPoster(self):
+        self.corregido = 2
+        self.updatePoster()
 
     def updatePoster(self):
-        Poster.query.filter_by(id=self.id).update(dict(id_usuario=self.id_usuario, imagen=self.imagen, reto=self.reto, info=self.info, pregunta=self.pregunta, respuesta_correcta=self.respuesta_correcta, likes=self.likes))
+        Poster.query.filter_by(id=self.id).update(dict(id_usuario=self.id_usuario, corregido=self.corregido, imagen=self.imagen, reto=self.reto, info=self.info, pregunta=self.pregunta, respuesta_correcta=self.respuesta_correcta))
         db.session.commit()
 
     @classmethod
@@ -126,8 +135,20 @@ class Poster(db.Model):
         return Poster.query.filter_by(id=id).first()
 
     @classmethod
+    def getPosterByUserId(cls, user_id):
+        return Poster.query.filter_by(id_usuario=user_id).all()
+
+    @classmethod
     def getPosters(cls):
         return Poster.query.all()
+
+    @classmethod
+    def getPostersNotChecked(cls):
+        return Poster.query.filter_by(corregido=0).all()
+    
+    @classmethod
+    def getPostersChecked(cls):
+        return Poster.query.filter_by(corregido=1).all()
 
 class QuestionOption(db.Model):
     __tablename__ = 'question_options'

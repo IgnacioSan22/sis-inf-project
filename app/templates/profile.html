@@ -7,64 +7,52 @@
   <br><br>
     <div class="row">
         <div class="col-3">
-            <!--left col-->
-            <!--<div><a class="pull-center"><img title="profile image" class="img-circle mx-auto" src="http://www.rlsandbox.com/img/profile.jpg"></a></div>-->
-            <ul class="list-group ml-4" style="overflow-y: auto; overflow-x: auto">
+            <!--<ul class="list-group ml-4" style="overflow-y: auto; overflow-x: auto">
                 <li class="list-group-item text-muted" contenteditable="false">Profile</li>
                 <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Username</span><p class="text-right">Benedict</p></li>
                 <li class="list-group-item list-group-item-success"><span class="pull-left font-weight-bold">email</span><p class="text-right">sherlock@great.com</p></li>
                 <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Tipo de Usuario</span><p class="text-right">Alumno</p></li>
                 <li class="list-group-item list-group-item-success"><span class="pull-left font-weight-bold">Carteles aceptados</span><p class="text-right">5</p></li>
                 <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Carteles rechazados</span><p class="text-right">2</p></li>
-            </ul>
+            </ul>-->
+            <table class="table table-bordered table-active">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" colspan="2">Perfil</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-primary">
+                    <td>Username</td>
+                    <td>{{ current_user.username }}</td>
+                  </tr>
+                  <tr class="table" style="background-color: #1d578e">
+                    <td>Email</td>
+                    <td>{{ current_user.email }}</td>
+                  </tr>
+                  <tr class="table-primary">
+                    <td>Tipo de Usuario</td>
+                    <td>{{ current_user.tipo_usuario }}</td>
+                  </tr>
+                </tbody>
+              </table>
         </div>
         <div class="col-9">
           <div class="panel panel-primary" id="result_panel">
               <div class="panel-heading"><h3 class="panel-title">Ultimas actualizaciones en tus carteles</h3></div>
-            <div style="height: 500px" class="panel-body">
+            <div style="height: 550px" class="panel-body">
               <ul class="list-group">
-                <li class="list-group-item alert list-group-item-success">
-                  El cartel con pregunta: <a href="poster" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>. Ha sido acceptado.
-                </li>
-                <li class="list-group-item alert list-group-item-danger">
-                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
-                </li>
-                <li class="list-group-item alert list-group-item-success">
-                  El cartel con pregunta: <a href="poster" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>. Ha sido acceptado.
-                </li>
-                <li class="list-group-item alert list-group-item-danger">
-                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
-                </li>
-                <li class="list-group-item alert list-group-item-danger">
-                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
-                </li>
-                <li class="list-group-item alert list-group-item-success">
-                  El cartel con pregunta: <a href="poster" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>. Ha sido acceptado.
-                </li>
-                <li class="list-group-item alert list-group-item-danger">
-                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
-                </li>
-                <li class="list-group-item alert list-group-item-success">
-                  El cartel con pregunta: <a href="poster" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>. Ha sido acceptado.
-                </li>
-                <li class="list-group-item alert list-group-item-danger">
-                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
-                </li>
-                <li class="list-group-item alert list-group-item-success">
-                  El cartel con pregunta: <a href="poster" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>. Ha sido acceptado.
-                </li>
-                <li class="list-group-item alert list-group-item-danger">
-                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
-                </li>
-                <li class="list-group-item alert list-group-item-danger">
-                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
-                </li>
-                <li class="list-group-item alert list-group-item-success">
-                  El cartel con pregunta: <a href="poster" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>. Ha sido acceptado.
-                </li>
-                <li class="list-group-item alert list-group-item-danger">
-                    El cartel con pregunta: <a href="poster" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>. Ha sido rechazado.
-                  </li>
+                {% for post in posts %}
+                    {% if post.corregido == 1  %}
+                        <li class="list-group-item alert list-group-item-success">
+                            El cartel con pregunta: <a href="poster" class="alert-link">{{ post.pregunta }}</a>. Ha sido acceptado.
+                        </li>
+                    {% else %}
+                        <li class="list-group-item alert list-group-item-danger">
+                            El cartel con pregunta: <a href="poster" class="alert-link">{{ post.pregunta }}</a>. Ha sido rechazado.
+                        </li>
+                    {% endif %}
+                {% endfor %}
               </ul>
             </div>
         </div>
