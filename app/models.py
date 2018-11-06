@@ -92,6 +92,7 @@ class Stat(db.Model):
     def getStatById(cls, id):
         return Stat.query.filter_by(id=id).first()
 
+
 class Poster(db.Model):
     __tablename__ = 'posters'
 
