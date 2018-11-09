@@ -52,11 +52,11 @@
                 {% for post in posts %}
                     {% if post.corregido == 1  %}
                         <li class="list-group-item alert list-group-item-success">
-                            El cartel con pregunta: <a href="poster" class="alert-link">{{ post.pregunta }}</a>. Ha sido acceptado.
+                            El cartel con pregunta: <a href="poster/{{ post.id }}" class="alert-link">{{ post.pregunta }}</a>. Ha sido acceptado.
                         </li>
-                    {% else %}
+                    {% elif post.corregido == 2 %}
                         <li class="list-group-item alert list-group-item-danger">
-                            El cartel con pregunta: <a href="poster" class="alert-link">{{ post.pregunta }}</a>. Ha sido rechazado.
+                            El cartel con pregunta: <a href="poster/{{ post.id }}" class="alert-link">{{ post.pregunta }}</a>. Ha sido rechazado.
                         </li>
                     {% endif %}
                 {% endfor %}
