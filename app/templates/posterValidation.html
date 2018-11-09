@@ -23,16 +23,12 @@
                   {{ posts.pregunta }}
               <br/><br/>
                 <form name="pregunta" id="answerForm" novalidate="novalidate">
-                  <div class="radio">
-                      <label><input type="radio" name="answer">  Option 1</label>
-                    </div>
+                  {% for question in questions %}
                     <div class="radio">
-                      <label><input type="radio" name="answer">  Option 2</label>
+                      <label><input type="radio" name="answer"> {{ question.opcion }}</label>
                     </div>
-                    <div class="radio">
-                      <label><input type="radio" name="answer">  Option 3</label>
-                    </div>
-                  </form>
+                  {% endfor %} 
+                </form>
               </div>
             </div>
             <div class="row">
