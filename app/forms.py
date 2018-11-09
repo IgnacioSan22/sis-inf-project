@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, HiddenField, RadioField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, HiddenField, RadioField, SelectMultipleField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -52,3 +52,6 @@ class StatForm(FlaskForm):
     estudios = RadioField('Estudios', choices=[('Universitarios', 'menor'), ('Bachiller', 'mayor'), ('Acabados','muy mayor')])
     edad = RadioField ('Edad', choices=[('0-18','menor'), ('18-22','mayor'), ('+22', 'muy mayor')])
     submit = SubmitField('Enviar')
+
+
+

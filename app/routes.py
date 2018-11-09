@@ -11,8 +11,11 @@ def index():
     form = StatForm()
     if form.validate_on_submit():
         stat = Stat(id_usuario=current_user.id,dato_estadistico_1=request.form['estudios'], dato_estadistico_2=request.form['edad'])
-        stat.addStat()
-        flash('Gracias por su atencion')
+        if stat.dato_estadistico_1 is None or stat.dato_estadistico_2 is None:
+            flash('Casillas sin seleccionar')
+        else:
+            stat.addStat()
+            flash('Gracias por su atencion')
     return render_template('index.html', title='Home', posts=posts, form=form)
 
 @app.route('/profile')

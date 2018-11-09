@@ -244,12 +244,18 @@
               </div>
                   <p>
                     {{ form.estudios() }}<br>
+                    {% for error in form.estudios.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
                   </p>
               <div class="modal-body">>
                   ¿Cual es su rango de edad?
               </div>
                   <p>
                     {{ form.edad() }}<br>
+                    {% for error in form.edad.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
                   </p>
                 <div class="form-group">
                   <p>
