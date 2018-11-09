@@ -84,7 +84,7 @@
     <section class="masthead bg-primary text-white text-center"></section>
   {% endfor %}
 
-  {% if current_user.is_authenticated %}
+  {% if current_user.tipo_usuario == 2 %}
       <!--Upload poster-->
       <section class="mb-0" id="upload">
           <div class="container">

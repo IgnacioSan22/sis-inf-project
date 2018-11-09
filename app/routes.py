@@ -84,7 +84,8 @@ def adminProfile():
     users = User.getUsersNotValidated()
     form = ValidateUserForm()
     posters = Poster.getPostersNotChecked()
-    return render_template('adminProfile.html', users=users, posters=posters, form=form)
+    allposters = Poster.getPosters()
+    return render_template('adminProfile.html', users=users, posters=posters, form=form, allposters=allposters)
 
     
 @app.route('/validateUser', methods=['GET', 'POST'])

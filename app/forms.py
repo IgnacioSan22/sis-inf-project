@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, HiddenField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, HiddenField, TextAreaField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -36,7 +36,7 @@ class PosterForm(FlaskForm):
     imagen = StringField('URL Imagen', validators=[DataRequired()])
     titulo = StringField('Título', validators=[DataRequired()])
     reto = StringField('Reto', validators=[DataRequired()])
-    info =  StringField('Información', validators=[DataRequired()])
+    info =  TextAreaField('Información', validators=[DataRequired()])
     pregunta = StringField('Pregunta', validators=[DataRequired()])
     respuesta1 = StringField('Respuesta 1', validators=[DataRequired()])
     respuesta2 = StringField('Respuesta 2', validators=[DataRequired()])

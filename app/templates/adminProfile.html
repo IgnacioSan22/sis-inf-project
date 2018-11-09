@@ -18,7 +18,7 @@
             <table class="table table-bordered table-active">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" colspan="2">Perfil</th>
+                    <th scope="col" colspan="2">Administración</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -117,6 +117,31 @@
                             </ul>
                     </div>
                   </div>
+                <div class="card">
+                  <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
+                        Eliminar carteles publicados
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+                            <ul class="list-group" style="overflow-y: auto; overflow-x: auto">
+                              {% if allposters %}
+                                {% for poster in allposters %}
+                                <li class="list-group-item list-group-item-primary">
+                                  <p>Cartel: <a href="#" class="alert-link"> {{ poster.pregunta }}</a>.</p>
+                                </li>
+                                {% endfor %}
+                              {% else %}
+                              <li class="list-group-item list-group-item-primary">
+                                <p>No hay carteles.</p>
+                              </li>
+                              {% endif %}
+                            </ul>
+                    </div>
+                  </div>
                 </div>
         </div>
     </div>
@@ -124,6 +149,7 @@
     
 
     <section class="masthead bg-primary text-white text-center"></section>
+
 
     <section class="text-white text-center">
 

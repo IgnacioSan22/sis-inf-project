@@ -2,7 +2,7 @@ from datetime import datetime
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from sqlalchemy import Column, String, Integer, Boolean, ForeignKey
+from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Text
 
 @login.user_loader
 def load_user(id):
@@ -99,8 +99,8 @@ class Poster(db.Model):
     id_usuario = Column(Integer, ForeignKey('users.id'))
     imagen = Column(String(1024))
     titulo = Column(String(1024))
-    reto = Column(String(2048))
-    info = Column(String(2048))
+    reto = Column(Text(8192))
+    info = Column(String(16))
     pregunta = Column(String(1024))
     respuesta_correcta = Column(Integer)
     corregido = Column(Integer)

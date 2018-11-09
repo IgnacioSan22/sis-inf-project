@@ -39,7 +39,7 @@
               <li class="nav-item mx-0 mx-lg-1">
                 <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="index#posters">Posters</a>
               </li>
-              {% if current_user.is_authenticated %}
+              {% if current_user.tipo_usuario == 2 %}
               <li class="nav-item mx-0 mx-lg-1">
                 <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="index#upload">Upload</a>
               </li>
