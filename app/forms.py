@@ -35,7 +35,7 @@ class RegisterForm(FlaskForm):
 class PosterForm(FlaskForm):
     imagen = StringField('URL Imagen', validators=[DataRequired()])
     titulo = StringField('Título', validators=[DataRequired()])
-    reto = StringField('Reto', validators=[DataRequired()])
+    reto = TextAreaField('Reto', validators=[DataRequired()])
     info =  TextAreaField('Información', validators=[DataRequired()])
     pregunta = StringField('Pregunta', validators=[DataRequired()])
     respuesta1 = StringField('Respuesta 1', validators=[DataRequired()])
