@@ -55,3 +55,8 @@ class ValidatePosterForm(FlaskForm):
     action = HiddenField('')
     validate = SubmitField('Validar')
     deny = SubmitField('Denegar')
+
+class DeletePosterForm(FlaskForm):
+    id = HiddenField('')
+    action = HiddenField('')
+    eliminar = SubmitField('Eliminar')

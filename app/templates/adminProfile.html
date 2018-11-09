@@ -131,8 +131,20 @@
                               {% if allposters %}
                                 {% for poster in allposters %}
                                 <li class="list-group-item list-group-item-primary">
-                                  <p>Cartel: <a href="#" class="alert-link"> {{ poster.pregunta }}</a>.</p>
-                                </li>
+                                    <div class="container">
+                                      <div class="row">
+                                        <div class="col-8" style="float:left;">
+                                            <p>Cartel: <a href="#" class="alert-link"> {{ poster.pregunta }}</a>.</p>
+                                        </div>
+                                        <div class="col-2">
+                                          <form action="deletePoster" method="post" novalidate style="color:#222;">
+                                            <p>{{ form2.id(value=poster.id) }} {{ form2.action(value="delete") }} {{ form2.eliminar(class="btn-danger") }}</p>
+                                          </form>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  </li>
+                                
                                 {% endfor %}
                               {% else %}
                               <li class="list-group-item list-group-item-primary">

@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm
+from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm, DeletePosterForm
 from app.models import User, Poster, UserLike, Poster, QuestionOption
 from flask_login import current_user, login_user, logout_user, login_required
 
@@ -93,9 +93,10 @@ def signup():
 def adminProfile():
     users = User.getUsersNotValidated()
     form = ValidateUserForm()
+    form2 = DeletePosterForm()
     posters = Poster.getPostersNotChecked()
     allposters = Poster.getPosters()
-    return render_template('adminProfile.html', users=users, posters=posters, form=form, allposters=allposters)
+    return render_template('adminProfile.html', users=users, posters=posters, form=form, allposters=allposters, form2=form2)
 
     
 @app.route('/validateUser', methods=['GET', 'POST'])
@@ -111,6 +112,19 @@ def validateUser():
                 user.validate()
             elif form.action.data == 'invalidate':
                 user.removeUser()
+        return redirect(url_for('adminProfile'))
+
+@app.route('/deletePoster', methods=['GET', 'POST'])
+@login_required
+def deletePoster():
+    if current_user.tipo_usuario != 1:
+        return render_template('index.html')
+    else:
+        form = DeletePosterForm()
+        if form.validate_on_submit:
+            post = Poster.getPosterById(id=form.id.data)
+            if form.action.data == 'delete':
+                post.removePoster()
         return redirect(url_for('adminProfile'))
 
 @app.route('/posterValidation/validatePoster', methods=['GET', 'POST'])
