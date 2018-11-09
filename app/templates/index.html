@@ -45,15 +45,12 @@
                         {{ post.pregunta }}
                     <br/><br/>
                       <form name="pregunta" id="answerForm" novalidate="novalidate">
-                        <div class="radio">
-                            <label><input type="radio" name="answer">  Option 1</label>
-                          </div>
-                          <div class="radio">
-                            <label><input type="radio" name="answer">  Option 2</label>
-                          </div>
-                          <div class="radio">
-                            <label><input type="radio" name="answer">  Option 3</label>
-                          </div>
+
+                        {% for question in questions[post.id] %}
+                      <div class="radio">
+                        <label><input type="radio" name="answer"> {{ question.opcion }}</label>
+                      </div>
+                    {% endfor %} 
                           <div class="form-group">
                             <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal2">
                               Enviar

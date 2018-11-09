@@ -119,7 +119,7 @@ class Poster(db.Model):
         db.session.commit()
     
     def validate(self):
-        self.corregido = True
+        self.corregido = 1
         self.updatePoster()
     
     def denyPoster(self):

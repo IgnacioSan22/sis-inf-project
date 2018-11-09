@@ -10,20 +10,25 @@ from flask_login import current_user, login_user, logout_user, login_required
 def index():
     form = PosterForm()
     posts = Poster.getPostersChecked()
+    questions={}
+    for post in posts:
+        questions[post.id]=QuestionOption.getOpcionPreguntaByPosterId(post.id)
+    print(questions)
+    print("Hola")
     if form.validate_on_submit():
         post = Poster(id_usuario=current_user.id, titulo=form.titulo.data, corregido=0, imagen=form.imagen.data, reto=form.reto.data, info=form.info.data, pregunta=form.pregunta.data)
+        post.addPoster()
         resp1 = QuestionOption(id_poster=post.id,opcion=form.respuesta1.data)
         resp2 = QuestionOption(id_poster=post.id,opcion=form.respuesta2.data)
         resp3 = QuestionOption(id_poster=post.id,opcion=form.respuesta3.data)
         resp4 = QuestionOption(id_poster=post.id,opcion=form.respuesta4.data)       
-        post.addPoster()
         resp1.addOpcionPregunta()
         resp2.addOpcionPregunta()
         resp3.addOpcionPregunta()
         resp4.addOpcionPregunta()
         flash('Poster almacenado con éxito. Debes esperar a que un administrador lo corrija para que se pueda mostrar')
         return redirect(url_for('index'))
-    return render_template('index.html', title='Home', posts=posts, form=form)
+    return render_template('index.html', title='Home', posts=posts, form=form,questions=questions)
 
 @app.route('/profile')
 @login_required
@@ -35,8 +40,19 @@ def profile():
 @login_required
 def posterValidation(poster_id):
     post=Poster.getPosterById(poster_id)
+    if post.corregido!=0:
+        return redirect(url_for('adminProfile'))
     form =  ValidatePosterForm()
-    return render_template('posterValidation.html', posts=post, form=form)
+    questions = QuestionOption.getOpcionPreguntaByPosterId(poster_id)
+    return render_template('posterValidation.html', posts=post, form=form, questions=questions)
+
+@app.route('/poster/<int:poster_id>')
+@login_required
+def poster(poster_id):
+    post=Poster.getPosterById(poster_id)
+    form =  ValidatePosterForm()
+    questions = QuestionOption.getOpcionPreguntaByPosterId(poster_id)
+    return render_template('poster.html', posts=post, form=form, questions=questions)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -71,12 +87,6 @@ def signup():
         flash('Usuario registrado con éxito. Debes esperar a que un administrador te valide para poder hacer Log In')
         return redirect(url_for('signup'))
     return render_template('signup.html', title='Sign Up', form=form)
-    
-
-@app.route('/poster')
-@login_required
-def poster():
-    return render_template('poster.html')
 
 @app.route('/adminProfile')
 @login_required
