@@ -49,7 +49,7 @@ def posterValidation(poster_id):
 @app.route('/poster/<int:poster_id>')
 @login_required
 def poster(poster_id):
-    post=Poster.getPosterById(poster_id)
+    post = Poster.getPosterById(poster_id)
     form =  ValidatePosterForm()
     questions = QuestionOption.getOpcionPreguntaByPosterId(poster_id)
     return render_template('poster.html', posts=post, form=form, questions=questions)
