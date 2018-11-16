@@ -14,6 +14,9 @@ class User(UserMixin, db.Model):
     # Campos
     id = Column(Integer, primary_key=True)
     username = Column(String(64), index=True, unique=True)
+    nombre = Column(String(64))
+    apellidos = Column(String(64))
+    nia = Column(String(6), index=True, unique=True)
     email = Column(String(120), index=True, unique=True)
     password_hash = Column(String(128))
     tipo_usuario = Column(Integer)
@@ -21,7 +24,7 @@ class User(UserMixin, db.Model):
 
     # Representación del Usuario
     def __repr__(self):
-        return '<ID: {}, User: {}, email: {}>'.format(self.id, self.username, self.email)
+        return '<ID: {}, NIA: {}, email: {}>'.format(self.id, self.nia, self.email)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

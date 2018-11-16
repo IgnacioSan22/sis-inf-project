@@ -13,15 +13,7 @@
     </div>
     </div>
     <div class="row">
-        <div class="col-3">
-            <!--<ul class="list-group ml-4" style="overflow-y: auto; overflow-x: auto">
-                <li class="list-group-item text-muted" contenteditable="false">Profile</li>
-                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Username</span><p class="text-right">Benedict</p></li>
-                <li class="list-group-item list-group-item-success"><span class="pull-left font-weight-bold">email</span><p class="text-right">sherlock@great.com</p></li>
-                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Tipo de Usuario</span><p class="text-right">Alumno</p></li>
-                <li class="list-group-item list-group-item-success"><span class="pull-left font-weight-bold">Carteles aceptados</span><p class="text-right">5</p></li>
-                <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Carteles rechazados</span><p class="text-right">2</p></li>
-            </ul>-->
+        <div class="col-4">
             <table class="table table-bordered table-active">
                 <thead class="thead-light">
                   <tr>
@@ -29,9 +21,21 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="table-primary">
+                  <tr class="table"  style="background-color: #94bbe0">
                     <td>Username</td>
                     <td>{{ current_user.username }}</td>
+                  </tr>
+                  <tr class="table-primary">
+                    <td>Nombre</td>
+                    <td>{{ current_user.nombre }}</td>
+                  </tr>
+                  <tr class="table" style="background-color: #94bbe0">
+                    <td>Apellidos</td>
+                    <td>{{ current_user.apellidos }}</td>
+                  </tr>
+                  <tr class="table-primary">
+                    <td>NIA</td>
+                    <td>{{ current_user.nia }}</td>
                   </tr>
                   <tr class="table" style="background-color: #94bbe0">
                     <td>Email</td>
@@ -39,13 +43,17 @@
                   </tr>
                   <tr class="table-primary">
                     <td>Tipo de Usuario</td>
-                    <td>{{ current_user.tipo_usuario }}</td>
+                    {% if current_user.tipo_usuario == 1 %}
+                    <td>Administrador</td>
+                    {% elif current_user.tipo_usuario == 2 %}
+                    <td>Alumno</td>
+                    {% endif %}
                   </tr>
                 </tbody>
               </table>
         </div>
-        <div class="col-9">
-          <div class="panel panel-primary" id="result_panel">
+        <div class="col-8">
+          <!--<div class="panel panel-primary" id="result_panel">
               <div class="panel-heading"><h3 class="panel-title">Ultimas actualizaciones en tus carteles</h3></div>
             <div style="height: 550px" class="panel-body">
               <ul class="list-group">
@@ -62,27 +70,40 @@
                 {% endfor %}
               </ul>
             </div>
+        </div> -->
+
+        <div class="accordion" id="accordionExample">
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Últimas actualizaciones de tus carteles
+                      </button>
+                    </h5>
+                  </div>
+                  
+                  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                            <ul class="list-group" style="overflow-y: auto; overflow-x: auto">
+                                    {% for post in posts %}
+                                        {% if post.corregido == 1  %}
+                                            <li class="list-group-item alert list-group-item-success">
+                                                El cartel con pregunta: <a href="poster/{{ post.id }}" class="alert-link">{{ post.pregunta }}</a>. Ha sido acceptado.
+                                            </li>
+                                        {% elif post.corregido == 2 %}
+                                            <li class="list-group-item alert list-group-item-danger">
+                                                El cartel con pregunta: <a href="poster/{{ post.id }}" class="alert-link">{{ post.pregunta }}</a>. Ha sido rechazado.
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                            </ul>
+                    </div>
+                  </div>
+            </div>
+
         </div>
-    </div>
+</div>
 </div>
 </section>
 
-<section class="masthead bg-primary text-white text-center"></section>
-
-<section class="text-white text-center">
-
-    <h2 class="text-center text-uppercase text-secondary mb-0">Exportar Datos</h2>
-    <hr class="star-dark mb-5">
-
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Exportar Datos
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Excell</a>
-            <a class="dropdown-item" href="#">CSV</a>
-            <a class="dropdown-item" href="#">SQL</a>
-        </div>
-        </div>
-</section>
 {% endblock %}

@@ -33,6 +33,8 @@ def index():
 @app.route('/profile')
 @login_required
 def profile():
+    if current_user.tipo_usuario == 1:
+        return redirect(url_for('adminProfile'))
     posts = Poster.getPosterByUserId(current_user.id)
     return render_template('profile.html', title='Profile', posts=posts)
 
@@ -81,7 +83,7 @@ def signup():
         return redirect(url_for('index'))
     form = RegisterForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, validated=False)
+        user = User(username=form.username.data, email=form.email.data,  nombre=form.nombre.data, apellidos=form.apellidos.data, nia=form.nia.data, validated=False)
         user.set_password(form.password.data)
         user.addUser()
         flash('Usuario registrado con éxito. Debes esperar a que un administrador te valide para poder hacer Log In')

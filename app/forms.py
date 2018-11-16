@@ -16,6 +16,9 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
+    nombre = StringField('Nombre', validators=[DataRequired()])
+    apellidos = StringField('Apellidos', validators=[DataRequired()])
+    nia = StringField('NIA', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
@@ -60,3 +63,6 @@ class DeletePosterForm(FlaskForm):
     id = HiddenField('')
     action = HiddenField('')
     eliminar = SubmitField('Eliminar')
+
+class Like(FlaskForm):
+    pass
