@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, HiddenField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, HiddenField, TextAreaField, IntegerField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -42,6 +42,19 @@ class PosterForm(FlaskForm):
     respuesta2 = StringField('Respuesta 2', validators=[DataRequired()])
     respuesta3 = StringField('Respuesta 3', validators=[DataRequired()])
     respuesta4 = StringField('Respuesta 4', validators=[DataRequired()])
+    submit = SubmitField('Upload')
+
+class QuestionForm(FlaskForm):
+    pregunta = StringField('Pregunta', validators=[DataRequired()])
+    year = IntegerField('Año de la pregunta', validators=[DataRequired()])
+    respuesta1 = StringField('Respuesta 1', validators=[DataRequired()])
+    respuesta2 = StringField('Respuesta 2', validators=[DataRequired()])
+    respuesta3 = StringField('Respuesta 3', validators=[DataRequired()])
+    respuesta4 = StringField('Respuesta 4')
+    respuesta5 = StringField('Respuesta 5')
+    respuesta6 = StringField('Respuesta 6')
+    respuesta7 = StringField('Respuesta 7')
+    respuesta8 = StringField('Respuesta 8')
     submit = SubmitField('Upload')
 
 class ValidateUserForm(FlaskForm):

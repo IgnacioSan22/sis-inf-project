@@ -1,0 +1,104 @@
+{% extends "basecontent.html" %}
+{% block contentpage %}
+
+<!-- Messages  -->
+{% for msg in get_flashed_messages() %}
+<section id="msgs" style="padding-block-end: 0rem">
+    <div class="alert alert-info" role="alert" style="position:absolute; z-index:1;">
+    <strong> {{ msg }} </strong>
+    </div>
+</section>
+{% endfor %}
+
+<!-- Singup Section -->
+<header class="masthead bg text-white text-center">
+        <div class="container">
+          <h2 class="text-center text-uppercase text-secondary mb-0">Nueva Pregunta</h2>
+          <hr class="star-dark mb-5">
+          <h6 class="dropdown-header">Una pregunta ha de tener entre 3 y 8 respuestas posibles.</h6>
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <form action="" method="post" style="color:#222;">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.pregunta.label }}<br>
+                    {{ form.pregunta(size=32) }}<br>
+                    {% for error in form.pregunta.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.year.label }}<br>
+                    {{ form.year(size=32) }}<br>
+                    {% for error in form.year.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.respuesta1.label }}<br>
+                    {{ form.respuesta1(size=32) }}<br>
+                    {% for error in form.respuesta1.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.respuesta2.label }}<br>
+                    {{ form.respuesta2(size=32) }}<br>
+                    {% for error in form.respuesta2.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.respuesta3.label }}<br>
+                    {{ form.respuesta3(size=32) }}<br>
+                    {% for error in form.respuesta3.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <button data-toggle="collapse" data-target="#demo">Añadir más respuestas</button>
+                <br><br>
+                  <div id="demo" class="collapse">
+                    <p>
+                        {{ form.respuesta4.label }}<br>
+                        {{ form.respuesta4(size=32) }}<br>
+                        {% for error in form.respuesta4.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.respuesta5.label }}<br>
+                        {{ form.respuesta5(size=32) }}<br>
+                        {% for error in form.respuesta5.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.respuesta6.label }}<br>
+                        {{ form.respuesta6(size=32) }}<br>
+                        {% for error in form.respuesta6.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.respuesta7.label }}<br>
+                        {{ form.respuesta7(size=32) }}<br>
+                        {% for error in form.respuesta7.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        {{ form.respuesta8.label }}<br>
+                        {{ form.respuesta8(size=32) }}<br>
+                        {% for error in form.respuesta8.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                  </div>
+                  <br><br>
+                <p>{{ form.submit() }}</p>
+            </form>
+          </div>
+        </div>
+      </div>
+</header>
+{% endblock %}
