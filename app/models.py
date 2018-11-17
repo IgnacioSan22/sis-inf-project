@@ -95,6 +95,60 @@ class Stat(db.Model):
     def getStatById(cls, id):
         return Stat.query.filter_by(id=id).first()
 
+#######################################################
+#######################################################
+
+class Pregunta(db.Model):
+    __tablename__ = 'preguntas'
+
+    id = Column(Integer, primary_key=True)
+    pregunta = Column(String(1024))
+    year = Column(Integer)
+
+    def addPregunta(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+class QuestionOption2(db.Model):
+    __tablename__ = 'question_options_2'
+    
+    id = Column(Integer, primary_key=True)
+    id_pregunta = Column(Integer, ForeignKey('preguntas.id'))
+    opcion = Column(String(512))
+    correcta = Column(Integer)
+
+    # Reperesentación de QuestionOption
+    def __resp__(self):
+        return '<id: {}, id_poster: {}, opcion:{}>'.format(self.id, self.id_pregunta, self.opcion)
+
+    @classmethod
+    def newOption(cls, pregunta_id, respuesta):
+        if respuesta != "":
+            resp = QuestionOption2(id_pregunta=pregunta_id,opcion=respuesta,correcta=0)
+            db.session.add(resp)
+            db.session.commit()
+
+    #Interfaz
+    def addOpcionPregunta(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    def removeOpcionPregunta(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def updateOpcionPregunta(self):
+        QuestionOption.query.filter_by(id=self.id).update(dict(id_poster=self.id_poster, opcion=self.opcion))
+        db.session.commit()
+
+    @classmethod
+    def getOpcionPreguntaByPosterId(cls, id_poster):
+        return QuestionOption.query.filter_by(id_poster=id_poster).all()
+
+#######################################################
+#######################################################
+
 class Poster(db.Model):
     __tablename__ = 'posters'
 

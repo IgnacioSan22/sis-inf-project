@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm, DeletePosterForm
-from app.models import User, Poster, UserLike, Poster, QuestionOption
+from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm, DeletePosterForm, QuestionForm
+from app.models import User, Poster, UserLike, Poster, QuestionOption, QuestionOption2, Pregunta
 from flask_login import current_user, login_user, logout_user, login_required
 
 @app.route('/')
@@ -89,6 +89,27 @@ def signup():
         flash('Usuario registrado con éxito. Debes esperar a que un administrador te valide para poder hacer Log In')
         return redirect(url_for('signup'))
     return render_template('signup.html', title='Sign Up', form=form)
+
+@app.route('/addQuestion', methods=['GET', 'POST'])
+@login_required
+def addQuestion():
+    if current_user.tipo_usuario!=1:
+        return redirect(url_for('index'))
+    form = QuestionForm()
+    if form.validate_on_submit():
+        pregunta = Pregunta(pregunta=form.pregunta.data, year=form.year.data)
+        pregunta.addPregunta()
+        QuestionOption2.newOption(pregunta.id,form.respuesta1.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta8.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta7.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta6.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta5.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta4.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta3.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta2.data)    
+        flash('Pregunta añadida correctamente')
+        return redirect(url_for('adminProfile'))
+    return render_template('addQuestion.html', title='Nueva Pregunta', form=form)
 
 @app.route('/adminProfile')
 @login_required
