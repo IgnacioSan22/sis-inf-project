@@ -166,6 +166,17 @@
               z.textContent = "Signup";
           }
       } 
+        
+        function showShareLink(id) {
+          var x = document.getElementById("share"+id);          
+          var url = document.URL;
+
+          document.getElementById("sharep"+id).innerHTML = "Comparte esta URL: " + url+"#"+id;
+
+          if (x.style.display === "none") {
+              x.style.display = "block";
+          }
+      } 
       </script>
 
 {% endblock %}

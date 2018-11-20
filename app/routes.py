@@ -1,14 +1,16 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm, DeletePosterForm, QuestionForm
+from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm, DeletePosterForm, QuestionForm, LikeForm
 from app.models import User, Poster, UserLike, Poster, QuestionOption, QuestionOption2, Pregunta
 from flask_login import current_user, login_user, logout_user, login_required
 
 @app.route('/')
 @app.route('/index')
+@app.route('/index/<int:poster_id>')
 @app.route('/uploadPoster', methods=['GET', 'POST'])
 def index():
     form = PosterForm()
+    formLike = LikeForm()
     posts = Poster.getPostersChecked()
     questions={}
     for post in posts:
@@ -28,7 +30,7 @@ def index():
         resp4.addOpcionPregunta()
         flash('Poster almacenado con éxito. Debes esperar a que un administrador lo corrija para que se pueda mostrar')
         return redirect(url_for('index'))
-    return render_template('index.html', title='Home', posts=posts, form=form,questions=questions)
+    return render_template('index.html', title='Home', posts=posts, form=form, questions=questions, formLike=formLike)
 
 @app.route('/profile')
 @login_required
@@ -77,9 +79,7 @@ def logout():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    print("Hola\n")
     if current_user.is_authenticated:
-        print("Hola2\n")
         return redirect(url_for('index'))
     form = RegisterForm()
     if form.validate_on_submit():
@@ -156,7 +156,6 @@ def validatePoster():
     if current_user.tipo_usuario != 1:
         return render_template('index.html')
     else:
-        print("Hola\n")
         form = ValidatePosterForm()
         if form.validate_on_submit:
             poster = Poster.getPosterById(id=form.id.data)
@@ -167,8 +166,12 @@ def validatePoster():
         return redirect(url_for('adminProfile'))
 
 
-@app.route('/like')
+@app.route('/like', methods=['POST'])
 @login_required
 def like():
-    pass
-    return render_template('index.html')
+    form = LikeForm()
+    if form.validate_on_submit:
+        ul = UserLike(id_usuario=current_user.id, id_poster=form.id.data)
+        if not UserLike.gaveLike(id_usuario=current_user.id, id_poster=form.id.data):
+            ul.likePoster()
+    return redirect(url_for('index'))

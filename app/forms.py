@@ -77,5 +77,6 @@ class DeletePosterForm(FlaskForm):
     action = HiddenField('')
     eliminar = SubmitField('Eliminar')
 
-class Like(FlaskForm):
-    pass
+class LikeForm(FlaskForm):
+    id = HiddenField('')
+    like = SubmitField('Like')

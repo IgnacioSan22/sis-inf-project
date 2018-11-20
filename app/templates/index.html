@@ -24,7 +24,7 @@
 
   {% for post in posts %}
     <!-- Poster section -->
-    <section class="portfolio" id="posters">
+    <section class="portfolio" id="{{ post.id }}">
         <div class="container">
           <div class="row">
             <div class="col">
@@ -69,10 +69,21 @@
 
           <div class="row">
               <div class="col-1">
-                  <button class="btn"><i class="fas fa-share-alt"></i> Share</button>
+                  <button class="btn" onclick="showShareLink({{post.id}})"><i class="fas fa-share-alt"></i> Share</button>
               </div>
+              {% if current_user.is_authenticated %}
               <div class="col-1">
-                  <button class="btn"><i class="fas fa-thumbs-up"></i> Like</button>
+                <form action="like" method="POST">
+                    {{ formLike.id(value=post.id) }}
+                    {{ formLike.like(class="btn", value="Like") }}
+                  <!--<button type="submit" class="btn"><i class="fas fa-thumbs-up"></i> Like</button>-->
+                </form>
+              </div>
+              {% endif %}
+          </div>
+          <div class="row">
+              <div class="col-5"  style="display:none;" id="share{{post.id}}">
+                  <p  id="sharep{{post.id}}"></p>
               </div>
           </div>
         </div>
