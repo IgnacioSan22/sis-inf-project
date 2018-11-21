@@ -31,8 +31,12 @@
                     <td>{{ current_user.email }}</td>
                   </tr>
                   <tr class="table-primary">
-                    <td>Tipo de Usuario</td>
-                    <td>{{ current_user.tipo_usuario }}</td>
+                      <td>Tipo de Usuario</td>
+                      {% if current_user.tipo_usuario == 1 %}
+                      <td>Administrador</td>
+                      {% elif current_user.tipo_usuario == 2 %}
+                      <td>Alumno</td>
+                      {% endif %}
                   </tr>
                 </tbody>
               </table>

@@ -303,3 +303,4 @@ class UserLike(db.Model):
     @classmethod
     def gaveLike(cls, id_usuario, id_poster):
         return UserLike.query.filter_by(id_usuario=id_usuario, id_poster=id_poster).first() is not None
+        
