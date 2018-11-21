@@ -77,7 +77,7 @@ class Stat(db.Model):
 
     # Representación del dato estadístico
     def __repr__(self):
-        return '<id: {}, id_usuario: {}, dato_estadistico_1: {}, datos_estadistico_2: {}>'.format(self.id, self.id_usuario, self.dato_estadistico_1, self.dato_estadistico_2)
+        return '<id: {}, id_usuario: {}, dato_estadistico_1: {}, datos_estadistico_2: {}, datos_estadistico_3>'.format(self.id, self.id_usuario, self.dato_estadistico_1, self.dato_estadistico_2, self.dato_estadistic_3)
 
     #Interfaz
     def addStat(self):
@@ -89,13 +89,16 @@ class Stat(db.Model):
         db.session.commit()
 
     def updateStat(self):
-        Stat.query.filter_by(id=self.id).update(dict(dato_estadistico_1=self.dato_estadistico_1, dato_estadistico_2=self.dato_estadistico_2))
+        Stat.query.filter_by(id=self.id).update(dict(dato_estadistico_1=self.dato_estadistico_1, dato_estadistico_2=self.dato_estadistico_2, dato_estadistic_3=self.dato_estadistic_3))
         db.session.commit()
     
     @classmethod
     def getStatById(cls, id):
         return Stat.query.filter_by(id=id).first()
 
+    @classmethod
+    def getUsers(cls,id):
+        return Stat.query.filter_by(id_usuario=id).first()
     @classmethod
     def getCountByDE1(cls, filter):
         return Stat.query.filter_by(dato_estadistico_1=filter).count()
@@ -253,11 +256,12 @@ class UserResponse(db.Model):
 
     id = Column(Integer, primary_key=True)
     id_usuario = Column(Integer, ForeignKey('users.id'))
-    id_opcion = Column(Integer, ForeignKey('question_options.id'))
+    id_poster = Column(Integer, ForeignKey('posters.id'))
+    opcion = Column(String(100))
 
     # Reperesentación de UserResponse
     def __resp__(self):
-        return '<id: {}, id_user: {}, id_opcion:{}>'.format(self.id, self.id_usuario, self.id_opcion)
+        return '<id: {}, id_user: {}, id_poster:{}, opcion:{}>'.format(self.id, self.id_usuario, self.id_poster,self.opcion)
 
     #Interfaz
     def addUserResponse(self):
@@ -269,7 +273,7 @@ class UserResponse(db.Model):
         db.session.commit()
 
     def updateUserResponse(self):
-        UserResponse.query.filter_by(id=self.id).update(dict(id_user=self.id_usuario, id_opcion=self.id_opcion))
+        UserResponse.query.filter_by(id=self.id).update(dict(id_user=self.id_usuario, id_poster=self.id_poster, opcion =self.opcion))
         db.session.commit()
 
     @classmethod

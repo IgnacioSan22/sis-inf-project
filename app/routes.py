@@ -1,21 +1,63 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm, DeletePosterForm, QuestionForm, LikeForm
-from app.models import User, Poster, UserLike, Poster, QuestionOption, QuestionOption2, Pregunta, Stat
+from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm, DeletePosterForm, QuestionForm, StatForm, ResponseForm, LikeForm
+from app.models import User, Poster, UserLike, Poster, QuestionOption, QuestionOption2, Pregunta, Stat, UserResponse
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import jsonify
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET','POST'])
+@app.route('/index', methods = ['GET', 'POST'])
 @app.route('/index/<int:poster_id>')
 @app.route('/uploadPoster', methods=['GET', 'POST'])
 def index():
     form = PosterForm()
+    formResponse = ResponseForm()
     formLike = LikeForm()
     posts = Poster.getPostersChecked()
     questions={}
     for post in posts:
         questions[post.id]=QuestionOption.getOpcionPreguntaByPosterId(post.id)
+        
+    if formResponse.validate_on_submit():
+        options = QuestionOption.getOpcionPreguntaByPosterId(formResponse.id.data)
+        print("A CONTINUACION ID POSTER")
+        print(formResponse.id.data)
+        if formResponse.opcion1:
+            if (current_user.is_authenticated):
+                respuesta = UserResponse(id_usuario=current_user.id, id_poster = formResponse.id.data, opcion=options[0].opcion)
+            else:
+                respuesta = UserResponse(id_poster = formResponse.id.data, opcion=options[0].opcion)
+            respuesta.addUserResponse()
+
+        if formResponse.opcion2.data:
+            if (current_user.is_authenticated):
+                respuesta = UserResponse(id_usuario=current_user.id, id_poster = formResponse.id.data, opcion=options[1].opcion)
+            else:
+                respuesta = UserResponse(id_poster = formResponse.id.data, opcion=options[1].opcion)
+            respuesta.addUserResponse()
+
+        if formResponse.opcion3.data:
+            if (current_user.is_authenticated):
+                respuesta = UserResponse(id_usuario=current_user.id, id_poster = formResponse.id.data, opcion=options[2].opcion)
+            else:
+                respuesta = UserResponse(id_poster = formResponse.id.data, opcion=options[2].opcion)
+            respuesta.addUserResponse()
+
+        if formResponse.opcion4.data:
+            if (current_user.is_authenticated):
+                respuesta = UserResponse(id_usuario=current_user.id, id_poster = formResponse.id.data, opcion=options[3].opcion)
+            else:
+                respuesta = UserResponse(id_poster = formResponse.id.data, opcion=options[3].opcion)
+            respuesta.addUserResponse()
+        if (current_user.is_anonymous):
+            return redirect(url_for('stat'))
+        else:
+            stat = Stat.getUsers(current_user.id)
+            if (stat is not None ):
+                return redirect(url_for('index'))
+            else:
+                return redirect(url_for('stat'))
+
     if form.validate_on_submit():
         post = Poster(id_usuario=current_user.id, titulo=form.titulo.data, corregido=0, imagen=form.imagen.data, reto=form.reto.data, info=form.info.data, pregunta=form.pregunta.data)
         post.addPoster()
@@ -29,7 +71,8 @@ def index():
         resp4.addOpcionPregunta()
         flash('Poster almacenado con éxito. Debes esperar a que un administrador lo corrija para que se pueda mostrar')
         return redirect(url_for('index'))
-    return render_template('index.html', title='Home', posts=posts, form=form, questions=questions, formLike=formLike)
+      
+    return render_template('index.html', title='Home', posts=posts, form=form, formResponse=formResponse, questions=questions, formLike=formLike)
 
 @app.route('/profile')
 @login_required
@@ -111,7 +154,9 @@ def logout():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    print("Hola\n")
     if current_user.is_authenticated:
+        print("Hola2\n")
         return redirect(url_for('index'))
     form = RegisterForm()
     if form.validate_on_submit():
@@ -151,7 +196,6 @@ def adminProfile():
     form2 = DeletePosterForm()
     posters = Poster.getPostersNotChecked()
     allposters = Poster.getPosters()
-
     return render_template('adminProfile.html', users=users, posters=posters, form=form, allposters=allposters, form2=form2)
 
     
@@ -208,3 +252,21 @@ def like():
         if not UserLike.gaveLike(id_usuario=current_user.id, id_poster=form.id.data):
             ul.likePoster()
     return redirect(url_for('index'))
+
+@app.route('/stat' , methods=['GET', 'POST'])
+def stat():
+    print('autenticando')
+    form = StatForm()
+    print(form.validate_on_submit)
+    if form.validate_on_submit():
+        if current_user.is_authenticated:
+            stat=Stat(id_usuario=current_user.id,dato_estadistico_1=request.form['estudios'], dato_estadistico_2=request.form['edad'], dato_estadistico_3=request.form['sexo'])
+            print('autenticado')
+    
+        else:
+            stat=Stat(dato_estadistico_1=request.form['estudios'], dato_estadistico_2=request.form['edad'], dato_estadistico_3=request.form['sexo'])
+        stat.addStat()
+        print('vaina2')
+
+        return redirect(url_for('index'))
+    return render_template('stat.html',title='stat', form=form)

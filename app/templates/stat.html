@@ -1,0 +1,49 @@
+{% extends "basecontent.html" %}
+{% block contentpage %}
+
+<!-- Singup Section -->
+<header class="masthead bg text-white text-center">
+    <div class="container"></div>
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+                <form action="" name="statForm" method="post" id="statForm">
+                    {{ form.hidden_tag() }}
+                    <div style="color: black;">
+                      ¿Actualmente está estudiando o ha terminado los estudios?
+                    </div>
+                        <p>
+                          {{ form.estudios(style="color: black") }}<br>
+                          {% for error in form.estudios.errors %}
+                          <span style="color: red;">[{{ error }}]</span>
+                          {% endfor %}
+                        </p>
+                    <div style="color: black;">
+                        ¿Cual es su rango de edad?
+                    </div>
+                        <p>
+                          {{ form.edad(style="color: black") }}<br>
+                          {% for error in form.edad.errors %}
+                          <span style="color: red;">[{{ error }}]</span>
+                          {% endfor %}
+                        </p>
+                    <div style="color: black">
+                        ¿Cual es su sexo?
+                    </div>
+                        <p>
+                            {{ form.sexo(style="color: black") }}<br>
+                            {% for error in form.sexo.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </p>
+                                                
+                      <div class="form-group">
+                        <p>
+                          {{ form.submit(style="color: black") }}<br>
+                        </p>
+                      </div>
+                </form>
+          </div>
+        </div>
+    </div>
+</header>
+{% endblock %}

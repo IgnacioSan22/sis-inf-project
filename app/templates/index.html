@@ -21,7 +21,6 @@
       <h2 class="font-weight-light mb-0">Enviromental Posters - Challenges</h2>
     </div>
   </header>
-
   {% for post in posts %}
     <!-- Poster section -->
     <section class="portfolio" id="{{ post.id }}">
@@ -44,19 +43,21 @@
                     <div class="col">
                         {{ post.pregunta }}
                     <br/><br/>
-                      <form name="pregunta" id="answerForm" novalidate="novalidate">
-
-                        {% for question in questions[post.id] %}
-                      <div class="radio">
-                        <label><input type="radio" name="answer"> {{ question.opcion }}</label>
-                      </div>
-                    {% endfor %} 
-                          <div class="form-group">
-                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal2">
-                              Enviar
-                            </button>
-                          </div>
-                        </form>
+                      <form action="" name="answer" id="answerForm" method="post" novalidate="novalidate">
+                        {{ formResponse.id(value=post.id) }}
+                        {{ formResponse.hidden_tag() }}
+                        {{ formResponse.opcion1 }}
+                        {{ formResponse.opcion1.label(questions[post.id][0].opcion) }}<br>
+                        {{ formResponse.opcion2 }}
+                        {{ formResponse.opcion2.label(questions[post.id][1].opcion) }}<br>
+                        {{ formResponse.opcion3 }}
+                        {{ formResponse.opcion3.label(questions[post.id][2].opcion) }}<br>
+                        {{ formResponse.opcion4 }}
+                        {{ formResponse.opcion4.label(questions[post.id][3].opcion) }}<br>
+                        <div class="form-group">
+                          {{ formResponse.submit() }}
+                        </div>
+                      </form>
                     </div>
                   </div>
                   <div class="row">
@@ -267,7 +268,7 @@
       </div>
 
       
-    <!-- Modal -->
+    <!-- Modal  -->
     <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -281,57 +282,14 @@
               ¿Serías tan amable de responder a dos preguntas estadísticas?
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#exampleModal3">Si</button>
+              <button type="button", id="statButton"  class="btn btn-secondary">Si</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <script type="text/javascript">
+                document.getElementById("statButton").onclick = function () {
+                    location.href = "{{ url_for('stat')}}";
+                };
+              </script>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Encuesta estadística</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <form name="pregunta" id="answerForm1" novalidate="novalidate">
-              <div class="modal-body">
-                ¿Actualmente está estudiando o ha terminado los estudios?
-              </div>
-              <form name="pregunta" id="answerForm1" novalidate="novalidate">
-                <div class="radio ml-4">
-                    <label><input type="radio" name="answer">  Estudiando grado</label>
-                  </div>
-                  <div class="radio ml-4">
-                    <label><input type="radio" name="answer">  Estudiando Bachillerato o anterior</label>
-                  </div>
-                  <div class="radio ml-4">
-                    <label><input type="radio" name="answer">  Estudios termindos</label>
-                  </div>
-                </form>
-                <div class="modal-body">
-                  ¿Cual es su rango de edad?
-                </div>
-                <form name="pregunta" id="answerForm2" novalidate="novalidate">
-                  <div class="radio ml-4">
-                      <label><input type="radio" name="answer">  0-18</label>
-                    </div>
-                    <div class="radio  ml-4">
-                      <label><input type="radio" name="answer">  18-22</label>
-                    </div>
-                    <div class="radio  ml-4">
-                      <label><input type="radio" name="answer">  +22</label>
-                    </div>
-                  </form>
-                  <br/>
-                <div class="form-group">
-                  <button type="button" class="btn btn-secondary ml-4" onclick="validateAndSubmit()" data-dismiss="modal">Enviar</button>
-                  <button type="button" class="btn btn-secondary " data-dismiss="modal">Cerrar</button>
-                </div>
-              </form>
           </div>
         </div>
       </div>
