@@ -1,19 +1,23 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm, DeletePosterForm, QuestionForm, StatForm, ResponseForm
+from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm, DeletePosterForm, QuestionForm, StatForm, ResponseForm, LikeForm
 from app.models import User, Poster, UserLike, Poster, QuestionOption, QuestionOption2, Pregunta, Stat, UserResponse
 from flask_login import current_user, login_user, logout_user, login_required
+from flask import jsonify
 
 @app.route('/', methods=['GET','POST'])
 @app.route('/index', methods = ['GET', 'POST'])
+@app.route('/index/<int:poster_id>')
 @app.route('/uploadPoster', methods=['GET', 'POST'])
 def index():
     form = PosterForm()
     formResponse = ResponseForm()
+    formLike = LikeForm()
     posts = Poster.getPostersChecked()
     questions={}
     for post in posts:
         questions[post.id]=QuestionOption.getOpcionPreguntaByPosterId(post.id)
+        
     if formResponse.validate_on_submit():
         options = QuestionOption.getOpcionPreguntaByPosterId(formResponse.id.data)
         print("A CONTINUACION ID POSTER")
@@ -53,6 +57,7 @@ def index():
                 return redirect(url_for('index'))
             else:
                 return redirect(url_for('stat'))
+
     if form.validate_on_submit():
         post = Poster(id_usuario=current_user.id, titulo=form.titulo.data, corregido=0, imagen=form.imagen.data, reto=form.reto.data, info=form.info.data, pregunta=form.pregunta.data)
         post.addPoster()
@@ -66,8 +71,8 @@ def index():
         resp4.addOpcionPregunta()
         flash('Poster almacenado con éxito. Debes esperar a que un administrador lo corrija para que se pueda mostrar')
         return redirect(url_for('index'))
-
-    return render_template('index.html', title='Home', posts=posts, form=form, formResponse=formResponse,questions=questions)
+      
+    return render_template('index.html', title='Home', posts=posts, form=form, formResponse=formResponse, questions=questions, formLike=formLike)
 
 @app.route('/profile')
 @login_required
@@ -76,6 +81,39 @@ def profile():
         return redirect(url_for('adminProfile'))
     posts = Poster.getPosterByUserId(current_user.id)
     return render_template('profile.html', title='Profile', posts=posts)
+
+@app.route('/stats/<string:de>')
+@login_required
+def stats(de):
+    if current_user.tipo_usuario != 1:
+        return redirect(url_for('index'))
+    if de == '1':
+        countu = Stat.getCountByDE1('U')
+        countb = Stat.getCountByDE1('B')
+        counta = Stat.getCountByDE1('A')
+        data = [
+                    ['Universitario', countu],
+                    ['Bachiller', countb],
+                    ['Acabado', counta]
+            ]
+    elif de == '2':
+        count1 = Stat.getCountByDE2('0-18')
+        count2 = Stat.getCountByDE2('19-22')
+        count3 = Stat.getCountByDE2('+22')
+        data = [
+                    ['0-18', count1],
+                    ['19-22', count2],
+                    ['+22', count3]
+            ]
+    elif de == '3':
+        counth = Stat.getCountByDE3('H')
+        countm = Stat.getCountByDE3('M')
+        data = [
+                    ['Hombre', counth],
+                    ['Mujer', countm]
+            ]
+    
+    return jsonify(data)
 
 @app.route('/posterValidation/<int:poster_id>')
 @login_required
@@ -195,7 +233,6 @@ def validatePoster():
     if current_user.tipo_usuario != 1:
         return render_template('index.html')
     else:
-        print("Hola\n")
         form = ValidatePosterForm()
         if form.validate_on_submit:
             poster = Poster.getPosterById(id=form.id.data)
@@ -206,11 +243,15 @@ def validatePoster():
         return redirect(url_for('adminProfile'))
 
 
-@app.route('/like')
+@app.route('/like', methods=['POST'])
 @login_required
 def like():
-    pass
-    return render_template('index.html')
+    form = LikeForm()
+    if form.validate_on_submit:
+        ul = UserLike(id_usuario=current_user.id, id_poster=form.id.data)
+        if not UserLike.gaveLike(id_usuario=current_user.id, id_poster=form.id.data):
+            ul.likePoster()
+    return redirect(url_for('index'))
 
 @app.route('/stat' , methods=['GET', 'POST'])
 def stat():

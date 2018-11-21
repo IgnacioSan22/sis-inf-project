@@ -31,8 +31,12 @@
                     <td>{{ current_user.email }}</td>
                   </tr>
                   <tr class="table-primary">
-                    <td>Tipo de Usuario</td>
-                    <td>{{ current_user.tipo_usuario }}</td>
+                      <td>Tipo de Usuario</td>
+                      {% if current_user.tipo_usuario == 1 %}
+                      <td>Administrador</td>
+                      {% elif current_user.tipo_usuario == 2 %}
+                      <td>Alumno</td>
+                      {% endif %}
                   </tr>
                 </tbody>
               </table>
@@ -157,18 +161,18 @@
 
     <section class="text-white text-center">
 
-        <h2 class="text-center text-uppercase text-secondary mb-0">Exportar Datos</h2>
+        <h2 class="text-center text-uppercase text-secondary mb-0">Estadísticas</h2>
         <hr class="star-dark mb-5">
 
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Exportar Datos
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Excell</a>
-              <a class="dropdown-item" href="#">CSV</a>
-              <a class="dropdown-item" href="#">SQL</a>
-            </div>
+        <div class="row">
+           <div align="center" class="col-4">
+              <div id="chart_div1"></div>
+          </div>
+           <div align="center" class="col-4">
+              <div id="chart_div2"></div>
+          </div>
+           <div align="center" class="col-4">
+              <div id="chart_div3"></div>
           </div>
         </div>
     </section>

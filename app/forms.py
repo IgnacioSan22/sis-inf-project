@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, HiddenField, TextAreaField, IntegerField, RadioField, BooleanField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, HiddenField, TextAreaField, IntegerField, RadioField, BooleanField, Field
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -77,9 +77,6 @@ class DeletePosterForm(FlaskForm):
     action = HiddenField('')
     eliminar = SubmitField('Eliminar')
 
-class Like(FlaskForm):
-    pass
-
 class StatForm(FlaskForm):
     estudios = RadioField('Estudios', choices=[('U', 'Universitarios'), ('B', 'Bachiller'), ('A','Acabados')])
     edad = RadioField ('Edad',choices=[('0-18','0-18'), ('19-22','19-22'), ('+22', '+22')])
@@ -94,3 +91,6 @@ class ResponseForm(FlaskForm):
     opcion4 = BooleanField('')
     submit = SubmitField('Enviar')
     
+class LikeForm(FlaskForm):
+    id = HiddenField('')
+    like = SubmitField('Like')

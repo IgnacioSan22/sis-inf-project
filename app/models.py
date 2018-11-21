@@ -2,7 +2,7 @@ from datetime import datetime
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Text
+from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Text, func
 
 @login.user_loader
 def load_user(id):
@@ -70,7 +70,7 @@ class Stat(db.Model):
     __tablename__ = 'stats'
 
     id = Column(Integer, primary_key=True)
-    id_usuario = Column(Integer, ForeignKey('users.id'), unique=True)
+    id_usuario = Column(Integer, unique=True)
     dato_estadistico_1 = Column(String(64))
     dato_estadistico_2 = Column(String(64))
     dato_estadistico_3 = Column(String(64))
@@ -99,6 +99,17 @@ class Stat(db.Model):
     @classmethod
     def getUsers(cls,id):
         return Stat.query.filter_by(id_usuario=id).first()
+    @classmethod
+    def getCountByDE1(cls, filter):
+        return Stat.query.filter_by(dato_estadistico_1=filter).count()
+
+    @classmethod
+    def getCountByDE2(cls, filter):
+        return Stat.query.filter_by(dato_estadistico_2=filter).count()
+
+    @classmethod
+    def getCountByDE3(cls, filter):
+        return Stat.query.filter_by(dato_estadistico_3=filter).count()
 
 #######################################################
 #######################################################
@@ -162,7 +173,7 @@ class Poster(db.Model):
     imagen = Column(String(1024))
     titulo = Column(String(1024))
     reto = Column(Text(8192))
-    info = Column(Text(16784))
+    info = Column(Text(16384))
     pregunta = Column(String(1024))
     respuesta_correcta = Column(Integer)
     corregido = Column(Integer)
@@ -216,7 +227,7 @@ class QuestionOption(db.Model):
     __tablename__ = 'question_options'
     
     id = Column(Integer, primary_key=True)
-    id_poster = Column(Integer, ForeignKey('posters.id'))
+    id_poster = Column(Integer)
     opcion = Column(String(512))
 
     # Reperesentación de QuestionOption
@@ -274,7 +285,7 @@ class UserLike(db.Model):
 
     id = Column(Integer, primary_key=True)
     id_usuario = Column(Integer, ForeignKey('users.id'))
-    id_poster = Column(Integer, ForeignKey('posters.id'))
+    id_poster = Column(Integer)
 
     #Interfaz
     def likePoster(self):
