@@ -256,7 +256,7 @@ class UserResponse(db.Model):
 
     id = Column(Integer, primary_key=True)
     id_usuario = Column(Integer, ForeignKey('users.id'))
-    id_poster = Column(Integer, ForeignKey('posters.id'))
+    id_poster = Column(Integer)
     opcion = Column(String(100))
 
     # Reperesentación de UserResponse

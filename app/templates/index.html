@@ -43,7 +43,7 @@
                     <div class="col">
                         {{ post.pregunta }}
                     <br/><br/>
-                      <form action="" name="answer" id="answerForm" method="post" novalidate="novalidate">
+                      <form action="submitAnswer" name="answer" id="answerForm" method="post" novalidate="novalidate">
                         {{ formResponse.id(value=post.id) }}
                         {{ formResponse.hidden_tag() }}
                         {{ formResponse.opcion1 }}
@@ -55,7 +55,7 @@
                         {{ formResponse.opcion4 }}
                         {{ formResponse.opcion4.label(questions[post.id][3].opcion) }}<br>
                         <div class="form-group">
-                          {{ formResponse.submit() }}
+                          {{ formResponse.submit(class="btn") }}
                         </div>
                       </form>
                     </div>

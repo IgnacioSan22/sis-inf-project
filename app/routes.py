@@ -5,23 +5,41 @@ from app.models import User, Poster, UserLike, Poster, QuestionOption, QuestionO
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import jsonify
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/')
 @app.route('/index', methods = ['GET', 'POST'])
 @app.route('/index/<int:poster_id>')
 @app.route('/uploadPoster', methods=['GET', 'POST'])
 def index():
     form = PosterForm()
-    formResponse = ResponseForm()
     formLike = LikeForm()
+    formResponse = ResponseForm()
     posts = Poster.getPostersChecked()
     questions={}
     for post in posts:
         questions[post.id]=QuestionOption.getOpcionPreguntaByPosterId(post.id)
         
+    if form.validate_on_submit():
+        post = Poster(id_usuario=current_user.id, titulo=form.titulo.data, corregido=0, imagen=form.imagen.data, reto=form.reto.data, info=form.info.data, pregunta=form.pregunta.data)
+        post.addPoster()
+        resp1 = QuestionOption(id_poster=post.id,opcion=form.respuesta1.data)
+        resp2 = QuestionOption(id_poster=post.id,opcion=form.respuesta2.data)
+        resp3 = QuestionOption(id_poster=post.id,opcion=form.respuesta3.data)
+        resp4 = QuestionOption(id_poster=post.id,opcion=form.respuesta4.data)       
+        resp1.addOpcionPregunta()
+        resp2.addOpcionPregunta()
+        resp3.addOpcionPregunta()
+        resp4.addOpcionPregunta()
+        flash('Poster almacenado con éxito. Debes esperar a que un administrador lo corrija para que se pueda mostrar')
+        return redirect(url_for('index'))
+      
+    return render_template('index.html', title='Home', posts=posts, form=form, formResponse=formResponse, questions=questions, formLike=formLike)
+
+@app.route('/submitAnswer', methods = ['GET', 'POST'])
+def submirAnswer():
+    formResponse = ResponseForm()
+
     if formResponse.validate_on_submit():
         options = QuestionOption.getOpcionPreguntaByPosterId(formResponse.id.data)
-        print("A CONTINUACION ID POSTER")
-        print(formResponse.id.data)
         if formResponse.opcion1:
             if (current_user.is_authenticated):
                 respuesta = UserResponse(id_usuario=current_user.id, id_poster = formResponse.id.data, opcion=options[0].opcion)
@@ -58,21 +76,7 @@ def index():
             else:
                 return redirect(url_for('stat'))
 
-    if form.validate_on_submit():
-        post = Poster(id_usuario=current_user.id, titulo=form.titulo.data, corregido=0, imagen=form.imagen.data, reto=form.reto.data, info=form.info.data, pregunta=form.pregunta.data)
-        post.addPoster()
-        resp1 = QuestionOption(id_poster=post.id,opcion=form.respuesta1.data)
-        resp2 = QuestionOption(id_poster=post.id,opcion=form.respuesta2.data)
-        resp3 = QuestionOption(id_poster=post.id,opcion=form.respuesta3.data)
-        resp4 = QuestionOption(id_poster=post.id,opcion=form.respuesta4.data)       
-        resp1.addOpcionPregunta()
-        resp2.addOpcionPregunta()
-        resp3.addOpcionPregunta()
-        resp4.addOpcionPregunta()
-        flash('Poster almacenado con éxito. Debes esperar a que un administrador lo corrija para que se pueda mostrar')
-        return redirect(url_for('index'))
-      
-    return render_template('index.html', title='Home', posts=posts, form=form, formResponse=formResponse, questions=questions, formLike=formLike)
+
 
 @app.route('/profile')
 @login_required

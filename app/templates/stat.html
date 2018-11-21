@@ -1,49 +1,54 @@
 {% extends "basecontent.html" %}
 {% block contentpage %}
 
-<!-- Singup Section -->
-<header class="masthead bg text-white text-center">
-    <div class="container"></div>
-        <div class="row">
-          <div class="col-lg-8 mx-auto">
+<section class="portfolio" id="statsFormID">
+        <div class="container">
+          <div class="row">
+            <div class="col" style="padding:5em">
+              <h2 class="text-center text-uppercase text-secondary mb-0">Formulario estadístico</h2>
+              <hr class="star-dark mb-5">
+            </div>
+          </div>
+        <br/>
+          <div class="row">
                 <form action="" name="statForm" method="post" id="statForm">
-                    {{ form.hidden_tag() }}
-                    <div style="color: black;">
-                      ¿Actualmente está estudiando o ha terminado los estudios?
-                    </div>
-                        <p>
-                          {{ form.estudios(style="color: black") }}<br>
-                          {% for error in form.estudios.errors %}
-                          <span style="color: red;">[{{ error }}]</span>
-                          {% endfor %}
-                        </p>
-                    <div style="color: black;">
-                        ¿Cual es su rango de edad?
-                    </div>
-                        <p>
-                          {{ form.edad(style="color: black") }}<br>
-                          {% for error in form.edad.errors %}
-                          <span style="color: red;">[{{ error }}]</span>
-                          {% endfor %}
-                        </p>
-                    <div style="color: black">
-                        ¿Cual es su sexo?
-                    </div>
-                        <p>
-                            {{ form.sexo(style="color: black") }}<br>
-                            {% for error in form.sexo.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                            {% endfor %}
-                        </p>
-                                                
-                      <div class="form-group">
-                        <p>
-                          {{ form.submit(style="color: black") }}<br>
-                        </p>
-                      </div>
-                </form>
+                        {{ form.hidden_tag() }}
+                        <div style="color: black;">
+                          ¿Actualmente está estudiando o ha terminado los estudios?
+                        </div>
+                            <p>
+                              {{ form.estudios(style="color: black") }}<br>
+                              {% for error in form.estudios.errors %}
+                              <span style="color: red;">[{{ error }}]</span>
+                              {% endfor %}
+                            </p>
+                        <div style="color: black;">
+                            ¿Cual es su rango de edad?
+                        </div>
+                            <p>
+                              {{ form.edad(style="color: black") }}<br>
+                              {% for error in form.edad.errors %}
+                              <span style="color: red;">[{{ error }}]</span>
+                              {% endfor %}
+                            </p>
+                        <div style="color: black">
+                            ¿Cual es su sexo?
+                        </div>
+                            <p>
+                                {{ form.sexo(style="color: black") }}<br>
+                                {% for error in form.sexo.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </p>
+                                                    
+                          <div class="form-group">
+                            <p>
+                              {{ form.submit(style="color: black", class="btn") }}<br>
+                            </p>
+                          </div>
+                    </form>
           </div>
         </div>
-    </div>
-</header>
+    </section>
+
 {% endblock %}

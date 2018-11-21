@@ -16,5 +16,5 @@ login = LoginManager(app)
 
 from app import routes, models
 
-db.create_all() # In case user table doesn't exists already. Else remove it.    
+db.create_all() # In case table doesn't exists already. Else remove it.    
 db.session.commit()
