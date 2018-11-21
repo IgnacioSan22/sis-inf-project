@@ -16,7 +16,6 @@ def index():
     questions={}
     for post in posts:
         questions[post.id]=QuestionOption.getOpcionPreguntaByPosterId(post.id)
-    print(questions)
     if form.validate_on_submit():
         post = Poster(id_usuario=current_user.id, titulo=form.titulo.data, corregido=0, imagen=form.imagen.data, reto=form.reto.data, info=form.info.data, pregunta=form.pregunta.data)
         post.addPoster()

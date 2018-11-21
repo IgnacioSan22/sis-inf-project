@@ -170,7 +170,7 @@ class Poster(db.Model):
     imagen = Column(String(1024))
     titulo = Column(String(1024))
     reto = Column(Text(8192))
-    info = Column(String(16))
+    info = Column(Text(16384))
     pregunta = Column(String(1024))
     respuesta_correcta = Column(Integer)
     corregido = Column(Integer)
@@ -303,4 +303,3 @@ class UserLike(db.Model):
     @classmethod
     def gaveLike(cls, id_usuario, id_poster):
         return UserLike.query.filter_by(id_usuario=id_usuario, id_poster=id_poster).first() is not None
-        
