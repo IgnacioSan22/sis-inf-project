@@ -1,8 +1,9 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
 from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm, DeletePosterForm, QuestionForm, LikeForm
-from app.models import User, Poster, UserLike, Poster, QuestionOption, QuestionOption2, Pregunta
+from app.models import User, Poster, UserLike, Poster, QuestionOption, QuestionOption2, Pregunta, Stat
 from flask_login import current_user, login_user, logout_user, login_required
+from flask import jsonify
 
 @app.route('/')
 @app.route('/index')
@@ -16,7 +17,6 @@ def index():
     for post in posts:
         questions[post.id]=QuestionOption.getOpcionPreguntaByPosterId(post.id)
     print(questions)
-    print("Hola")
     if form.validate_on_submit():
         post = Poster(id_usuario=current_user.id, titulo=form.titulo.data, corregido=0, imagen=form.imagen.data, reto=form.reto.data, info=form.info.data, pregunta=form.pregunta.data)
         post.addPoster()
@@ -39,6 +39,39 @@ def profile():
         return redirect(url_for('adminProfile'))
     posts = Poster.getPosterByUserId(current_user.id)
     return render_template('profile.html', title='Profile', posts=posts)
+
+@app.route('/stats/<string:de>')
+@login_required
+def stats(de):
+    if current_user.tipo_usuario != 1:
+        return redirect(url_for('index'))
+    if de == '1':
+        countu = Stat.getCountByDE1('U')
+        countb = Stat.getCountByDE1('B')
+        counta = Stat.getCountByDE1('A')
+        data = [
+                    ['Universitario', countu],
+                    ['Bachiller', countb],
+                    ['Acabado', counta]
+            ]
+    elif de == '2':
+        count1 = Stat.getCountByDE2('0-18')
+        count2 = Stat.getCountByDE2('19-22')
+        count3 = Stat.getCountByDE2('+22')
+        data = [
+                    ['0-18', count1],
+                    ['19-22', count2],
+                    ['+22', count3]
+            ]
+    elif de == '3':
+        counth = Stat.getCountByDE3('H')
+        countm = Stat.getCountByDE3('M')
+        data = [
+                    ['Hombre', counth],
+                    ['Mujer', countm]
+            ]
+    
+    return jsonify(data)
 
 @app.route('/posterValidation/<int:poster_id>')
 @login_required
@@ -119,6 +152,7 @@ def adminProfile():
     form2 = DeletePosterForm()
     posters = Poster.getPostersNotChecked()
     allposters = Poster.getPosters()
+
     return render_template('adminProfile.html', users=users, posters=posters, form=form, allposters=allposters, form2=form2)
 
     
