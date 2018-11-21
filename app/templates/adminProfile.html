@@ -18,7 +18,7 @@
             <table class="table table-bordered table-active">
                 <thead class="thead-light">
                   <tr>
-                    <th scope="col" colspan="2">Perfil</th>
+                    <th scope="col" colspan="2">Administración</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -36,16 +36,8 @@
                   </tr>
                 </tbody>
               </table>
+              <a class="btn btn-link" href="{{ url_for('addQuestion') }}">Añadir pregunta antigua.</a>
         </div>
-        <!--
-        <ul class="list-group ml-4">
-            <li class="list-group-item text-muted" contenteditable="false">Profile</li>
-            <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Username</span><p class="text-right">{{ current_user.username }}</p></li>
-            <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">email</span><p class="text-right">{{ current_user.email }}</p></li>
-            <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Tipo de Usuario</span><p class="text-right">{{ current_user.tipo_usuario }}</p></li>
-            <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Usuarios registrados</span><p class="text-right">20</p></li>
-            <li class="list-group-item list-group-item-primary"><span class="pull-left font-weight-bold">Carteles validados</span><p class="text-right">37</p></li>
-        </ul>-->
 
         <div class="col-8">
           <div class="accordion" id="accordionExample">
@@ -103,18 +95,54 @@
                   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                     <div class="card-body">
                             <ul class="list-group" style="overflow-y: auto; overflow-x: auto">
-                                <li class="list-group-item alert list-group-item-secondary">
-                                El usuario 735508 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>.
-                                </li>
+                              {% if posters %}
+                                {% for poster in posters %}
                                 <li class="list-group-item list-group-item-primary">
-                                El usuario 735508 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>.
+                                  <p>El usuario con id {{ poster.id_usuario }} quiere publicar el cartel con pregunta:<a href="posterValidation/{{ poster.id }}" class="alert-link"> {{ poster.pregunta }}</a>.</p>
                                 </li>
-                                <li class="list-group-item alert list-group-item-secondary">
-                                El usuario 737317 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Cúal es la principal causa de contaminación en Aragón?</a>.
-                                </li>
+                                {% endfor %}
+                              {% else %}
+                              <li class="list-group-item list-group-item-primary">
+                                <p>No hay carteles pendientes de revisión.</p>
+                              </li>
+                              {% endif %}
+                            </ul>
+                    </div>
+                  </div>
+                <div class="card">
+                  <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
+                        Eliminar carteles publicados
+                      </button>
+                    </h5>
+                  </div>
+                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+                            <ul class="list-group" style="overflow-y: auto; overflow-x: auto">
+                              {% if allposters %}
+                                {% for poster in allposters %}
                                 <li class="list-group-item list-group-item-primary">
-                                El usuario 651943 quiere publicar cartel con pregunta: <a href="posterValidation" class="alert-link">¿Por qué es tan difícil beberse de un trago un litro de cerveza?</a>.
-                                </li>
+                                    <div class="container">
+                                      <div class="row">
+                                        <div class="col-8" style="float:left;">
+                                            <p>Cartel: <a href="poster/{{ poster.id }}" class="alert-link"> {{ poster.pregunta }}</a>.</p>
+                                        </div>
+                                        <div class="col-2">
+                                          <form action="deletePoster" method="post" novalidate style="color:#222;">
+                                            <p>{{ form2.id(value=poster.id) }} {{ form2.action(value="delete") }} {{ form2.eliminar(class="btn-danger") }}</p>
+                                          </form>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  </li>
+                                
+                                {% endfor %}
+                              {% else %}
+                              <li class="list-group-item list-group-item-primary">
+                                <p>No hay carteles.</p>
+                              </li>
+                              {% endif %}
                             </ul>
                     </div>
                   </div>
@@ -125,6 +153,7 @@
     
 
     <section class="masthead bg-primary text-white text-center"></section>
+
 
     <section class="text-white text-center">
 

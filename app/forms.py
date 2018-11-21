@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, HiddenField, RadioField, SelectMultipleField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, HiddenField, TextAreaField, IntegerField, RadioField, BooleanField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -16,6 +16,9 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
+    nombre = StringField('Nombre', validators=[DataRequired()])
+    apellidos = StringField('Apellidos', validators=[DataRequired()])
+    nia = StringField('NIA', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
@@ -33,10 +36,29 @@ class RegisterForm(FlaskForm):
             raise ValidationError('Please use a different email address.')
 
 class PosterForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign in')
+    imagen = StringField('URL Imagen', validators=[DataRequired()])
+    titulo = StringField('Título', validators=[DataRequired()])
+    reto = TextAreaField('Reto', validators=[DataRequired()])
+    info =  TextAreaField('Información', validators=[DataRequired()])
+    pregunta = StringField('Pregunta', validators=[DataRequired()])
+    respuesta1 = StringField('Respuesta 1', validators=[DataRequired()])
+    respuesta2 = StringField('Respuesta 2', validators=[DataRequired()])
+    respuesta3 = StringField('Respuesta 3', validators=[DataRequired()])
+    respuesta4 = StringField('Respuesta 4', validators=[DataRequired()])
+    submit = SubmitField('Upload')
+
+class QuestionForm(FlaskForm):
+    pregunta = StringField('Pregunta', validators=[DataRequired()])
+    year = IntegerField('Año de la pregunta', validators=[DataRequired()])
+    respuesta1 = StringField('Respuesta 1', validators=[DataRequired()])
+    respuesta2 = StringField('Respuesta 2', validators=[DataRequired()])
+    respuesta3 = StringField('Respuesta 3', validators=[DataRequired()])
+    respuesta4 = StringField('Respuesta 4')
+    respuesta5 = StringField('Respuesta 5')
+    respuesta6 = StringField('Respuesta 6')
+    respuesta7 = StringField('Respuesta 7')
+    respuesta8 = StringField('Respuesta 8')
+    submit = SubmitField('Upload')
 
 class ValidateUserForm(FlaskForm):
     user = HiddenField('')
@@ -45,13 +67,30 @@ class ValidateUserForm(FlaskForm):
     deny = SubmitField('Denegar')
 
 class ValidatePosterForm(FlaskForm):
+    id = HiddenField('')
+    action = HiddenField('')
     validate = SubmitField('Validar')
     deny = SubmitField('Denegar')
 
+class DeletePosterForm(FlaskForm):
+    id = HiddenField('')
+    action = HiddenField('')
+    eliminar = SubmitField('Eliminar')
+
+class Like(FlaskForm):
+    pass
+
 class StatForm(FlaskForm):
-    estudios = RadioField('Estudios', choices=[('Universitarios', 'menor'), ('Bachiller', 'mayor'), ('Acabados','muy mayor')])
-    edad = RadioField ('Edad', choices=[('0-18','menor'), ('18-22','mayor'), ('+22', 'muy mayor')])
+    estudios = RadioField('Estudios', choices=[('U', 'Universitarios'), ('B', 'Bachiller'), ('A','Acabados')])
+    edad = RadioField ('Edad',choices=[('0-18','0-18'), ('19-22','19-22'), ('+22', '+22')])
+    sexo = RadioField ('Sexo', choices=[('H','Hombre'),('M','Mujer')])
     submit = SubmitField('Enviar')
 
-
-
+class ResponseForm(FlaskForm):
+    id = HiddenField('')
+    opcion1 = BooleanField('')
+    opcion2 = BooleanField('')
+    opcion3 = BooleanField('')
+    opcion4 = BooleanField('')
+    submit = SubmitField('Enviar')
+    

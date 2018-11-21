@@ -2,7 +2,7 @@ from datetime import datetime
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from sqlalchemy import Column, String, Integer, Boolean, ForeignKey
+from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Text
 
 @login.user_loader
 def load_user(id):
@@ -14,6 +14,9 @@ class User(UserMixin, db.Model):
     # Campos
     id = Column(Integer, primary_key=True)
     username = Column(String(64), index=True, unique=True)
+    nombre = Column(String(64))
+    apellidos = Column(String(64))
+    nia = Column(String(6), index=True, unique=True)
     email = Column(String(120), index=True, unique=True)
     password_hash = Column(String(128))
     tipo_usuario = Column(Integer)
@@ -21,7 +24,7 @@ class User(UserMixin, db.Model):
 
     # Representación del Usuario
     def __repr__(self):
-        return '<ID: {}, User: {}, email: {}>'.format(self.id, self.username, self.email)
+        return '<ID: {}, NIA: {}, email: {}>'.format(self.id, self.nia, self.email)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -70,10 +73,11 @@ class Stat(db.Model):
     id_usuario = Column(Integer, ForeignKey('users.id'), unique=True)
     dato_estadistico_1 = Column(String(64))
     dato_estadistico_2 = Column(String(64))
+    dato_estadistico_3 = Column(String(64))
 
     # Representación del dato estadístico
     def __repr__(self):
-        return '<id: {}, id_usuario: {}, dato_estadistico_1: {}, datos_estadistico_2: {}>'.format(self.id, self.id_usuario, self.dato_estadistico_1, self.dato_estadistico_2)
+        return '<id: {}, id_usuario: {}, dato_estadistico_1: {}, datos_estadistico_2: {}, datos_estadistico_3>'.format(self.id, self.id_usuario, self.dato_estadistico_1, self.dato_estadistico_2, self.dato_estadistic_3)
 
     #Interfaz
     def addStat(self):
@@ -85,13 +89,70 @@ class Stat(db.Model):
         db.session.commit()
 
     def updateStat(self):
-        Stat.query.filter_by(id=self.id).update(dict(dato_estadistico_1=self.dato_estadistico_1, dato_estadistico_2=self.dato_estadistico_2))
+        Stat.query.filter_by(id=self.id).update(dict(dato_estadistico_1=self.dato_estadistico_1, dato_estadistico_2=self.dato_estadistico_2, dato_estadistic_3=self.dato_estadistic_3))
         db.session.commit()
     
     @classmethod
     def getStatById(cls, id):
         return Stat.query.filter_by(id=id).first()
 
+    @classmethod
+    def getUsers(cls,id):
+        return Stat.query.filter_by(id_usuario=id).first()
+
+#######################################################
+#######################################################
+
+class Pregunta(db.Model):
+    __tablename__ = 'preguntas'
+
+    id = Column(Integer, primary_key=True)
+    pregunta = Column(String(1024))
+    year = Column(Integer)
+
+    def addPregunta(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+class QuestionOption2(db.Model):
+    __tablename__ = 'question_options_2'
+    
+    id = Column(Integer, primary_key=True)
+    id_pregunta = Column(Integer, ForeignKey('preguntas.id'))
+    opcion = Column(String(512))
+    correcta = Column(Integer)
+
+    # Reperesentación de QuestionOption
+    def __resp__(self):
+        return '<id: {}, id_poster: {}, opcion:{}>'.format(self.id, self.id_pregunta, self.opcion)
+
+    @classmethod
+    def newOption(cls, pregunta_id, respuesta):
+        if respuesta != "":
+            resp = QuestionOption2(id_pregunta=pregunta_id,opcion=respuesta,correcta=0)
+            db.session.add(resp)
+            db.session.commit()
+
+    #Interfaz
+    def addOpcionPregunta(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    def removeOpcionPregunta(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def updateOpcionPregunta(self):
+        QuestionOption.query.filter_by(id=self.id).update(dict(id_poster=self.id_poster, opcion=self.opcion))
+        db.session.commit()
+
+    @classmethod
+    def getOpcionPreguntaByPosterId(cls, id_poster):
+        return QuestionOption.query.filter_by(id_poster=id_poster).all()
+
+#######################################################
+#######################################################
 
 class Poster(db.Model):
     __tablename__ = 'posters'
@@ -100,10 +161,11 @@ class Poster(db.Model):
     id_usuario = Column(Integer, ForeignKey('users.id'))
     imagen = Column(String(1024))
     titulo = Column(String(1024))
-    reto = Column(String(2048))
-    info = Column(String(2048))
+    reto = Column(Text(8192))
+    info = Column(Text(16784))
     pregunta = Column(String(1024))
     respuesta_correcta = Column(Integer)
+    corregido = Column(Integer)
 
     # Representación del poster
     def __repr__(self):
@@ -117,9 +179,17 @@ class Poster(db.Model):
     def removePoster(self):
         db.session.delete(self)
         db.session.commit()
+    
+    def validate(self):
+        self.corregido = 1
+        self.updatePoster()
+    
+    def denyPoster(self):
+        self.corregido = 2
+        self.updatePoster()
 
     def updatePoster(self):
-        Poster.query.filter_by(id=self.id).update(dict(id_usuario=self.id_usuario, imagen=self.imagen, reto=self.reto, info=self.info, pregunta=self.pregunta, respuesta_correcta=self.respuesta_correcta, likes=self.likes))
+        Poster.query.filter_by(id=self.id).update(dict(id_usuario=self.id_usuario, corregido=self.corregido, imagen=self.imagen, reto=self.reto, info=self.info, pregunta=self.pregunta, respuesta_correcta=self.respuesta_correcta))
         db.session.commit()
 
     @classmethod
@@ -127,8 +197,20 @@ class Poster(db.Model):
         return Poster.query.filter_by(id=id).first()
 
     @classmethod
+    def getPosterByUserId(cls, user_id):
+        return Poster.query.filter_by(id_usuario=user_id).all()
+
+    @classmethod
     def getPosters(cls):
         return Poster.query.all()
+
+    @classmethod
+    def getPostersNotChecked(cls):
+        return Poster.query.filter_by(corregido=0).all()
+    
+    @classmethod
+    def getPostersChecked(cls):
+        return Poster.query.filter_by(corregido=1).all()
 
 class QuestionOption(db.Model):
     __tablename__ = 'question_options'
@@ -163,11 +245,12 @@ class UserResponse(db.Model):
 
     id = Column(Integer, primary_key=True)
     id_usuario = Column(Integer, ForeignKey('users.id'))
-    id_opcion = Column(Integer, ForeignKey('question_options.id'))
+    id_poster = Column(Integer, ForeignKey('posters.id'))
+    opcion = Column(String(100))
 
     # Reperesentación de UserResponse
     def __resp__(self):
-        return '<id: {}, id_user: {}, id_opcion:{}>'.format(self.id, self.id_usuario, self.id_opcion)
+        return '<id: {}, id_user: {}, id_poster:{}, opcion:{}>'.format(self.id, self.id_usuario, self.id_poster,self.opcion)
 
     #Interfaz
     def addUserResponse(self):
@@ -179,7 +262,7 @@ class UserResponse(db.Model):
         db.session.commit()
 
     def updateUserResponse(self):
-        UserResponse.query.filter_by(id=self.id).update(dict(id_user=self.id_usuario, id_opcion=self.id_opcion))
+        UserResponse.query.filter_by(id=self.id).update(dict(id_user=self.id_usuario, id_poster=self.id_poster, opcion =self.opcion))
         db.session.commit()
 
     @classmethod

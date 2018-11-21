@@ -2,53 +2,43 @@
 {% block contentpage %}
 
 <br><br>
-    <section class="portfolio" id="posters">
-        <div class="container">
+<section class="portfolio" id="posters">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h2 class="text-center text-uppercase text-secondary mb-0">{{ posts.titulo }}</h2>
+        <hr class="star-dark mb-5">
+      </div>
+    </div>
+  <br/>
+    <div class="row">
+        <div class="col-8">
+          <img src="{{ posts.imagen }}" class="rounded img-thumbnail">
+          <br/><br/>
+          <p style="text-align:justify">{{ posts.info }}</p>
+        </div>
+        <div class="col-4">
             <div class="row">
               <div class="col">
-                <h2 class="text-center text-uppercase text-secondary mb-0">Título de cartel</h2>
-                <hr class="star-dark mb-5">
+                  {{ posts.pregunta }}
+              <br/><br/>
+              <form name="pregunta" id="answerForm" novalidate="novalidate">
+                {% for question in questions %}
+                    <div class="checkbox">
+                      <label><input type="checkbox" name="answer"> {{ question.opcion }}</label>
+                    </div>
+                {% endfor %}  
+                  </form>
               </div>
             </div>
-          <br/>
-          <div class="row">
-              <div class="col-4">
-                  <div class="row">
-                    <div class="col">
-                      ¿Cual es la mejor pregunta 1 que se te ocurre?
-                    <br/><br/>
-                      <form name="pregunta" id="answerForm" novalidate="novalidate">
-                        <div class="radio">
-                            <label><input type="radio" name="answer">  Option 1</label>
-                          </div>
-                          <div class="radio">
-                            <label><input type="radio" name="answer">  Option 2</label>
-                          </div>
-                          <div class="radio">
-                            <label><input type="radio" name="answer">  Option 3</label>
-                          </div>
-                          <div class="form-group">
-                              <button type="button" class="btn btn-secondary">
-                                  Enviar
-                              </button>
-                          </div>
-                        </form>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <p style="text-align:justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum varius consectetur augue a aliquet. Suspendisse potenti. Duis leo justo, bibendum a commodo eget, placerat quis neque. Curabitur auctor convallis nunc non faucibus. Donec a leo a lorem dapibus condimentum nec sit amet eros. Nam vitae dolor vel nulla convallis cursus nec at velit. Integer ex nisl, porta ut urna non, tincidunt sollicitudin massa. Integer ultrices a ipsum ut condimentum. Maecenas at magna neque.</p>
-                    </div>
-                  </div>
-              </div> 
-                <div class="col-8">
-                  <img src="/static/img/parque.jpg" class="rounded">
-                  <br/><br/>
-                  <p style="text-align:justify">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</p>
-                  <p style="text-align:justify">In pharetra, orci vitae rutrum blandit, odio arcu dignissim elit, eget rhoncus ex dui et ligula. Etiam consectetur ipsum ut ante venenatis, id mollis nulla varius. Nunc condimentum, lorem sit amet rutrum gravida, magna felis fermentum sem, id viverra purus risus vel magna. Aenean enim sapien, fringilla non justo sed, volutpat laoreet turpis.</p>
-                </div>
+            <div class="row">
+              <div class="col">
+                <p style="text-align:justify">{{ posts.reto }}</p>
+              </div>
             </div>
-          </div>  
-    </section>
+        </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

@@ -13,7 +13,7 @@
 <!-- Singup Section -->
 <header class="masthead bg text-white text-center">
         <div class="container">
-          <h2 class="text-center text-uppercase text-secondary mb-0">SingUp</h2>
+          <h2 class="text-center text-uppercase text-secondary mb-0">Stat</h2>
           <hr class="star-dark mb-5">
 
         <div class="row">
@@ -24,6 +24,27 @@
                     {{ form.username.label }}<br>
                     {{ form.username(size=32) }}<br>
                     {% for error in form.username.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.nombre.label }}<br>
+                    {{ form.nombre(size=32) }}<br>
+                    {% for error in form.nombre.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.apellidos.label }}<br>
+                    {{ form.apellidos(size=32) }}<br>
+                    {% for error in form.apellidos.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{ form.nia.label }}<br>
+                    {{ form.nia(size=32) }}<br>
+                    {% for error in form.nia.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </p>
