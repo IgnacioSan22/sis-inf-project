@@ -42,6 +42,10 @@
                     {% endfor %}
                 </p>
                 <p>
+                    {{ form.es_correcta1.label }}<br>
+                    {{ form.es_correcta1 }}<br>
+                </p>
+                <p>
                     {{ form.respuesta2.label }}<br>
                     {{ form.respuesta2(size=32) }}<br>
                     {% for error in form.respuesta2.errors %}
@@ -49,12 +53,20 @@
                     {% endfor %}
                 </p>
                 <p>
+                    {{ form.es_correcta2.label }}<br>
+                    {{ form.es_correcta2 }}<br>
+                  </p>
+                <p>
                     {{ form.respuesta3.label }}<br>
                     {{ form.respuesta3(size=32) }}<br>
                     {% for error in form.respuesta3.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </p>
+                <p>
+                    {{ form.es_correcta3.label }}<br>
+                    {{ form.es_correcta3 }}<br>
+                  </p>
                 <button data-toggle="collapse" data-target="#demo">Añadir más respuestas</button>
                 <br><br>
                   <div id="demo" class="collapse">
@@ -66,12 +78,20 @@
                         {% endfor %}
                     </p>
                     <p>
+                        {{ form.es_correcta4.label }}<br>
+                        {{ form.es_correcta4 }}<br>
+                      </p>
+                    <p>
                         {{ form.respuesta5.label }}<br>
                         {{ form.respuesta5(size=32) }}<br>
                         {% for error in form.respuesta5.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </p>
+                    <p>
+                        {{ form.es_correcta5.label }}<br>
+                        {{ form.es_correcta5 }}<br>
+                      </p>
                     <p>
                         {{ form.respuesta6.label }}<br>
                         {{ form.respuesta6(size=32) }}<br>
@@ -80,6 +100,10 @@
                         {% endfor %}
                     </p>
                     <p>
+                        {{ form.es_correcta6.label }}<br>
+                        {{ form.es_correcta6 }}<br>
+                      </p>
+                    <p>
                         {{ form.respuesta7.label }}<br>
                         {{ form.respuesta7(size=32) }}<br>
                         {% for error in form.respuesta7.errors %}
@@ -87,12 +111,20 @@
                         {% endfor %}
                     </p>
                     <p>
+                        {{ form.es_correcta7.label }}<br>
+                        {{ form.es_correcta7 }}<br>
+                      </p>
+                    <p>
                         {{ form.respuesta8.label }}<br>
                         {{ form.respuesta8(size=32) }}<br>
                         {% for error in form.respuesta8.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </p>
+                    <p>
+                        {{ form.es_correcta8.label }}<br>
+                        {{ form.es_correcta8 }}<br>
+                      </p>
                   </div>
                   <br><br>
                 <p>{{ form.submit() }}</p>

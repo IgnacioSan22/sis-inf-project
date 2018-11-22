@@ -1,0 +1,26 @@
+{% extends "basecontent.html" %}
+{% block contentpage %}
+
+<br><br>
+<section class="portfolio" id="posters">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h2 class="text-center text-uppercase text-secondary mb-0">Intermedio QUIZ</h2>
+        <hr class="star-dark mb-5">
+        <h6 class="dropdown-header">Si desea continuar con el quiz pulse continuar:</h6><br>
+        <button type="button" class="btn btn-secondary">
+            <a href="/quiz/{{ numero }}">Continuar</a>
+        </button>
+        <br><br>
+        <h6 class="dropdown-header">Si desea finalizar el QUIZ pulse finalizar:</h6>
+        <br>
+        <button type="button" class="btn btn-secondary">
+            <a href="{{ url_for('index', _anchor='posters') }}">Finalizar</a>
+        </button>
+      </div>
+    </div>
+  
+</section>
+
+{% endblock %}

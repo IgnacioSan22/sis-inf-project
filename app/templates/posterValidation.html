@@ -25,7 +25,13 @@
                 <form name="pregunta" id="answerForm" novalidate="novalidate">
                   {% for question in questions %}
                     <div class="radio">
-                      <label><input type="radio" name="answer"> {{ question.opcion }}</label>
+                      <label><input type="radio" name="answer"> {{ question.opcion }}                      
+                          {% if question.correcta %}
+                          <a>
+                          (Es una opción correcta)
+                          </a>
+                          {% endif %}
+                      </label>
                     </div>
                   {% endfor %} 
                 </form>

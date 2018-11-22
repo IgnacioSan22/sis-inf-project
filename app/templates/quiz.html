@@ -1,0 +1,67 @@
+{% extends "basecontent.html" %}
+{% block contentpage %}
+
+<!-- Messages  -->
+{% for msg in get_flashed_messages() %}
+<section id="msgs" style="padding-block-end: 0rem">
+    <div class="alert alert-info" role="alert" style="position:absolute; z-index:1;">
+    <strong> {{ msg }} </strong>
+    </div>
+</section>
+{% endfor %}
+
+<!-- Singup Section -->
+<header class="masthead bg text-white text-center">
+		<div class="container">
+			<h2 class="text-center text-uppercase text-secondary mb-0">QUIZ</h2>
+			<hr class="star-dark mb-5">
+			<div class="col">
+				<p class="text-body">{{ pregunta.pregunta }}</p>
+					<form name="pregunta" id="answerForm" novalidate="novalidate" style="color: black" method="POST">
+						{{ form.id_pregunta(value=pregunta.id)}}
+						{{ form.hidden_tag() }}
+                        {{ form.opcion1 }}
+                        {{ form.opcion1.label(options[0].opcion) }}<br>
+                        {{ form.opcion2 }}
+                        {{ form.opcion2.label(options[1].opcion) }}<br>
+                        {{ form.opcion3 }}
+						{{ form.opcion3.label(options[2].opcion) }}<br>
+						{% if options[3] %}
+                        {{ form.opcion4 }}
+						{{ form.opcion4.label(options[3].opcion) }}<br>
+						{% endif %}
+						{% if options[4] %}
+                        {{ form.opcion5 }}
+						{{ form.opcion5.label(options[4].opcion) }}<br>
+						{% endif %}
+						{% if options[5] %}
+                        {{ form.opcion6 }}
+						{{ form.opcion6.label(options[5].opcion) }}<br>
+						{% endif %}
+						{% if options[6] %}
+                        {{ form.opcion7 }}
+						{{ form.opcion7.label(options[6].opcion) }}<br>
+						{% endif %}
+						{% if options[7] %}
+                        {{ form.opcion8 }}
+						{{ form.opcion8.label(options[7].opcion) }}<br>
+						{% endif %}
+						<br>
+						<p style="color: darkgrey">Si no desea constetar a la pregunta pulse siguiente sin marcar ninguna casillas.</p>
+                        <p>{{ form.submit() }}</p>
+					</form>
+				</div>
+				<!--<form action='/quizResult' method='POST'>
+					<ol>
+						{% for pregunta in preguntas %}
+							<li>{{ pregunta.pregunta }}</li>
+							{% for option in options[pregunta.id] %}
+								<input type='radio' value='{{ option.id }}' name='{{ pregunta.pregunta }}' />{{ option.opcion }}
+							{% endfor %}
+						{% endfor %}
+					</ol>
+					<input type="submit" value="submit" />
+				</form>-->
+		</div>
+</header>
+{% endblock %}

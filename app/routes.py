@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app
-from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm, DeletePosterForm, QuestionForm, StatForm, ResponseForm, LikeForm
-from app.models import User, Poster, UserLike, Poster, QuestionOption, QuestionOption2, Pregunta, Stat, UserResponse
+from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterForm, PosterForm, DeletePosterForm, QuestionForm, RespQuizForm, StatForm, ResponseForm, LikeForm
+from app.models import User, Poster, UserLike, Poster, QuestionOption, QuestionOption2, Pregunta, Stat, UserResponse2, UserResponse
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import jsonify
 
@@ -21,10 +21,10 @@ def index():
     if form.validate_on_submit():
         post = Poster(id_usuario=current_user.id, titulo=form.titulo.data, corregido=0, imagen=form.imagen.data, reto=form.reto.data, info=form.info.data, pregunta=form.pregunta.data)
         post.addPoster()
-        resp1 = QuestionOption(id_poster=post.id,opcion=form.respuesta1.data)
-        resp2 = QuestionOption(id_poster=post.id,opcion=form.respuesta2.data)
-        resp3 = QuestionOption(id_poster=post.id,opcion=form.respuesta3.data)
-        resp4 = QuestionOption(id_poster=post.id,opcion=form.respuesta4.data)       
+        resp1 = QuestionOption(id_poster=post.id,opcion=form.respuesta1.data,correcta=form.es_correcta1.data)
+        resp2 = QuestionOption(id_poster=post.id,opcion=form.respuesta2.data,correcta=form.es_correcta2.data)
+        resp3 = QuestionOption(id_poster=post.id,opcion=form.respuesta3.data,correcta=form.es_correcta3.data)
+        resp4 = QuestionOption(id_poster=post.id,opcion=form.respuesta4.data,correcta=form.es_correcta4.data)       
         resp1.addOpcionPregunta()
         resp2.addOpcionPregunta()
         resp3.addOpcionPregunta()
@@ -180,14 +180,14 @@ def addQuestion():
     if form.validate_on_submit():
         pregunta = Pregunta(pregunta=form.pregunta.data, year=form.year.data)
         pregunta.addPregunta()
-        QuestionOption2.newOption(pregunta.id,form.respuesta1.data)    
-        QuestionOption2.newOption(pregunta.id,form.respuesta8.data)    
-        QuestionOption2.newOption(pregunta.id,form.respuesta7.data)    
-        QuestionOption2.newOption(pregunta.id,form.respuesta6.data)    
-        QuestionOption2.newOption(pregunta.id,form.respuesta5.data)    
-        QuestionOption2.newOption(pregunta.id,form.respuesta4.data)    
-        QuestionOption2.newOption(pregunta.id,form.respuesta3.data)    
-        QuestionOption2.newOption(pregunta.id,form.respuesta2.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta1.data,form.es_correcta1.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta8.data,form.es_correcta2.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta7.data,form.es_correcta3.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta6.data,form.es_correcta4.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta5.data,form.es_correcta5.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta4.data,form.es_correcta6.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta3.data,form.es_correcta7.data)    
+        QuestionOption2.newOption(pregunta.id,form.respuesta2.data,form.es_correcta8.data)    
         flash('Pregunta añadida correctamente')
         return redirect(url_for('adminProfile'))
     return render_template('addQuestion.html', title='Nueva Pregunta', form=form)
@@ -202,6 +202,81 @@ def adminProfile():
     allposters = Poster.getPosters()
     return render_template('adminProfile.html', users=users, posters=posters, form=form, allposters=allposters, form2=form2)
 
+
+
+#class RandList:
+#    preguntas = []
+#    options={}
+#    
+#    @classmethod
+#    def initOpt(cls):
+#        RandList.preguntas = Pregunta.getRandomQuestions()
+#        for preg in RandList.preguntas:
+#            RandList.options[preg.id]=QuestionOption2.getOpcionPreguntaByPreguntaId(preg.id)
+#        for preg in RandList.preguntas:
+#            if len(RandList.options[preg.id])<8:
+#                for i in range(len(RandList.options[preg.id]),8):
+#                    RandList.options[preg.id].append(None)
+#
+#    @classmethod
+#    def getPreg(cls,i):
+#        return RandList.preguntas[i]
+#
+#    @classmethod
+#    def getOpts(cls,i):
+#        return RandList.options[i]
+#        
+#
+
+@app.route('/continuar/<int:num_preg>')
+def continuar(num_preg):
+    return render_template('continuar.html', numero=num_preg)
+
+@app.route('/quiz/<int:num_preg>', methods=['GET', 'POST'])
+def quiz(num_preg):
+    print(Pregunta.numPreg())
+    if (num_preg>(Pregunta.numPreg()-1)):
+        flash('Muchas gracias por participar en el QUIZ, has respondido a todas las preguntas.')
+        return redirect(url_for('index'))
+    preg = Pregunta.getNext(num_preg)
+    options = QuestionOption2.getOpcionPreguntaByPreguntaId(preg.id)
+    form = RespQuizForm()
+    if form.validate_on_submit():
+        print("Holaa2222")
+        if (current_user.is_authenticated):
+            user=current_user.id
+        else:
+            user=None
+        options2 = QuestionOption2.getOpcionPreguntaByPreguntaId(form.id_pregunta.data)
+        if form.opcion1.data:
+            print("Holaaaa")
+            respuesta = UserResponse2(id_usuario=user, id_opcion = options2[0].id)
+            respuesta.addUserResponse()
+        if form.opcion2.data:
+            respuesta = UserResponse2(id_usuario=user, id_opcion = options2[1].id)
+            respuesta.addUserResponse()
+        if form.opcion3.data:
+            respuesta = UserResponse2(id_usuario=user, id_opcion = options2[2].id)
+            respuesta.addUserResponse()
+        if form.opcion4.data:
+            respuesta = UserResponse2(id_usuario=user, id_opcion = options2[3].id)
+            respuesta.addUserResponse()
+        if form.opcion5.data:
+            respuesta = UserResponse2(id_usuario=user, id_opcion = options2[4].id)
+            respuesta.addUserResponse()
+        if form.opcion6.data:
+            respuesta = UserResponse2(id_usuario=user, id_opcion = options2[5].id)
+            respuesta.addUserResponse()
+        if form.opcion7.data:
+            respuesta = UserResponse2(id_usuario=user, id_opcion = options2[6].id)
+            respuesta.addUserResponse()
+        if form.opcion8.data:
+            respuesta = UserResponse2(id_usuario=user, id_opcion = options2[7].id)
+            respuesta.addUserResponse()
+        
+        redir='/continuar/'+str(num_preg+1)
+        return redirect(redir)
+    return render_template('quiz.html', pregunta=preg, options=options, form=form)
     
 @app.route('/validateUser', methods=['GET', 'POST'])
 @login_required

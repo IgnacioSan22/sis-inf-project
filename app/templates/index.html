@@ -177,6 +177,10 @@
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </p>
+                            <p>
+                              {{ form.es_correcta1.label("hola me llamo ignacio") }}<br>
+                              {{ form.es_correcta1 }}<br>
+                            </p>
                             </div>
                           </div>
                         </div>
@@ -190,6 +194,10 @@
                                   {% for error in form.respuesta2.errors %}
                                   <span style="color: red;">[{{ error }}]</span>
                                   {% endfor %}
+                              </p>
+                              <p>
+                                {{ form.es_correcta2.label }}<br>
+                                {{ form.es_correcta2 }}<br>
                               </p>
                               </div>
                             </div>
@@ -205,6 +213,10 @@
                                     <span style="color: red;">[{{ error }}]</span>
                                     {% endfor %}
                                 </p>
+                                <p>
+                                  {{ form.es_correcta3.label }}<br>
+                                  {{ form.es_correcta3 }}<br>
+                                </p>
                                 </div>
                               </div>
                           </div>
@@ -218,7 +230,11 @@
                                   {% for error in form.respuesta4.errors %}
                                   <span style="color: red;">[{{ error }}]</span>
                                   {% endfor %}
-                              </p>
+                                </p>
+                                <p>
+                                  {{ form.es_correcta4.label }}<br>
+                                  {{ form.es_correcta4 }}<br>
+                                </p>
                               </div>
                             </div>
                         </div>

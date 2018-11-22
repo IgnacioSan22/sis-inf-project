@@ -3,6 +3,7 @@ from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Text, func
+from  sqlalchemy.sql.expression import func, select
 
 @login.user_loader
 def load_user(id):
@@ -125,6 +126,19 @@ class Pregunta(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    @classmethod
+    def getRandomQuestions(cls):
+        return db.session.query(Pregunta).order_by(func.rand()).all()
+    
+    @classmethod
+    def getNext(cls,num):
+        preg=Pregunta.query.all()
+        return preg[num]
+    
+    @classmethod
+    def numPreg(cls):
+        return len(Pregunta.query.all())
+    
 
 class QuestionOption2(db.Model):
     __tablename__ = 'question_options_2'
@@ -139,9 +153,9 @@ class QuestionOption2(db.Model):
         return '<id: {}, id_poster: {}, opcion:{}>'.format(self.id, self.id_pregunta, self.opcion)
 
     @classmethod
-    def newOption(cls, pregunta_id, respuesta):
+    def newOption(cls, pregunta_id, respuesta, es_correcta):
         if respuesta != "":
-            resp = QuestionOption2(id_pregunta=pregunta_id,opcion=respuesta,correcta=0)
+            resp = QuestionOption2(id_pregunta=pregunta_id,opcion=respuesta,correcta=es_correcta)
             db.session.add(resp)
             db.session.commit()
 
@@ -159,8 +173,37 @@ class QuestionOption2(db.Model):
         db.session.commit()
 
     @classmethod
-    def getOpcionPreguntaByPosterId(cls, id_poster):
-        return QuestionOption.query.filter_by(id_poster=id_poster).all()
+    def getOpcionPreguntaByPreguntaId(cls, id_pregunta):
+        return QuestionOption2.query.filter_by(id_pregunta=id_pregunta).all()
+
+
+class UserResponse2(db.Model):
+    __tablename__ = 'user_response2'
+
+    id = Column(Integer, primary_key=True)
+    id_usuario = Column(Integer, ForeignKey('users.id'))
+    id_opcion = Column(Integer, ForeignKey('question_options_2.id'))
+
+    # Reperesentación de UserResponse
+    def __resp__(self):
+        return '<id: {}, id_user: {}, id_opcion:{}>'.format(self.id, self.id_usuario, self.id_opcion)
+
+    #Interfaz
+    def addUserResponse(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    def removeUserResponse(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def updateUserResponse(self):
+        UserResponse.query.filter_by(id=self.id).update(dict(id_user=self.id_usuario, id_opcion=self.id_opcion))
+        db.session.commit()
+
+    @classmethod
+    def getUserResponseByUserId(cls, id_usuario):
+        return UserResponse.query.filter_by(id_usuario=id_usuario).all()
 
 #######################################################
 #######################################################
@@ -229,6 +272,7 @@ class QuestionOption(db.Model):
     id = Column(Integer, primary_key=True)
     id_poster = Column(Integer)
     opcion = Column(String(512))
+    correcta = Column(Boolean)
 
     # Reperesentación de QuestionOption
     def __resp__(self):

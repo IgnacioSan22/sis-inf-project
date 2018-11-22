@@ -45,6 +45,10 @@ class PosterForm(FlaskForm):
     respuesta2 = StringField('Respuesta 2', validators=[DataRequired()])
     respuesta3 = StringField('Respuesta 3', validators=[DataRequired()])
     respuesta4 = StringField('Respuesta 4', validators=[DataRequired()])
+    es_correcta1 = BooleanField('¿Es una respuesta correcta?')
+    es_correcta2 = BooleanField('¿Es una respuesta correcta?')
+    es_correcta3 = BooleanField('¿Es una respuesta correcta?')
+    es_correcta4 = BooleanField('¿Es una respuesta correcta?')
     submit = SubmitField('Upload')
 
 class QuestionForm(FlaskForm):
@@ -58,6 +62,14 @@ class QuestionForm(FlaskForm):
     respuesta6 = StringField('Respuesta 6')
     respuesta7 = StringField('Respuesta 7')
     respuesta8 = StringField('Respuesta 8')
+    es_correcta1 = BooleanField('¿Es una respuesta correcta?')
+    es_correcta2 = BooleanField('¿Es una respuesta correcta?')
+    es_correcta3 = BooleanField('¿Es una respuesta correcta?')
+    es_correcta4 = BooleanField('¿Es una respuesta correcta?')
+    es_correcta5 = BooleanField('¿Es una respuesta correcta?')
+    es_correcta6 = BooleanField('¿Es una respuesta correcta?')
+    es_correcta7 = BooleanField('¿Es una respuesta correcta?')
+    es_correcta8 = BooleanField('¿Es una respuesta correcta?')
     submit = SubmitField('Upload')
 
 class ValidateUserForm(FlaskForm):
@@ -82,7 +94,7 @@ class StatForm(FlaskForm):
     edad = RadioField ('Edad',choices=[('0-18','0-18'), ('19-22','19-22'), ('+22', '+22')])
     sexo = RadioField ('Sexo', choices=[('H','Hombre'),('M','Mujer')])
     submit = SubmitField('Enviar')
-
+    
 class ResponseForm(FlaskForm):
     id = HiddenField('')
     opcion1 = BooleanField('')
@@ -90,6 +102,18 @@ class ResponseForm(FlaskForm):
     opcion3 = BooleanField('')
     opcion4 = BooleanField('')
     submit = SubmitField('Enviar')
+
+class RespQuizForm(FlaskForm):
+    id_pregunta=HiddenField('')
+    opcion1 = BooleanField('')
+    opcion2 = BooleanField('')
+    opcion3 = BooleanField('')
+    opcion4 = BooleanField('')
+    opcion5 = BooleanField('')
+    opcion6 = BooleanField('')
+    opcion7 = BooleanField('')
+    opcion8 = BooleanField('')
+    submit = SubmitField('Siguiente')
     
 class LikeForm(FlaskForm):
     id = HiddenField('')
