@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2018 at 08:21 PM
+-- Generation Time: Nov 22, 2018 at 07:59 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -69,22 +69,23 @@ CREATE TABLE `preguntas` (
 CREATE TABLE `question_options` (
   `id` int(11) NOT NULL,
   `id_poster` int(11) DEFAULT NULL,
-  `opcion` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL
+  `opcion` varchar(512) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `correcta` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `question_options`
 --
 
-INSERT INTO `question_options` (`id`, `id_poster`, `opcion`) VALUES
-(17, 5, 'Dolor'),
-(18, 5, 'Lorem'),
-(19, 5, 'Ipsum'),
-(20, 5, 'Sit amet'),
-(21, 6, 'Lorem'),
-(22, 6, 'Ipsum'),
-(23, 6, 'Dolor'),
-(24, 6, 'Sit amet');
+INSERT INTO `question_options` (`id`, `id_poster`, `opcion`, `correcta`) VALUES
+(17, 5, 'Dolor', NULL),
+(18, 5, 'Lorem', NULL),
+(19, 5, 'Ipsum', NULL),
+(20, 5, 'Sit amet', NULL),
+(21, 6, 'Lorem', NULL),
+(22, 6, 'Ipsum', NULL),
+(23, 6, 'Dolor', NULL),
+(24, 6, 'Sit amet', NULL);
 
 -- --------------------------------------------------------
 
@@ -178,7 +179,8 @@ CREATE TABLE `user_likes` (
 --
 
 INSERT INTO `user_likes` (`id`, `id_usuario`, `id_poster`) VALUES
-(1, 1, 3);
+(1, 1, 3),
+(2, 15, 5);
 
 -- --------------------------------------------------------
 
@@ -198,11 +200,23 @@ CREATE TABLE `user_response` (
 --
 
 INSERT INTO `user_response` (`id`, `id_usuario`, `id_poster`, `opcion`) VALUES
-(21, 1, 5, 'Dolor'),
-(22, 1, 5, 'Lorem'),
-(23, 1, 5, 'Ipsum'),
-(24, 1, 6, 'Lorem'),
-(25, 1, 6, 'Sit amet');
+(1, 15, 5, 'Dolor'),
+(2, 15, 5, 'Sit amet'),
+(3, 15, 5, 'Dolor'),
+(4, 15, 5, 'Ipsum'),
+(5, 15, 5, 'Sit amet');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_response2`
+--
+
+CREATE TABLE `user_response2` (
+  `id` int(11) NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
+  `id_opcion` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -265,6 +279,14 @@ ALTER TABLE `user_response`
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
+-- Indexes for table `user_response2`
+--
+ALTER TABLE `user_response2`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_opcion` (`id_opcion`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -278,7 +300,7 @@ ALTER TABLE `posters`
 -- AUTO_INCREMENT for table `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `question_options`
@@ -290,7 +312,7 @@ ALTER TABLE `question_options`
 -- AUTO_INCREMENT for table `question_options_2`
 --
 ALTER TABLE `question_options_2`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `stats`
@@ -308,13 +330,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_likes`
 --
 ALTER TABLE `user_likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user_response`
 --
 ALTER TABLE `user_response`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `user_response2`
+--
+ALTER TABLE `user_response2`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -342,8 +370,14 @@ ALTER TABLE `user_likes`
 -- Constraints for table `user_response`
 --
 ALTER TABLE `user_response`
-  ADD CONSTRAINT `user_response_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `user_response_ibfk_2` FOREIGN KEY (`id_poster`) REFERENCES `posters` (`id`);
+  ADD CONSTRAINT `user_response_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `user_response2`
+--
+ALTER TABLE `user_response2`
+  ADD CONSTRAINT `user_response2_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `user_response2_ibfk_2` FOREIGN KEY (`id_opcion`) REFERENCES `question_options_2` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
