@@ -1,6 +1,14 @@
 {% extends "basecontent.html" %}
 {% block contentpage %}
 
+{% for msg in get_flashed_messages() %}
+<section id="msgs" style="padding-block-end: 0rem">
+    <div class="alert alert-info" role="alert" style="position:absolute; z-index:1;">
+    <strong> {{ msg }} </strong>
+    </div>
+</section>
+{% endfor %}
+
 <section class="portfolio" id="statsFormID">
         <div class="container">
           <div class="row">

@@ -72,8 +72,10 @@ def submirAnswer():
         else:
             stat = Stat.getUsers(current_user.id)
             if (stat is not None ):
+                flash('Respuesta registrada con éxito')
                 return redirect(url_for('index'))
             else:
+                flash('Respuesta registrada con éxito, ¿Serías tan amable de rellenar el siguiente formulario estadístico?')
                 return redirect(url_for('stat'))
 
 
@@ -330,6 +332,7 @@ def like():
         ul = UserLike(id_usuario=current_user.id, id_poster=form.id.data)
         if not UserLike.gaveLike(id_usuario=current_user.id, id_poster=form.id.data):
             ul.likePoster()
+            flash('Like registrado con éxito')
     return redirect(url_for('index'))
 
 @app.route('/stat' , methods=['GET', 'POST'])
