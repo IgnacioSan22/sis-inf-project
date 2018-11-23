@@ -204,32 +204,6 @@ def adminProfile():
     allposters = Poster.getPosters()
     return render_template('adminProfile.html', users=users, posters=posters, form=form, allposters=allposters, form2=form2)
 
-
-
-#class RandList:
-#    preguntas = []
-#    options={}
-#    
-#    @classmethod
-#    def initOpt(cls):
-#        RandList.preguntas = Pregunta.getRandomQuestions()
-#        for preg in RandList.preguntas:
-#            RandList.options[preg.id]=QuestionOption2.getOpcionPreguntaByPreguntaId(preg.id)
-#        for preg in RandList.preguntas:
-#            if len(RandList.options[preg.id])<8:
-#                for i in range(len(RandList.options[preg.id]),8):
-#                    RandList.options[preg.id].append(None)
-#
-#    @classmethod
-#    def getPreg(cls,i):
-#        return RandList.preguntas[i]
-#
-#    @classmethod
-#    def getOpts(cls,i):
-#        return RandList.options[i]
-#        
-#
-
 @app.route('/continuar/<int:num_preg>')
 def continuar(num_preg):
     return render_template('continuar.html', numero=num_preg)
