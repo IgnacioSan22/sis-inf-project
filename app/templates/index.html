@@ -74,6 +74,9 @@
               </div>
               {% if current_user.is_authenticated %}
               <div class="col-1">
+                {{ likes[post.id] }}
+              </div>
+              <div class="col-1">
                 <form action="like" method="POST">
                     {{ formLike.id(value=post.id) }}
                     {{ formLike.like(class="btn", value="Like") }}
@@ -89,7 +92,6 @@
           </div>
         </div>
     </section>
-
     <section class="masthead bg-primary text-white text-center"></section>
   {% endfor %}
 
@@ -283,30 +285,4 @@
         </div>
       </div>
 
-      
-    <!-- Modal  -->
-    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Respuesta registrada</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              ¿Serías tan amable de responder a dos preguntas estadísticas?
-            </div>
-            <div class="modal-footer">
-              <button type="button", id="statButton"  class="btn btn-secondary">Si</button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-              <script type="text/javascript">
-                document.getElementById("statButton").onclick = function () {
-                    location.href = "{{ url_for('stat')}}";
-                };
-              </script>
-            </div>
-          </div>
-        </div>
-      </div>
       {% endblock %}

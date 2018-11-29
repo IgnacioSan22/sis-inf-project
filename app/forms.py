@@ -113,7 +113,7 @@ class RespQuizForm(FlaskForm):
     opcion6 = BooleanField('')
     opcion7 = BooleanField('')
     opcion8 = BooleanField('')
-    submit = SubmitField('Siguiente')
+    submit = SubmitField('Verificar y Continuar')
     
 class LikeForm(FlaskForm):
     id = HiddenField('')
