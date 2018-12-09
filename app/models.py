@@ -176,6 +176,15 @@ class QuestionOption2(db.Model):
     def getOpcionPreguntaByPreguntaId(cls, id_pregunta):
         return QuestionOption2.query.filter_by(id_pregunta=id_pregunta).all()
 
+    @classmethod
+    def checkAnswer(cls,opciones_dadas,pregunta):
+        options = QuestionOption2.getOpcionPreguntaByPreguntaId(pregunta)
+        print(opciones_dadas)
+        for i in range (0,len(options)):
+            if options[0].correcta!=opciones_dadas[0]:
+                return False
+        return True
+
 
 class UserResponse2(db.Model):
     __tablename__ = 'user_response2'

@@ -67,10 +67,12 @@
                     {{ form.es_correcta3.label }}<br>
                     {{ form.es_correcta3 }}<br>
                   </p>
+
                 <!--<button data-toggle="collapse" data-target="#demo">Añadir más respuestas</button>-->
-                <a class="btn btn-primary" data-toggle="collapse" href="#colapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Añadir más respuestas</a>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Añadir más respuestas</a>
+
                 <br><br>
-                  <div id="demo" class="collapse">
+                  <div class="collapse" id="collapseExample">
                     <p>
                         {{ form.respuesta4.label }}<br>
                         {{ form.respuesta4(size=32) }}<br>

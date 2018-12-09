@@ -14,6 +14,10 @@ def index():
     formLike = LikeForm()
     formResponse = ResponseForm()
     posts = Poster.getPostersChecked()
+    likes={}
+    for i in posts:
+        likes[i.id]=UserLike.getPosterLikes(i.id)
+    print(likes)
     questions={}
     for post in posts:
         questions[post.id]=QuestionOption.getOpcionPreguntaByPosterId(post.id)
@@ -32,7 +36,7 @@ def index():
         flash('Poster almacenado con éxito. Debes esperar a que un administrador lo corrija para que se pueda mostrar')
         return redirect(url_for('index'))
       
-    return render_template('index.html', title='Home', posts=posts, form=form, formResponse=formResponse, questions=questions, formLike=formLike)
+    return render_template('index.html', title='Home', posts=posts, form=form, formResponse=formResponse, questions=questions, formLike=formLike, likes=likes)
 
 @app.route('/submitAnswer', methods = ['GET', 'POST'])
 def submirAnswer():
@@ -204,36 +208,6 @@ def adminProfile():
     allposters = Poster.getPosters()
     return render_template('adminProfile.html', users=users, posters=posters, form=form, allposters=allposters, form2=form2)
 
-
-
-#class RandList:
-#    preguntas = []
-#    options={}
-#    
-#    @classmethod
-#    def initOpt(cls):
-#        RandList.preguntas = Pregunta.getRandomQuestions()
-#        for preg in RandList.preguntas:
-#            RandList.options[preg.id]=QuestionOption2.getOpcionPreguntaByPreguntaId(preg.id)
-#        for preg in RandList.preguntas:
-#            if len(RandList.options[preg.id])<8:
-#                for i in range(len(RandList.options[preg.id]),8):
-#                    RandList.options[preg.id].append(None)
-#
-#    @classmethod
-#    def getPreg(cls,i):
-#        return RandList.preguntas[i]
-#
-#    @classmethod
-#    def getOpts(cls,i):
-#        return RandList.options[i]
-#        
-#
-
-@app.route('/continuar/<int:num_preg>')
-def continuar(num_preg):
-    return render_template('continuar.html', numero=num_preg)
-
 @app.route('/quiz/<int:num_preg>', methods=['GET', 'POST'])
 def quiz(num_preg):
     print(Pregunta.numPreg())
@@ -244,41 +218,53 @@ def quiz(num_preg):
     options = QuestionOption2.getOpcionPreguntaByPreguntaId(preg.id)
     form = RespQuizForm()
     if form.validate_on_submit():
-        print("Holaa2222")
         if (current_user.is_authenticated):
             user=current_user.id
         else:
             user=None
         options2 = QuestionOption2.getOpcionPreguntaByPreguntaId(form.id_pregunta.data)
+        opt=[]
+        opt.append(form.opcion1.data)
         if form.opcion1.data:
-            print("Holaaaa")
             respuesta = UserResponse2(id_usuario=user, id_opcion = options2[0].id)
             respuesta.addUserResponse()
+        opt.append(form.opcion2.data)
         if form.opcion2.data:
             respuesta = UserResponse2(id_usuario=user, id_opcion = options2[1].id)
             respuesta.addUserResponse()
+        opt.append(form.opcion3.data)
         if form.opcion3.data:
             respuesta = UserResponse2(id_usuario=user, id_opcion = options2[2].id)
             respuesta.addUserResponse()
+        opt.append(form.opcion4.data)
         if form.opcion4.data:
             respuesta = UserResponse2(id_usuario=user, id_opcion = options2[3].id)
             respuesta.addUserResponse()
+        opt.append(form.opcion5.data)
         if form.opcion5.data:
             respuesta = UserResponse2(id_usuario=user, id_opcion = options2[4].id)
             respuesta.addUserResponse()
+        opt.append(form.opcion6.data)
         if form.opcion6.data:
             respuesta = UserResponse2(id_usuario=user, id_opcion = options2[5].id)
             respuesta.addUserResponse()
+        opt.append(form.opcion7.data)
         if form.opcion7.data:
             respuesta = UserResponse2(id_usuario=user, id_opcion = options2[6].id)
             respuesta.addUserResponse()
+        opt.append(form.opcion8.data)
         if form.opcion8.data:
             respuesta = UserResponse2(id_usuario=user, id_opcion = options2[7].id)
-            respuesta.addUserResponse()
+            respuesta.addUserResponse() 
         
-        redir='/continuar/'+str(num_preg+1)
+        if QuestionOption2.checkAnswer(opt,form.id_pregunta.data):
+            flash('Enhorabuena has respondido correctamente la pregunta')
+        else:
+            flash('Lo siento no has respondido correctamente la pregunta')
+
+        redir='/quiz/'+str(num_preg+1)
         return redirect(redir)
-    return render_template('quiz.html', pregunta=preg, options=options, form=form)
+    return render_template('quiz.html', pregunta=preg, options=options, form=form, num=(num_preg+1))
     
 @app.route('/validateUser', methods=['GET', 'POST'])
 @login_required

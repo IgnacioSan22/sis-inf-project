@@ -48,20 +48,28 @@
 						{% endif %}
 						<br>
 						<p style="color: darkgrey">Si no desea constetar a la pregunta pulse siguiente sin marcar ninguna casillas.</p>
-                        <p>{{ form.submit() }}</p>
+                        <p>{{ form.submit(class="btn") }}</p>
 					</form>
+					<div class="row">
+						<div class="col">
+							<button type="button", id="endButton"  class="btn btn-secondary">Finalizar</button>
+							<script type="text/javascript">
+								document.getElementById("endButton").onclick = function () {
+									location.href = "{{ url_for('index', _anchor='posters') }}";
+								};
+							</script>
+						</div>
+						<div class="col">
+							<button type="button", id="nextButton"  class="btn btn-secondary">Saltar pregunta</button>
+							<script type="text/javascript">
+								document.getElementById("nextButton").onclick = function () {
+									dir= "/quiz/{{ num }}";
+									location.href = dir ;
+								};
+							</script>
+						</div>
+					</div>
 				</div>
-				<!--<form action='/quizResult' method='POST'>
-					<ol>
-						{% for pregunta in preguntas %}
-							<li>{{ pregunta.pregunta }}</li>
-							{% for option in options[pregunta.id] %}
-								<input type='radio' value='{{ option.id }}' name='{{ pregunta.pregunta }}' />{{ option.opcion }}
-							{% endfor %}
-						{% endfor %}
-					</ol>
-					<input type="submit" value="submit" />
-				</form>-->
 		</div>
 </header>
 {% endblock %}
