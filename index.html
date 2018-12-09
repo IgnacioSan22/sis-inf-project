@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <title> - Sis Inf</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link href="/static/personal/style.css" rel="stylesheet" type="text/css">
+    <link href="/static/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/freelancer.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+    
+    // Load the Visualization API and the piechart package.
+    google.charts.load('current', {'packages':['corechart']});
+      
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+      
+    function drawChart() {
+      var jsonData1 = $.ajax({
+          url: "stats/1",
+          dataType: "json",
+          async: false
+          }).responseText;
+          
+      var jsonData2 = $.ajax({
+          url: "stats/2",
+          dataType: "jon",
+          async: false
+          }).responseText;
+          
+      var jsonData3 = $.ajax({
+          url: "stats/3",
+          dataType: "json",
+          async: false
+          }).responseText;
+          
+
+      var data1 = new google.visualization.DataTable();
+
+      data1.addColumn('string', 'Estudios');
+      data1.addColumn('number', 'Numero');  
+      data1.addRows(JSON.parse(jsonData1));
+
+      var data2 = new google.visualization.DataTable();
+
+      data2.addColumn('string', 'Edad');
+      data2.addColumn('number', 'Numero');  
+      data2.addRows(JSON.parse(jsonData2));
+
+      var data3 = new google.visualization.DataTable();
+
+      data3.addColumn('string', 'Genero');
+      data3.addColumn('number', 'Numero');  
+      data3.addRows(JSON.parse(jsonData3));
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div1'));
+      chart.draw(data1, {width: 400, height: 240});
+
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
+      chart.draw(data2, {width: 400, height: 240});
+
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
+      chart.draw(data3, {width: 400, height: 240});
+    }
+
+    </script>
+
+
+
+
+  </head>
+  <body>
+    
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+        <div class="container">
+          <a class="navbar-brand js-scroll-trigger" href="/uploadPoster">Env hub</a>
+          <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/quiz/0">QUIZ</a>
+              </li>
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/uploadPoster#posters">Posters</a>
+              </li>
+              
+              
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">Login</a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+    
+
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+        <div class="container">
+          <a class="navbar-brand js-scroll-trigger" href="/uploadPoster">Env hub</a>
+          <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/quiz/0">QUIZ</a>
+              </li>
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/uploadPoster#posters">Posters</a>
+              </li>
+              
+              
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">Login</a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+
+
+
+
+
+  <!-- Header -->
+  <header class="masthead bg-primary text-white text-center" id="page-top">
+    <div class="container">
+      <!--<i class="fas fa-leaf fa-3x"></i>-->
+      <i class="fas fa-fish fa-8x"></i>
+      <br/>
+      <br/>
+      <h1 class="text-uppercase mb-0">ENV HUB</h1>
+      <hr class="star-light">
+      <h2 class="font-weight-light mb-0">Enviromental Posters - Challenges</h2>
+    </div>
+  </header>
+  
+
+  
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Login error</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Tienes que iniciar sesión para subir un poster.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+    <!-- Modal  -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Respuesta registrada</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ¿Serías tan amable de responder a dos preguntas estadísticas?
+            </div>
+            <div class="modal-footer">
+              <button type="button", id="statButton"  class="btn btn-secondary">Si</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <script type="text/javascript">
+                document.getElementById("statButton").onclick = function () {
+                    location.href = "/stat";
+                };
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+
+    
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 mb-5 mb-lg-0">
+              <h4 class="text-uppercase mb-4">EINA - UNIZAR</h4>
+              <p class="lead mb-0">C/ María de Luna, 3, 50008, Zaragoza</p>
+            </div>
+            <div class="col-md-4 mb-5 mb-lg-0">
+              <h4 class="text-uppercase mb-4">Around the Web</h4>
+              <ul class="list-inline mb-0">
+                <li class="list-inline-item">
+                  <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                    <i class="fab fa-fw fa-facebook-f"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                    <i class="fab fa-fw fa-google-plus-g"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                    <i class="fab fa-fw fa-twitter"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                    <i class="fab fa-fw fa-linkedin-in"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                    <i class="fab fa-fw fa-dribbble"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <h4 class="text-uppercase mb-4">About Us</h4>
+              <p class="lead mb-0">WebApp made by: <br/> Víctor Fernández Melic <br/> Ignacio Galve Ceamanos <br/> Jorge Generelo Gimeno <br/>
+                <a href="#">EnvHub</a>.</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+  
+      <div class="copyright py-4 text-center text-white">
+        <div class="container">
+          <small>Copyright &copy; EnvHub 2018</small>
+        </div>
+      </div>
+
+    <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+    <div class="scroll-to-top d-lg-none position-fixed ">
+        <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+          <i class="fa fa-chevron-up"></i>
+        </a>
+      </div>
+  
+      <!-- Bootstrap core JavaScript -->
+      <script src="/static/vendor/jquery/jquery.min.js"></script>
+      <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
+      <!-- Plugin JavaScript -->
+      <script src="/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <script src="/static/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+  
+      <!-- Contact Form JavaScript -->
+      <script src="/static/js/jqBootstrapValidation.js"></script>
+      <script src="/static/js/contact_me.js"></script>
+  
+      <!-- Custom scripts for this template -->
+      <script src="/static/js/freelancer.min.js"></script>
+  
+      <script>
+        
+        function toggleLogin() {
+          var x = document.getElementById("signup-form");
+          var y = document.getElementById("login-form");
+          var z = document.getElementById("toggleLoginButton");
+  
+          if (x.style.display === "none") {
+              y.style.display = "none";
+              x.style.display = "block";
+              z.textContent = "Login";
+          } else {
+              x.style.display = "none";
+              y.style.display = "block";
+              z.textContent = "Signup";
+          }
+      } 
+        
+        function showShareLink(id) {
+          var x = document.getElementById("share"+id);          
+          var url = document.URL;
+
+          document.getElementById("sharep"+id).innerHTML = "Comparte esta URL: " + url+"#"+id;
+
+          if (x.style.display === "none") {
+              x.style.display = "block";
+          }
+      } 
+      </script>
+
+<script type="text/javascript">
+  // Load google charts
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  
+  // Draw the chart and set the chart values
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable('');
+  
+    // Optional; add a title and set the width and height of the chart
+    var options = {'title':'Rando de edad de los usuarios', 'width':550, 'height':400};
+  
+    // Display the chart inside the <div> element with id="piechart"
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    chart.draw(data, options);
+  }
+  </script>
+
+
+
+
+
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </body>
+</html>
