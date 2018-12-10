@@ -34,7 +34,7 @@
         <br/>
           <div class="row">
               <div class="col-8">
-                <img src="{{ post.imagen }}" class="rounded img-thumbnail">
+                <img src="/static/{{ post.id }}.jpg" class="rounded img-thumbnail">
                 <br/><br/>
                 <p style="text-align:justify">{{ post.info }}</p>
               </div>
@@ -108,7 +108,7 @@
           <br/>
             <div class="row">
                 <div class="col">
-                  <form action="uploadPoster" method="post" style="color:#222;" name="uploadPoster" id="posterForm" novalidate="novalidate">
+                  <form action="uploadPoster" method="post" style="color:#222;" name="uploadPoster" id="posterForm" novalidate="novalidate" enctype="multipart/form-data">
                     {{ form.hidden_tag() }}
                     <div class="row">
                       <div class="col">
@@ -143,14 +143,12 @@
 
                         <div class="row">
                           <div class="control-group">
-                            <div class="form-group controls mb-0 pb-2">
-                              <p>
-                                {{ form.imagen.label }}<br>
-                                {{ form.imagen }}<br>
+                            <div class="form-group controls mb-0 pb-2" type="file">
+                             <br>   
+                                {{ form.imagen() }}<br>
                                 {% for error in form.imagen.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
-                            </p>
                             </div>
                           </div>
                         </div>

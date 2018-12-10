@@ -2,7 +2,7 @@ from datetime import datetime
 from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Text, func
+from sqlalchemy import Column, String, Integer, Boolean, ForeignKey, Text, func, BLOB
 from  sqlalchemy.sql.expression import func, select
 
 @login.user_loader
@@ -222,7 +222,7 @@ class Poster(db.Model):
 
     id = Column(Integer, primary_key=True)
     id_usuario = Column(Integer, ForeignKey('users.id'))
-    imagen = Column(String(1024))
+    imagen = Column(BLOB)
     titulo = Column(String(1024))
     reto = Column(Text(8192))
     info = Column(Text(16384))
@@ -258,6 +258,12 @@ class Poster(db.Model):
     @classmethod
     def getPosterById(cls, id):
         return Poster.query.filter_by(id=id).first()
+
+    @classmethod
+    def getImagen(cls, id):
+        #query = "SELECT imagen FROM posters WHERE id = %s"
+        post = Poster.query.filter_by(id=id).first()
+        return post.imagen
 
     @classmethod
     def getPosterByUserId(cls, user_id):

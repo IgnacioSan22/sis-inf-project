@@ -4,6 +4,9 @@ from app.forms import LoginForm, RegisterForm, ValidateUserForm, ValidatePosterF
 from app.models import User, Poster, UserLike, Poster, QuestionOption, QuestionOption2, Pregunta, Stat, UserResponse2, UserResponse
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import jsonify
+import os
+import io
+from app.getIMG import read_blob
 
 @app.route('/')
 @app.route('/index', methods = ['GET', 'POST'])
@@ -14,6 +17,8 @@ def index():
     formLike = LikeForm()
     formResponse = ResponseForm()
     posts = Poster.getPostersChecked()
+    for p in posts:
+        read_blob(p.id,".\\app\\static\\"+str(p.id)+".jpg")
     likes={}
     for i in posts:
         likes[i.id]=UserLike.getPosterLikes(i.id)
@@ -23,7 +28,8 @@ def index():
         questions[post.id]=QuestionOption.getOpcionPreguntaByPosterId(post.id)
         
     if form.validate_on_submit():
-        post = Poster(id_usuario=current_user.id, titulo=form.titulo.data, corregido=0, imagen=form.imagen.data, reto=form.reto.data, info=form.info.data, pregunta=form.pregunta.data)
+        post = Poster(id_usuario=current_user.id, titulo=form.titulo.data, corregido=0, imagen=form.imagen.data.read(), reto=form.reto.data, info=form.info.data, pregunta=form.pregunta.data)
+        print("Hola foto subida")
         post.addPoster()
         resp1 = QuestionOption(id_poster=post.id,opcion=form.respuesta1.data,correcta=form.es_correcta1.data)
         resp2 = QuestionOption(id_poster=post.id,opcion=form.respuesta2.data,correcta=form.es_correcta2.data)
@@ -129,6 +135,7 @@ def stats(de):
 @login_required
 def posterValidation(poster_id):
     post=Poster.getPosterById(poster_id)
+    read_blob(poster_id,".\\app\\static\\"+str(poster_id)+".jpg")
     if post.corregido!=0:
         return redirect(url_for('adminProfile'))
     form =  ValidatePosterForm()
@@ -139,6 +146,7 @@ def posterValidation(poster_id):
 @login_required
 def poster(poster_id):
     post = Poster.getPosterById(poster_id)
+    read_blob(poster_id,".\\app\\static\\"+str(poster_id)+".jpg")
     form =  ValidatePosterForm()
     questions = QuestionOption.getOpcionPreguntaByPosterId(poster_id)
     return render_template('poster.html', posts=post, form=form, questions=questions)

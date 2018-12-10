@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, HiddenField, TextAreaField, IntegerField, RadioField, BooleanField, Field
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
@@ -36,7 +37,7 @@ class RegisterForm(FlaskForm):
             raise ValidationError('Please use a different email address.')
 
 class PosterForm(FlaskForm):
-    imagen = StringField('URL Imagen', validators=[DataRequired()])
+    imagen = FileField('Imagen', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
     titulo = StringField('Título', validators=[DataRequired()])
     reto = TextAreaField('Reto', validators=[DataRequired()])
     info =  TextAreaField('Información', validators=[DataRequired()])
