@@ -1,3 +1,6 @@
 node_modules
 __pycache__
 .vscode
+ignore
+venv
+log

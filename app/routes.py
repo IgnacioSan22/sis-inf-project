@@ -17,8 +17,10 @@ def index():
     formLike = LikeForm()
     formResponse = ResponseForm()
     posts = Poster.getPostersChecked()
+
     for p in posts:
-        read_blob(p.id,".\\app\\static\\"+str(p.id)+".jpg")
+        read_blob(p.id,"./app/static/"+str(p.id)+".jpg")
+      
     likes={}
     for i in posts:
         likes[i.id]=UserLike.getPosterLikes(i.id)

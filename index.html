@@ -1,8 +1,13 @@
-{% extends "bootstrap/base.html" %}
-{% block head %}
-{{ super() }}
+<!DOCTYPE html>
+<html>
+  <head>
 
-    <title>{% block title %}{% endblock %} - Sis Inf</title>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <title> - Sis Inf</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -86,16 +91,14 @@
 
 
 
-{% endblock %}
 
-{% block content %}
-{% block navbar %}
+  </head>
+  <body>
+    
       <!-- Navigation -->
       <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
         <div class="container">
-
-          <a class="navbar-brand js-scroll-trigger" href="{{ url_for('index', _anchor='page_top') }}">Env hub</a>
-
+          <a class="navbar-brand js-scroll-trigger" href="/uploadPoster">Env hub</a>
           <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars"></i>
@@ -106,42 +109,120 @@
                 <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/quiz/0">QUIZ</a>
               </li>
               <li class="nav-item mx-0 mx-lg-1">
-                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('index', _anchor='posters') }}">Posters</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/uploadPoster#posters">Posters</a>
               </li>
-              {% if current_user.tipo_usuario == 2 %}
+              
+              
               <li class="nav-item mx-0 mx-lg-1">
-                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('index', _anchor='upload') }}">Upload</a>
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">Login</a>
               </li>
-              {% endif %}
-              {% if current_user.is_anonymous %}
-              <li class="nav-item mx-0 mx-lg-1">
-                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('login') }}">Login</a>
-              </li>
-              {% else %}
-                {% if current_user.tipo_usuario == 2 %}
-                  <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('profile', username=current_user.username) }}">Profile</a>
-                  </li>
-                {% elif current_user.tipo_usuario == 1 %}
-                  <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('adminProfile', username=current_user.username) }}">Admin</a>
-                  </li>
-                {% endif %}
-                  <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{{ url_for('logout') }}">Logout</a>
-                  </li>
-              {% endif %}
+              
             </ul>
           </div>
         </div>
       </nav>
 
-{% endblock %}
 
-{% block contentpage %}
-{% endblock %}
+    
 
-{% block footer %}
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+        <div class="container">
+          <a class="navbar-brand js-scroll-trigger" href="/uploadPoster">Env hub</a>
+          <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/quiz/0">QUIZ</a>
+              </li>
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/uploadPoster#posters">Posters</a>
+              </li>
+              
+              
+              <li class="nav-item mx-0 mx-lg-1">
+                <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/login">Login</a>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+
+
+
+
+
+
+  <!-- Header -->
+  <header class="masthead bg-primary text-white text-center" id="page-top">
+    <div class="container">
+      <!--<i class="fas fa-leaf fa-3x"></i>-->
+      <i class="fas fa-fish fa-8x"></i>
+      <br/>
+      <br/>
+      <h1 class="text-uppercase mb-0">ENV HUB</h1>
+      <hr class="star-light">
+      <h2 class="font-weight-light mb-0">Enviromental Posters - Challenges</h2>
+    </div>
+  </header>
+  
+
+  
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Login error</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Tienes que iniciar sesión para subir un poster.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+    <!-- Modal  -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Respuesta registrada</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ¿Serías tan amable de responder a dos preguntas estadísticas?
+            </div>
+            <div class="modal-footer">
+              <button type="button", id="statButton"  class="btn btn-secondary">Si</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              <script type="text/javascript">
+                document.getElementById("statButton").onclick = function () {
+                    location.href = "/stat";
+                };
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+
     
     <!-- Footer -->
     <footer class="footer text-center">
@@ -267,5 +348,11 @@
   </script>
 
 
-{% endblock %}
-{% endblock %}
+
+
+
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </body>
+</html>

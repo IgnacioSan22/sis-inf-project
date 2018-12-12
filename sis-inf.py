@@ -1,2 +1,5 @@
-from app import app, db
-from app.models import User, Poster
+from app import app as application
+
+if __name__ == "__main__":
+	application.run()
+
